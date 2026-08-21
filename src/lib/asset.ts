@@ -19,3 +19,24 @@ export function asset(url?: string | null): string {
   if (!url.startsWith('/')) return url; // relative paths are left alone
   return BASE + url;
 }
+
+/** Combining diacritics, stripped after an NFD normalise. */
+const COMBINING = /[̀-ͯ]/g;
+
+/**
+ * The filename a download is saved under.
+ *
+ * Uploads are stored with a collision-proof suffix ("CV_...--5--mt2awe20.pdf"),
+ * which is fine on disk but awful in someone's Downloads folder. The anchor's
+ * `download` attribute lets us hand over a clean name instead.
+ */
+export function downloadName(displayName: string, kind: string, url: string): string {
+  const ext = (url.match(/\.[a-z0-9]+$/i)?.[0] ?? '.pdf').toLowerCase();
+  const slug = displayName
+    .normalize('NFD')
+    .replace(COMBINING, '')
+    .trim()
+    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return [slug || 'CV', kind].filter(Boolean).join('-') + ext;
+}

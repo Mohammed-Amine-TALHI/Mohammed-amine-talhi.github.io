@@ -50,6 +50,8 @@ const UI = {
   'projects.all': { en: 'All', fr: 'Tous' },
   'projects.empty': { en: 'No projects match this filter.', fr: 'Aucun projet ne correspond à ce filtre.' },
   'projects.count': { en: 'projects', fr: 'projets' },
+  'projects.showMore': { en: 'Show all projects', fr: 'Voir tous les projets' },
+  'projects.showLess': { en: 'Show fewer', fr: 'Réduire' },
 
   'leadership.eyebrow': { en: 'Beyond the desk', fr: 'Au-delà du bureau' },
   'leadership.title': { en: 'Leadership & Student Life', fr: 'Engagement & Vie associative' },

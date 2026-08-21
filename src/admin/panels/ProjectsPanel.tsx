@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { HiChevronDown, HiChevronUp, HiOutlinePlus, HiOutlineTrash } from 'react-icons/hi';
 import { Toggle, Card, Button, LocField, TagsInput, ImageDrop, Field } from '../ui';
 import AssetEditor from '../AssetEditor';
+import CropBox from '../CropBox';
+import { resolveCrop } from '../../lib/crop';
 import { resume } from '../../lib/data';
 import type { PortfolioConfig, Project } from '../../lib/types';
 
@@ -132,6 +134,19 @@ export default function ProjectsPanel({
                         onChange={(imgs) => set((d) => void (d.projectMeta[p.id] = { ...meta, cover: imgs[0] ?? '' }))}
                       />
                     </Field>
+
+                    {meta.cover && (
+                      <Field label="Crop" hint="drag to reframe, scroll or slide to zoom">
+                        <CropBox
+                          src={meta.cover}
+                          aspect={368 / 144}
+                          crop={resolveCrop({ imageCrop: meta.coverCrop })}
+                          onChange={(c) =>
+                            set((d) => void (d.projectMeta[p.id] = { ...(d.projectMeta[p.id] ?? {}), coverCrop: c }))
+                          }
+                        />
+                      </Field>
+                    )}
 
                     <AssetsFor id={p.id} />
                   </div>

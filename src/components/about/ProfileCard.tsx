@@ -5,6 +5,7 @@ import { config, contact, softSkills } from '../../lib/data';
 import { dur, on } from '../../lib/anim';
 import CvDownload from '../CvDownload';
 import { asset } from '../../lib/asset';
+import { cropStyle, resolveCrop } from '../../lib/crop';
 
 /* Small decorative dots that orbit the portrait. */
 const ORBIT = [
@@ -47,7 +48,8 @@ export default function ProfileCard() {
           <img
             src={asset(config.profile.photo)}
             alt={contact.displayName}
-            className="h-full w-full object-cover grayscale transition-all duration-700 hover:grayscale-0"
+            style={cropStyle(resolveCrop({ imageCrop: config.profile.photoCrop }))}
+            className="h-full w-full transition-transform duration-700 hover:scale-[1.03]"
             onError={(e) => {
               // graceful placeholder until a real photo is dropped into public/
               const el = e.currentTarget;

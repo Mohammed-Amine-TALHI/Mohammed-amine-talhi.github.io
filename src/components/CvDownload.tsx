@@ -1,11 +1,10 @@
 import { motion } from 'framer-motion';
 import { HiOutlineDocumentText, HiOutlineDownload } from 'react-icons/hi';
 import { useLang } from '../lib/i18n';
-import { config } from '../lib/data';
+import { config, contact } from '../lib/data';
 import { dur, on } from '../lib/anim';
-import { asset } from '../lib/asset';
+import { asset, downloadName } from '../lib/asset';
 
-const FLAG = { en: '🇬🇧', fr: '🇫🇷' } as const;
 const LANG_NAME = {
   en: { en: 'English', fr: 'Anglais' },
   fr: { en: 'French', fr: 'Français' },
@@ -25,6 +24,7 @@ const LANG_NAME = {
 export default function CvDownload({ variant = 'inline' }: { variant?: 'inline' | 'panel' }) {
   const { lang, t, ui } = useLang();
   const file = config.cv?.[lang];
+  const saveAs = file?.url ? downloadName(contact.displayName, lang.toUpperCase(), file.url) : '';
 
   if (!file?.url) return null;
 
@@ -33,7 +33,7 @@ export default function CvDownload({ variant = 'inline' }: { variant?: 'inline' 
       <div className="mt-7">
         <a
           href={asset(file.url)}
-          download
+          download={saveAs}
           className="group inline-flex items-center gap-2.5 rounded-xl border border-accent-500/30 bg-accent-500/[0.07] px-5 py-3 text-sm font-medium text-accent-300 transition-colors hover:bg-accent-500/[0.15]"
         >
           <HiOutlineDownload size={16} className="transition-transform group-hover:translate-y-0.5" />
@@ -67,12 +67,14 @@ export default function CvDownload({ variant = 'inline' }: { variant?: 'inline' 
 
       <a
         href={asset(file.url)}
-        download
+        download={saveAs}
         className="group flex items-center gap-3 rounded-xl border border-line bg-ink-850/60 px-4 py-3 transition-colors hover:border-accent-500/40 hover:bg-accent-500/[0.06]"
       >
-        <span className="text-lg leading-none">{FLAG[lang]}</span>
-        <span className="min-w-0 flex-1 text-sm text-zinc-200 transition-colors group-hover:text-accent-300">
-          {ui('about.downloadCv')}
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm text-zinc-200 transition-colors group-hover:text-accent-300">
+            {ui('about.downloadCv')}
+          </span>
+          <span className="mt-0.5 block truncate font-mono text-[10px] text-zinc-600">{saveAs}</span>
         </span>
         <HiOutlineDownload
           size={16}

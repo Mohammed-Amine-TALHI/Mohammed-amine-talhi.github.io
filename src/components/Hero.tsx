@@ -7,7 +7,7 @@ import { dur, on } from '../lib/anim';
 import HeroName from './HeroName';
 import { CountUp, Magnet, ClickSpark } from './reactbits';
 import CountriesStat from './CountriesStat';
-import { asset } from '../lib/asset';
+import { asset, downloadName } from '../lib/asset';
 
 const container: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } } };
 const item: Variants = {
@@ -81,7 +81,7 @@ export default function Hero() {
           {cvFile && (
             <a
               href={asset(cvFile.url)}
-              download
+              download={downloadName(contact.displayName, lang.toUpperCase(), cvFile.url)}
               className="group flex items-center gap-2 rounded-xl border border-accent-500/30 bg-accent-500/[0.07] px-4 py-3.5 text-sm font-medium text-accent-300 transition-colors hover:bg-accent-500/[0.15]"
             >
               <HiOutlineDownload size={15} className="transition-transform group-hover:translate-y-0.5" />

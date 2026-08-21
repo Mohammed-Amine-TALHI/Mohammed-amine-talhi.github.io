@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { HiOutlineExternalLink } from 'react-icons/hi';
+import { HiOutlineExternalLink, HiOutlineChevronDown, HiOutlineChevronUp } from 'react-icons/hi';
 import { TbFolderCode, TbFileTypePdf, TbPresentation, TbLayoutBoardSplit, TbBrandGithub } from 'react-icons/tb';
 import type { IconType } from 'react-icons';
 import SectionHeading from './SectionHeading';
@@ -9,6 +9,7 @@ import { visibleProjects, projectTags, config, endYear, projectAssets, ASSET_LAB
 import { dur, on } from '../lib/anim';
 import type { AssetKind } from '../lib/types';
 import { asset } from '../lib/asset';
+import { cropStyle, resolveCrop } from '../lib/crop';
 
 /* Each document type gets its own icon and tint, so a card's attachments are
    readable at a glance the way they are on a conference poster session. */
@@ -24,13 +25,18 @@ export default function Projects() {
   const { t, ui, lang } = useLang();
   const [filter, setFilter] = useState<string>('__all');
   const [expanded, setExpanded] = useState<string | null>(null);
+  // keep the page short: show a first row-and-a-bit, reveal the rest on demand
+  const [showAll, setShowAll] = useState(false);
+  const PREVIEW = 6;
 
   const projects = useMemo(() => visibleProjects(), []);
   const tags = useMemo(() => projectTags(lang), [lang]);
 
-  const shown = projects.filter(
+  const matching = projects.filter(
     (p) => filter === '__all' || (p.tag?.[lang] || p.tag?.en || '').trim() === filter,
   );
+  const shown = showAll ? matching : matching.slice(0, PREVIEW);
+  const hidden = matching.length - shown.length;
 
   return (
     <section id="projects" className="relative px-5 py-24 sm:px-8 sm:py-32">
@@ -43,7 +49,7 @@ export default function Projects() {
               return (
                 <button
                   key={tag}
-                  onClick={() => setFilter(tag)}
+                  onClick={() => { setFilter(tag); setShowAll(false); }}
                   className={
                     'relative rounded-full border px-4 py-2 text-xs transition-colors ' +
                     (active
@@ -63,7 +69,7 @@ export default function Projects() {
               );
             })}
             <span className="ml-auto font-mono text-[11px] text-zinc-600">
-              {shown.length} {ui('projects.count')}
+              {matching.length} {ui('projects.count')}
             </span>
           </div>
         </SectionHeading>
@@ -95,7 +101,8 @@ export default function Projects() {
                       <img
                         src={asset(meta.cover)}
                         alt=""
-                        className="h-full w-full object-cover opacity-70 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
+                        style={cropStyle(resolveCrop({ imageCrop: meta.coverCrop }))}
+                        className="h-full w-full opacity-70 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
                       />
                       <span className="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/20 to-transparent" />
                     </div>
@@ -185,7 +192,37 @@ export default function Projects() {
           </AnimatePresence>
         </motion.div>
 
-        {!shown.length && <p className="py-16 text-center text-sm text-zinc-600">{ui('projects.empty')}</p>}
+        {!matching.length && <p className="py-16 text-center text-sm text-zinc-600">{ui('projects.empty')}</p>}
+
+        {hidden > 0 && (
+          <div className="mt-10 flex justify-center">
+            <button
+              onClick={() => setShowAll(true)}
+              className="group flex items-center gap-2.5 rounded-xl border border-line bg-white/[0.03] px-6 py-3.5 text-sm font-medium text-zinc-300 transition-colors hover:border-accent-500/40 hover:text-accent-300"
+            >
+              {ui('projects.showMore')}
+              <span className="rounded-md bg-accent-500/15 px-1.5 py-0.5 font-mono text-[10px] text-accent-400">
+                +{hidden}
+              </span>
+              <HiOutlineChevronDown size={15} className="transition-transform group-hover:translate-y-0.5" />
+            </button>
+          </div>
+        )}
+
+        {showAll && matching.length > PREVIEW && (
+          <div className="mt-10 flex justify-center">
+            <button
+              onClick={() => {
+                setShowAll(false);
+                document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="group flex items-center gap-2 rounded-xl border border-line px-5 py-3 text-sm text-zinc-500 transition-colors hover:text-accent-300"
+            >
+              <HiOutlineChevronUp size={15} className="transition-transform group-hover:-translate-y-0.5" />
+              {ui('projects.showLess')}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

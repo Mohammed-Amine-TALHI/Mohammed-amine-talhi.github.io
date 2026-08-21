@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { HiChevronDown, HiChevronUp, HiOutlinePlus, HiOutlineTrash, HiOutlineSearch, HiOutlineX } from 'react-icons/hi';
 import { Card, Button, Input, Select, Field } from '../ui';
 import { autoMatch } from '../../lib/skillLinks';
+import AssetEditor from '../AssetEditor';
 import { resume } from '../../lib/data';
 import { ICONS, resolveIcon, searchIcons } from '../../lib/iconRegistry';
 import { FAMILY_DOT, FAMILY_LABEL, FAMILIES } from '../../lib/skills';
@@ -250,6 +251,15 @@ export default function SkillsAdminPanel({
                       })}
                     </div>
                   </Field>
+
+                  <div className="mt-5">
+                    <AssetEditor
+                      assets={s.assets ?? []}
+                      onChange={(next) => set((d) => void (d.skills[i].assets = next))}
+                      label="Attachments"
+                      hint="a report, certificate or deck — shown when this skill is selected on the site"
+                    />
+                  </div>
                 </div>
               )}
             </Card>

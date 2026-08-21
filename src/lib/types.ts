@@ -102,6 +102,8 @@ export interface ProjectAsset {
 export interface ProjectMeta {
   featured?: boolean;
   cover?: string;
+  /** manual framing for the cover image */
+  coverCrop?: { x: number; y: number; zoom: number };
   stack?: string[];
   assets?: ProjectAsset[];
 }
@@ -182,11 +184,15 @@ export interface SkillItem {
   family: SkillFamily;
   /** project ids linked by hand in the admin, on top of the automatic matches */
   projects?: string[];
+  /** a report, certificate or deck evidencing this skill */
+  assets?: ProjectAsset[];
 }
 
 export interface PortfolioConfig {
   profile: {
     photo: string;
+    /** manual framing for the portrait */
+    photoCrop?: { x: number; y: number; zoom: number };
     /** legacy single-file CV link; the bilingual `cv` block supersedes it */
     resumeUrl: string;
     githubUrl: string;
