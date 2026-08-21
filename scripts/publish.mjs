@@ -28,15 +28,25 @@ function step(n, total, label) {
 }
 
 try {
-  const TOTAL = 4;
+  const TOTAL = 5;
 
   step(1, TOTAL, 'Syncing CV data from ResumeApp');
   run('node scripts/sync-resume.mjs');
 
-  step(2, TOTAL, 'Building');
+  step(2, TOTAL, 'Checking uploaded files');
+  try {
+    run('node scripts/check-assets.mjs');
+  } catch {
+    // the checker has already printed what is missing and how to fix it
+    console.error(`\n${c.red('✗ Stopped.')} Some content points at files that were deleted.`);
+    console.error(c.dim('  Publishing now would put broken images on the live site.\n'));
+    process.exit(1);
+  }
+
+  step(3, TOTAL, 'Building');
   run('npm run build');
 
-  step(3, TOTAL, 'Committing');
+  step(4, TOTAL, 'Committing');
   const dirty = quiet('git status --porcelain');
   if (!dirty) {
     console.log(c.dim('  nothing changed — already published'));
@@ -48,7 +58,7 @@ try {
   run('git add -A');
   run(`git commit -q -m "Update portfolio — ${stamp}"`);
 
-  step(4, TOTAL, 'Pushing');
+  step(5, TOTAL, 'Pushing');
   run('git push -q origin main');
 
   const url = 'https://mohammed-amine-talhi.github.io';

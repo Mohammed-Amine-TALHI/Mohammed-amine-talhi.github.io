@@ -33,8 +33,7 @@ const master = JSON.parse(readFileSync(MASTER, 'utf8'));
 
 // Only carry over what the public site needs. letterTemplate / interviewScript
 // are private job-hunting assets and are deliberately left behind.
-const resume = {
-  syncedAt: new Date().toISOString(),
+const payload = {
   personal: master.personal,
   experiences: master.experiences ?? [],
   projects: master.projects ?? [],
@@ -42,6 +41,19 @@ const resume = {
   skills: master.skills ?? [],
 };
 
+// Keep the previous timestamp when nothing else moved. Stamping the clock on
+// every run made `npm run publish` produce a commit even when there was nothing
+// to publish.
+let syncedAt = new Date().toISOString();
+if (existsSync(RESUME_OUT)) {
+  const previous = JSON.parse(readFileSync(RESUME_OUT, 'utf8'));
+  const { syncedAt: previousStamp, ...previousPayload } = previous;
+  if (JSON.stringify(previousPayload) === JSON.stringify(payload)) {
+    syncedAt = previousStamp ?? syncedAt;
+  }
+}
+
+const resume = { syncedAt, ...payload };
 writeFileSync(RESUME_OUT, JSON.stringify(resume, null, 2) + '\n', 'utf8');
 
 // ---- reconcile the admin config -------------------------------------------

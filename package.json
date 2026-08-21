@@ -10,7 +10,9 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "admin": "vite --open /#/admin",
-    "publish": "node scripts/publish.mjs"
+    "publish": "node scripts/publish.mjs",
+    "check-assets": "node scripts/check-assets.mjs",
+    "fix-assets": "node scripts/check-assets.mjs --prune"
   },
   "dependencies": {
     "framer-motion": "^12.23.12",
