@@ -158,3 +158,22 @@ body {
     box-shadow: 0 0 0 2px var(--color-accent-500), 0 0 34px -4px var(--color-accent-600);
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Low-power devices.
+
+   `backdrop-filter` is applied to the navbar and to every card on the page.
+   Each one forces the compositor to re-sample what is behind it, which on a
+   phone costs far more than the effect is worth — dropping it is the single
+   biggest scroll-smoothness win after the shader budget. The panels keep an
+   opaque background so nothing becomes unreadable.
+--------------------------------------------------------------------------- */
+html.low-power [class*='backdrop-blur'] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.low-power .bg-grid {
+  /* a full-page repeating gradient is another compositor cost for very little */
+  background-image: none;
+}

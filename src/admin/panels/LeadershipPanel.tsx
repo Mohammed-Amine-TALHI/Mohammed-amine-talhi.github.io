@@ -1,7 +1,6 @@
 import { HiOutlinePlus, HiChevronUp, HiChevronDown } from 'react-icons/hi';
 import { Card, Button, LocField, TagsInput, ImageDrop, Field, Select } from '../ui';
 import AssetEditor from '../AssetEditor';
-import CropBox from '../CropBox';
 import { resolveCrop } from '../../lib/crop';
 import type { LeadershipEntry, PortfolioConfig } from '../../lib/types';
 
@@ -156,34 +155,30 @@ export default function LeadershipPanel({
               />
             </Field>
 
-            <Field label="Photos" hint="the first one is the card cover; all of them show in the journal view">
-              <ImageDrop images={e.images ?? []} onChange={(v) => set((d) => void (d.leadership[i].images = v))} />
+            <Field label="Photos" hint="the first is the card cover — its crop frame appears below">
+              <ImageDrop
+                images={e.images ?? []}
+                onChange={(v) => set((d) => void (d.leadership[i].images = v))}
+                aspect={368 / 160}
+                fit={e.imageFit ?? 'cover'}
+                crop={resolveCrop(e)}
+                onCrop={(c) => set((d) => void (d.leadership[i].imageCrop = c))}
+              />
             </Field>
 
             {e.images?.[0] && (
-              <>
-                <Field label="Cover framing" hint="how the first photo fills the card">
-                  <div className="max-w-xs">
-                    <Select
-                      value={e.imageFit ?? 'cover'}
-                      onChange={(v) => set((d) => void (d.leadership[i].imageFit = v as 'cover' | 'contain'))}
-                      options={[
-                        { value: 'cover', label: 'Fill — crop to the card' },
-                        { value: 'contain', label: 'Fit — show the whole image' },
-                      ]}
-                    />
-                  </div>
-                </Field>
-
-                <Field label="Crop" hint="drag the picture to reframe it, scroll or slide to zoom">
-                  <CropBox
-                    src={e.images[0]}
-                    fit={e.imageFit ?? 'cover'}
-                    crop={resolveCrop(e)}
-                    onChange={(c) => set((d) => void (d.leadership[i].imageCrop = c))}
+              <Field label="Cover framing" hint="how the first photo fills the card">
+                <div className="max-w-xs">
+                  <Select
+                    value={e.imageFit ?? 'cover'}
+                    onChange={(v) => set((d) => void (d.leadership[i].imageFit = v as 'cover' | 'contain'))}
+                    options={[
+                      { value: 'cover', label: 'Fill — crop to the card' },
+                      { value: 'contain', label: 'Fit — show the whole image' },
+                    ]}
                   />
-                </Field>
-              </>
+                </div>
+              </Field>
             )}
 
             <AssetEditor

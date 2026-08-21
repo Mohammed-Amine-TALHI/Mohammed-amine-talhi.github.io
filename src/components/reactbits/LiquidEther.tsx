@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { etherBudget } from '../../lib/anim';
 
 /**
  * React Bits — LiquidEther
@@ -21,7 +22,7 @@ attribute vec2 aPos;
 void main() { gl_Position = vec4(aPos, 0.0, 1.0); }
 `;
 
-const FRAG = `
+const FRAG = (octaves: number) => `
 precision highp float;
 
 uniform vec2  uRes;
@@ -48,12 +49,14 @@ float noise(vec2 p) {
   );
 }
 
-// five octaves, each rotated to avoid axis-aligned artefacts
+// Octaves are compiled in rather than looped to a uniform: WebGL1 requires a
+// constant loop bound, and fewer octaves is the single biggest saving on a
+// phone — each one is another noise sample for every pixel, every frame.
 float fbm(vec2 p) {
   float v = 0.0;
   float a = 0.5;
   mat2 rot = mat2(1.6, 1.2, -1.2, 1.6);
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < ${octaves}; i++) {
     v += a * noise(p);
     p = rot * p;
     a *= 0.5;
@@ -99,7 +102,7 @@ void main() {
   float filament = pow(clamp(length(q) * 0.75, 0.0, 1.0), 3.0);
   col += uWarm * filament * 0.35;
 
-  col *= (0.42 + 0.85 * f) * uIntensity;
+  col *= (0.42 + 0.85 * f * ${(5.0 / octaves).toFixed(2)}) * uIntensity;
 
   // keep the edges dark so foreground text stays legible
   float vig = smoothstep(1.2, 0.3, distance(uv, vec2(0.5)));
@@ -143,7 +146,7 @@ export default function LiquidEther({
     if (!gl) return; // caller's CSS gradient stays visible
 
     const vs = compile(gl, gl.VERTEX_SHADER, VERT);
-    const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
+    const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG(etherBudget.octaves));
     if (!vs || !fs) return;
 
     const prog = gl.createProgram()!;
@@ -181,9 +184,9 @@ export default function LiquidEther({
     gl.uniform1f(u.intensity, intensity);
 
     // cap the render scale — this is a background, not the subject
-    let dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    let dpr = Math.min(window.devicePixelRatio || 1, etherBudget.maxDpr);
     const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      dpr = Math.min(window.devicePixelRatio || 1, etherBudget.maxDpr);
       const w = Math.floor(canvas.clientWidth * dpr);
       const h = Math.floor(canvas.clientHeight * dpr);
       if (canvas.width !== w || canvas.height !== h) {
@@ -219,9 +222,15 @@ export default function LiquidEther({
     gl.uniform1f(u.impulse, 0);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
+    const minFrameMs = 1000 / etherBudget.fpsCap;
+    let lastDraw = 0;
+
     const frame = (now: number) => {
       raf = requestAnimationFrame(frame);
       if (document.hidden) return;
+      // skip frames rather than render every vsync on a phone
+      if (now - lastDraw < minFrameMs) return;
+      lastDraw = now;
 
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;

@@ -69,7 +69,7 @@
     "speed": 1,
     "nameEffect": "shine",
     "backgroundBlooms": true,
-    "orbitDots": true,
+    "orbitDots": false,
     "flowConsole": true,
     "timelinePulse": true,
     "hoverLift": true,
@@ -152,7 +152,7 @@
       "imageFit": "cover",
       "imageCrop": {
         "x": 47.708324591318764,
-        "y": 13.89636544686226,
+        "y": 14.854776448910933,
         "zoom": 1
       }
     },

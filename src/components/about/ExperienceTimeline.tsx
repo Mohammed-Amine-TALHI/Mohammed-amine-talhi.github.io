@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 import { useLang } from '../../lib/i18n';
 import { visibleExperiences } from '../../lib/data';
-import { dur, on } from '../../lib/anim';
+import { dur, on, loopOn } from '../../lib/anim';
 
 export default function ExperienceTimeline() {
   const { t, ui } = useLang();
@@ -22,7 +22,7 @@ export default function ExperienceTimeline() {
             instead of visibly restarting.
         --------------------------------------------------------------- */}
         <div className="absolute bottom-2 left-[3px] top-2 w-px overflow-hidden bg-line sm:left-[7px]">
-          {on('timelinePulse') &&
+          {loopOn('timelinePulse') &&
             [0, 2].map((delay) => (
               <motion.div
                 key={delay}
@@ -49,7 +49,7 @@ export default function ExperienceTimeline() {
               {/* node sitting on the rail, aligned with the card title */}
               <span className="absolute -left-8 top-7 flex h-[7px] w-[7px] items-center justify-center sm:-left-12">
                 <span className="absolute h-[7px] w-[7px] rounded-full bg-accent-500 ring-4 ring-ink-950" />
-                {on('timelinePulse') && (
+                {loopOn('timelinePulse') && (
                   <motion.span
                     className="absolute h-[7px] w-[7px] rounded-full bg-accent-400"
                     animate={{ scale: [1, 2.6, 1], opacity: [0.7, 0, 0.7] }}

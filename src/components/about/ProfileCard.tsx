@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 import { useLang } from '../../lib/i18n';
 import { config, contact, softSkills } from '../../lib/data';
-import { dur, on } from '../../lib/anim';
+import { dur, loopOn } from '../../lib/anim';
 import CvDownload from '../CvDownload';
 import { asset } from '../../lib/asset';
 import { cropStyle, resolveCrop } from '../../lib/crop';
@@ -35,7 +35,7 @@ export default function ProfileCard() {
             background:
               'conic-gradient(from 0deg, transparent 0deg, var(--color-accent-500) 70deg, var(--color-accent-300) 110deg, transparent 180deg, transparent 360deg)',
           }}
-          animate={on('orbitDots') ? { rotate: 360 } : undefined}
+          animate={loopOn('orbitDots') ? { rotate: 360 } : undefined}
           transition={{ duration: dur(9), repeat: Infinity, ease: 'linear' }}
         />
         {/* inset mask turns the rotating gradient into a thin animated border */}
@@ -72,7 +72,7 @@ export default function ProfileCard() {
         </div>
 
         {/* orbiting accent dots */}
-        {on('orbitDots') &&
+        {loopOn('orbitDots') &&
           ORBIT.map((o, i) => (
           <motion.div
             key={i}

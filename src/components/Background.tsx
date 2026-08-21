@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { anim, dur, on } from '../lib/anim';
+import { anim, dur, on, loopOn } from '../lib/anim';
 import { LiquidEther } from './reactbits';
 
 /**
@@ -11,7 +11,7 @@ import { LiquidEther } from './reactbits';
  * admin panel. A scrim above the canvas keeps foreground text legible.
  */
 export default function Background() {
-  const drift = on('backgroundBlooms');
+  const drift = loopOn('backgroundBlooms');
   const ether = on('liquidEther');
 
   return (

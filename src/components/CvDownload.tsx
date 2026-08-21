@@ -24,7 +24,7 @@ const LANG_NAME = {
 export default function CvDownload({ variant = 'inline' }: { variant?: 'inline' | 'panel' }) {
   const { lang, t, ui } = useLang();
   const file = config.cv?.[lang];
-  const saveAs = file?.url ? downloadName(contact.displayName, lang.toUpperCase(), file.url) : '';
+  const saveAs = file?.url ? downloadName("CV",contact.displayName, lang.toUpperCase(), file.url) : '';
 
   if (!file?.url) return null;
 

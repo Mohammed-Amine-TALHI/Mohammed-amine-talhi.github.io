@@ -1,5 +1,4 @@
 import { Card, Field, Input, LocField, Toggle, ImageDrop } from '../ui';
-import CropBox from '../CropBox';
 import { resolveCrop } from '../../lib/crop';
 import { resume } from '../../lib/data';
 import type { PortfolioConfig } from '../../lib/types';
@@ -17,25 +16,17 @@ export default function ProfilePanel({
         <h2 className="mb-4 font-display text-lg font-semibold text-zinc-100">Profile</h2>
 
         <Card className="space-y-5">
-          <Field label="Photo">
+          <Field label="Photo" hint="upload one and the crop frame appears straight away">
             <ImageDrop
               folder=""
               single
               images={cfg.profile.photo ? [cfg.profile.photo] : []}
               onChange={(imgs) => set((d) => void (d.profile.photo = imgs[0] ?? '/profile.jpg'))}
+              aspect={1}
+              crop={resolveCrop({ imageCrop: cfg.profile.photoCrop })}
+              onCrop={(c) => set((d) => void (d.profile.photoCrop = c))}
             />
           </Field>
-
-          {cfg.profile.photo && (
-            <Field label="Crop" hint="drag to reframe the portrait, scroll or slide to zoom">
-              <CropBox
-                src={cfg.profile.photo}
-                aspect={1}
-                crop={resolveCrop({ imageCrop: cfg.profile.photoCrop })}
-                onChange={(c) => set((d) => void (d.profile.photoCrop = c))}
-              />
-            </Field>
-          )}
 
           <LocField
             label="Headline (shown under your name in the hero)"

@@ -1,6 +1,8 @@
 import { useRef, useState, type ReactNode } from 'react';
 import { HiOutlineUpload, HiOutlineTrash, HiOutlineDocumentText, HiOutlineExternalLink } from 'react-icons/hi';
 import type { Loc } from '../lib/types';
+import CropBox from './CropBox';
+import { resolveCrop, type Crop } from '../lib/crop';
 
 /* Small building blocks shared by every admin panel. Deliberately plain —
    this UI never ships to production, so it optimises for speed of editing. */
@@ -195,14 +197,25 @@ export function ImageDrop({
   onChange,
   folder = 'leadership',
   single,
+  crop,
+  onCrop,
+  aspect,
+  fit = 'cover',
 }: {
   images: string[];
   onChange: (next: string[]) => void;
   folder?: string;
   single?: boolean;
+  /** pass these to get a crop frame the moment a picture lands */
+  crop?: Crop;
+  onCrop?: (c: Crop) => void;
+  aspect?: number;
+  fit?: 'cover' | 'contain';
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
+  // the picture the crop frame acts on — the cover, i.e. the first one
+  const cropTarget = images[0];
 
   async function upload(files: FileList | null) {
     if (!files?.length) return;
@@ -255,6 +268,23 @@ export function ImageDrop({
       <p className="mt-2 font-mono text-[10px] text-zinc-600">
         saved to public/{folder || ''}/ — commit these files so they appear on the live site
       </p>
+
+      {/* the crop frame appears as soon as there is something to crop, rather
+          than sitting in a separate field further down the form */}
+      {onCrop && cropTarget && (
+        <div className="mt-4 rounded-xl border border-line bg-ink-950/40 p-3">
+          <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.15em] text-zinc-500">
+            Adjust framing
+          </p>
+          <CropBox
+            src={cropTarget}
+            fit={fit}
+            aspect={aspect}
+            crop={crop ?? resolveCrop({})}
+            onChange={onCrop}
+          />
+        </div>
+      )}
     </div>
   );
 }

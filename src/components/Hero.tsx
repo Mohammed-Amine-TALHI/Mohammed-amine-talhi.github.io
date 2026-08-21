@@ -81,7 +81,7 @@ export default function Hero() {
           {cvFile && (
             <a
               href={asset(cvFile.url)}
-              download={downloadName(contact.displayName, lang.toUpperCase(), cvFile.url)}
+              download={downloadName('CV', contact.displayName, lang.toUpperCase(), cvFile.url)}
               className="group flex items-center gap-2 rounded-xl border border-accent-500/30 bg-accent-500/[0.07] px-4 py-3.5 text-sm font-medium text-accent-300 transition-colors hover:bg-accent-500/[0.15]"
             >
               <HiOutlineDownload size={15} className="transition-transform group-hover:translate-y-0.5" />

@@ -9,6 +9,7 @@ import Portal from './Portal';
 import { useLang } from '../lib/i18n';
 import { config, ASSET_LABEL } from '../lib/data';
 import { dur, on } from '../lib/anim';
+import { usePreloadImages } from '../lib/preload';
 import { cropStyle, resolveCrop } from '../lib/crop';
 import type { AssetKind, LeadershipEntry } from '../lib/types';
 import { asset } from '../lib/asset';
@@ -265,7 +266,6 @@ function Journal({
                   <img
                     src={asset(src)}
                     alt=""
-                    loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover/img:scale-105"
                   />
                 </button>
@@ -287,6 +287,10 @@ export default function Leadership() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [shot, setShot] = useState<number | null>(null);
   const entry = entries.find((e) => e.id === openId) ?? null;
+
+  // the journal's gallery is mounted on click, so warm every photo up front —
+  // otherwise the grid opens empty and fills in
+  usePreloadImages(entries.flatMap((e) => e.images ?? []));
 
   const isOpen = Boolean(entry);
 

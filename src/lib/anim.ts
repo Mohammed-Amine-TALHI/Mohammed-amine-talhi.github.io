@@ -74,6 +74,48 @@ export const anim: AnimationSettings = config.animation ?? {
 export const reduced =
   typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
+/* ---------------------------------------------------------------------------
+   Device budget.
+
+   The WebGL background samples five octaves of noise five times per pixel; on a
+   laptop that is nothing, on a mid-range phone at devicePixelRatio 3 it is the
+   difference between 60fps and a slideshow. Rather than switching effects off
+   for phones — the logic stays identical everywhere — we scale what they cost:
+   fewer octaves, fewer pixels, a lower frame cap, and no backdrop blur.
+--------------------------------------------------------------------------- */
+export type PerfTier = 'high' | 'low';
+
+export const perfTier: PerfTier = (() => {
+  if (typeof window === 'undefined') return 'high';
+  const nav = navigator as Navigator & { deviceMemory?: number };
+  const coarse = window.matchMedia?.('(pointer: coarse)').matches ?? false;
+  const narrow = window.matchMedia?.('(max-width: 900px)').matches ?? false;
+  const fewCores = (nav.hardwareConcurrency ?? 8) <= 4;
+  const littleMemory = (nav.deviceMemory ?? 8) <= 4;
+  // a touch device OR a small screen OR genuinely modest hardware
+  return coarse || narrow || fewCores || littleMemory ? 'low' : 'high';
+})();
+
+export const isLowPower = perfTier === 'low';
+
+/** Per-tier budget for the background shader. */
+export const etherBudget = {
+  octaves: isLowPower ? 3 : 5,
+  maxDpr: isLowPower ? 1 : 1.5,
+  fpsCap: isLowPower ? 30 : 60,
+};
+
+/**
+ * Continuous loops that are pleasant on a desktop but not worth the battery on
+ * a phone. Scroll reveals and hover states are unaffected — only the things
+ * that animate forever.
+ */
+export function loopOn(key: Parameters<typeof on>[0]): boolean {
+  if (!on(key)) return false;
+  if (!isLowPower) return true;
+  return key !== 'orbitDots' && key !== 'timelinePulse';
+}
+
 /** Scale a duration by the configured speed. Returns ~0 when motion is off. */
 export function dur(seconds: number): number {
   if (reduced) return 0.001;

@@ -30,13 +30,14 @@ const COMBINING = /[̀-ͯ]/g;
  * which is fine on disk but awful in someone's Downloads folder. The anchor's
  * `download` attribute lets us hand over a clean name instead.
  */
-export function downloadName(displayName: string, kind: string, url: string): string {
+export function downloadName(prefix: string, displayName: string, kind: string, url: string): string {
   const ext = (url.match(/\.[a-z0-9]+$/i)?.[0] ?? '.pdf').toLowerCase();
-  const slug = displayName
-    .normalize('NFD')
-    .replace(COMBINING, '')
-    .trim()
-    .replace(/[^a-zA-Z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-  return [slug || 'CV', kind].filter(Boolean).join('-') + ext;
+  const slugify = (v: string) =>
+    v
+      .normalize('NFD')
+      .replace(COMBINING, '')
+      .trim()
+      .replace(/[^a-zA-Z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  return [slugify(prefix), slugify(displayName), kind].filter(Boolean).join('-') + ext;
 }
