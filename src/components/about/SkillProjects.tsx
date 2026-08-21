@@ -9,17 +9,9 @@ import { resolveIcon } from '../../lib/iconRegistry';
 import { FAMILY_DOT } from '../../lib/skills';
 import { ASSET_LABEL } from '../../lib/data';
 import { useDocViewer } from '../DocViewer';
+import { focusProject } from '../../lib/projectNav';
 import { TbFileTypePdf } from 'react-icons/tb';
 import type { SkillItem } from '../../lib/types';
-
-/** Scroll to a project card and pulse it. */
-function goToProject(id: string) {
-  const el = document.getElementById('project-' + id);
-  if (!el) return;
-  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  el.classList.add('flash-target');
-  window.setTimeout(() => el.classList.remove('flash-target'), 1800);
-}
 
 /**
  * Takes over the right-hand panel when a skill icon is clicked, listing every
@@ -104,7 +96,7 @@ export default function SkillProjects({ skill, onClose }: { skill: SkillItem; on
                 initial={on('scrollReveal') ? { opacity: 0, x: -10 } : false}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: dur(0.3), delay: dur(i * 0.04) }}
-                onClick={() => goToProject(p.id)}
+                onClick={() => focusProject(p.id)}
                 className="group flex w-full items-start gap-3 border-b border-line px-4 py-3 text-left transition-colors last:border-b-0 hover:bg-accent-500/[0.07]"
               >
                 <TbFolderCode className="mt-0.5 shrink-0 text-accent-500/70" size={15} />

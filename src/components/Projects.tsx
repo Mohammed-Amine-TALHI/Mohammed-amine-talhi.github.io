@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   HiOutlineExternalLink,
@@ -22,6 +22,7 @@ import { dur, on } from '../lib/anim';
 import { cropStyle, resolveCrop, cropFor } from '../lib/crop';
 import { usePreloadImages } from '../lib/preload';
 import { asset } from '../lib/asset';
+import { useProjectFocusRequest, revealProjectCard } from '../lib/projectNav';
 import type { AssetKind, Project } from '../lib/types';
 
 /* Each document type gets its own icon and tint, so a card's attachments are
@@ -273,6 +274,8 @@ export default function Projects() {
   const [showAll, setShowAll] = useState(false);
   const [openId, setOpenId] = useState<string | null>(null);
   const [shot, setShot] = useState<number | null>(null);
+  /** a project another section asked us to scroll to, once it has rendered */
+  const [pendingFocus, setPendingFocus] = useState<string | null>(null);
   const PREVIEW = 6;
 
   const projects = useMemo(() => visibleProjects(), []);
@@ -290,6 +293,24 @@ export default function Projects() {
 
   // every project photo, warmed on idle, so a journal opens already painted
   usePreloadImages(projects.flatMap((p) => galleryOf(p.id)));
+
+  // Another section (a skill, say) wants to jump to a project. Clear anything
+  // hiding it first — a tag filter, or the six-card preview — then scroll once
+  // React has actually put the card in the DOM.
+  useProjectFocusRequest(
+    useCallback((id: string) => {
+      setOpenId(null);
+      setFilter('__all');
+      setShowAll(true);
+      setPendingFocus(id);
+    }, []),
+  );
+
+  useEffect(() => {
+    if (!pendingFocus) return;
+    // the card may not exist yet on this render; the effect re-runs when it does
+    if (revealProjectCard(pendingFocus)) setPendingFocus(null);
+  }, [pendingFocus, showAll, filter, shown.length]);
 
   useEffect(() => {
     if (!isOpen) return;

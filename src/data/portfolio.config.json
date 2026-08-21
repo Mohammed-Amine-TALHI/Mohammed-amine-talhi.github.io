@@ -457,7 +457,23 @@
       "family": "scm"
     }
   ],
-  "languageProof": {},
+  "languageProof": {
+    "english": {
+      "images": [],
+      "assets": [
+        {
+          "id": "asset-kgzzs9z",
+          "kind": "report",
+          "label": {
+            "en": "TOEIC Score",
+            "fr": "TOEIC Score"
+          },
+          "url": "/docs/TOEIC---Talhi-Mohammed-Amine-mt36972l.pdf"
+        }
+      ],
+      "label": ""
+    }
+  },
   "crops": {
     "/leadership/Capture-d--cran-2026-05-06-102033-mt320fb2.png": {
       "x": 48.08033789907183,
