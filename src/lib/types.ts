@@ -104,6 +104,8 @@ export interface ProjectMeta {
   cover?: string;
   /** manual framing for the cover image */
   coverCrop?: { x: number; y: number; zoom: number };
+  /** photos of the work itself, shown in the project's journal view */
+  gallery?: string[];
   stack?: string[];
   assets?: ProjectAsset[];
 }

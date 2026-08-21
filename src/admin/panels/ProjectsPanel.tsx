@@ -139,6 +139,16 @@ export default function ProjectsPanel({
                       />
                     </Field>
 
+                    <Field label="Photo gallery" hint="the work itself — shown when the card is opened">
+                      <ImageDrop
+                        folder="covers"
+                        images={meta.gallery ?? []}
+                        onChange={(imgs) =>
+                          set((d) => void (d.projectMeta[p.id] = { ...(d.projectMeta[p.id] ?? {}), gallery: imgs }))
+                        }
+                      />
+                    </Field>
+
                     <AssetsFor id={p.id} />
                   </div>
                 )}
@@ -228,6 +238,16 @@ export default function ProjectsPanel({
                       (d) =>
                         void (d.projectMeta[p.id] = { ...(d.projectMeta[p.id] ?? {}), cover: imgs[0] ?? '' }),
                     )
+                  }
+                />
+              </Field>
+
+              <Field label="Photo gallery" hint="the work itself — shown when the card is opened">
+                <ImageDrop
+                  folder="covers"
+                  images={cfg.projectMeta[p.id]?.gallery ?? []}
+                  onChange={(imgs) =>
+                    set((d) => void (d.projectMeta[p.id] = { ...(d.projectMeta[p.id] ?? {}), gallery: imgs }))
                   }
                 />
               </Field>

@@ -151,9 +151,56 @@
           "url": "/docs/Dossier_de_Definition-mt32nbii.pdf"
         }
       ]
+    },
+    "custom-design-apparel": {
+      "stack": [
+        "Adobe Illustrator",
+        "Vector design",
+        "Print production"
+      ],
+      "gallery": []
     }
   },
-  "customProjects": [],
+  "customProjects": [
+    {
+      "id": "custom-design-apparel",
+      "title": {
+        "en": "Team Apparel Design — Jerseys & Hoodie",
+        "fr": "Design des Tenues d'Équipe — Maillots & Hoodie"
+      },
+      "tag": {
+        "en": "Graphic Design",
+        "fr": "Design Graphique"
+      },
+      "period": {
+        "en": "2023 – 2025",
+        "fr": "2023 – 2025"
+      },
+      "bullets": [
+        {
+          "id": "b-design-1",
+          "text": {
+            "en": "Designed three basketball jerseys and a team hoodie in Adobe Illustrator, from first sketch through to the print-ready files.",
+            "fr": "Conception de trois maillots de basketball et d'un hoodie d'équipe sous Adobe Illustrator, du premier croquis aux fichiers prêts à l'impression."
+          }
+        },
+        {
+          "id": "b-design-2",
+          "text": {
+            "en": "Worked to real production constraints: colour separation, placement of numbers and names, and fabric-safe contrast so the design survived the printing process.",
+            "fr": "Travail sous contraintes de production réelles : séparation des couleurs, placement des numéros et des noms, et contraste adapté au tissu pour que le design résiste à l'impression."
+          }
+        },
+        {
+          "id": "b-design-3",
+          "text": {
+            "en": "All four pieces were produced and worn by the team — the photographs below are the finished kit in use, not mockups.",
+            "fr": "Les quatre pièces ont été produites et portées par l'équipe — les photos ci-dessous montrent les tenues réelles en usage, et non des maquettes."
+          }
+        }
+      ]
+    }
+  ],
   "leadership": [
     {
       "id": "lead-basket-captain",
@@ -370,7 +417,10 @@
       "id": "sk-15-illustrator",
       "name": "Illustrator",
       "icon": "illustrator",
-      "family": "cad"
+      "family": "cad",
+      "projects": [
+        "custom-design-apparel"
+      ]
     },
     {
       "id": "sk-16-arduino",
