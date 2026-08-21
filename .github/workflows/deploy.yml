@@ -37,10 +37,16 @@ jobs:
         id: base
         run: |
           REPO="${GITHUB_REPOSITORY#*/}"
+          # GitHub treats these names case-insensitively, and an owner like
+          # Mohammed-Amine-TALHI with a repo named mohammed-amine-talhi.github.io
+          # is a user page — so compare in lower case or the base path comes out
+          # as "/mohammed-amine-talhi.github.io/" and every asset 404s.
+          REPO_LC=$(echo "$REPO" | tr '[:upper:]' '[:lower:]')
+          OWNER_LC=$(echo "$GITHUB_REPOSITORY_OWNER" | tr '[:upper:]' '[:lower:]')
           if [ -f public/CNAME ] || [ -f CNAME ]; then
             BASE="/"
             WHY="custom domain (CNAME present)"
-          elif [ "$REPO" = "${GITHUB_REPOSITORY_OWNER}.github.io" ]; then
+          elif [ "$REPO_LC" = "${OWNER_LC}.github.io" ]; then
             BASE="/"
             WHY="user page"
           else
