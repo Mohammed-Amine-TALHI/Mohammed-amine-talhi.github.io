@@ -8,7 +8,7 @@ import { endYear } from '../../lib/data';
 import { resolveIcon } from '../../lib/iconRegistry';
 import { FAMILY_DOT } from '../../lib/skills';
 import { ASSET_LABEL } from '../../lib/data';
-import { asset } from '../../lib/asset';
+import { useDocViewer } from '../DocViewer';
 import { TbFileTypePdf } from 'react-icons/tb';
 import type { SkillItem } from '../../lib/types';
 
@@ -28,6 +28,7 @@ function goToProject(id: string) {
  */
 export default function SkillProjects({ skill, onClose }: { skill: SkillItem; onClose: () => void }) {
   const { t, ui, lang } = useLang();
+  const { open: openDoc } = useDocViewer();
   const projects = projectsForSkill(skill);
   const Icon = resolveIcon(skill.icon);
 
@@ -66,19 +67,28 @@ export default function SkillProjects({ skill, onClose }: { skill: SkillItem; on
         <div className="flex flex-wrap gap-1.5 border-b border-line px-4 py-3">
           {(skill.assets ?? [])
             .filter((a) => a.url)
-            .map((a) => (
-              <a
-                key={a.id}
-                href={asset(a.url)}
-                target="_blank"
-                rel="noreferrer"
-                {...(/^https?:/i.test(a.url) ? {} : { download: '' })}
-                className="flex items-center gap-1.5 rounded-lg border border-rose-500/25 bg-white/[0.02] px-2.5 py-1.5 text-[11px] font-medium text-rose-300/90 transition-colors hover:bg-rose-500/10"
-              >
-                <TbFileTypePdf size={13} />
-                {t(a.label)?.trim() || t(ASSET_LABEL[a.kind])}
-              </a>
-            ))}
+            .map((a) => {
+              const label = t(a.label)?.trim() || t(ASSET_LABEL[a.kind]);
+              const external = /^https?:/i.test(a.url);
+              const cn =
+                'flex items-center gap-1.5 rounded-lg border border-rose-500/25 bg-white/[0.02] px-2.5 py-1.5 text-[11px] font-medium text-rose-300/90 transition-colors hover:bg-rose-500/10';
+
+              return external ? (
+                <a key={a.id} href={a.url} target="_blank" rel="noreferrer" className={cn}>
+                  <TbFileTypePdf size={13} />
+                  {label}
+                </a>
+              ) : (
+                <button
+                  key={a.id}
+                  onClick={() => openDoc({ url: a.url, title: skill.name + ' — ' + label })}
+                  className={cn}
+                >
+                  <TbFileTypePdf size={13} />
+                  {label}
+                </button>
+              );
+            })}
         </div>
       )}
 

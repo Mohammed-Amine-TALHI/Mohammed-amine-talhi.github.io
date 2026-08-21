@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
-import { HiOutlineDocumentText, HiOutlineDownload } from 'react-icons/hi';
+import { HiOutlineDocumentText, HiOutlineDownload, HiOutlineEye } from 'react-icons/hi';
 import { useLang } from '../lib/i18n';
 import { config, contact } from '../lib/data';
 import { dur, on } from '../lib/anim';
 import { asset, downloadName } from '../lib/asset';
+import { useDocViewer } from './DocViewer';
 
 const LANG_NAME = {
   en: { en: 'English', fr: 'Anglais' },
@@ -13,31 +14,46 @@ const LANG_NAME = {
 /**
  * CV download.
  *
- * Only the CV matching the language the site is currently displayed in is
- * offered — a visitor reading in French gets the French CV and nothing else,
- * and switching the site to English swaps the button over. If that language's
- * file hasn't been uploaded yet, nothing renders.
+ * Only the CV matching the language the site is displayed in is offered — a
+ * visitor reading in French gets the French CV and nothing else. If that
+ * language's file hasn't been uploaded, nothing renders.
+ *
+ * The primary action *shows* the CV in the in-page viewer; saving it is a
+ * second, deliberate click from inside that viewer. A recruiter skimming the
+ * page should be able to read it without a file landing in their Downloads.
  *
  * `variant="inline"` is the compact button under the About intro;
  * `variant="panel"` is the framed block in the contact section.
  */
 export default function CvDownload({ variant = 'inline' }: { variant?: 'inline' | 'panel' }) {
   const { lang, t, ui } = useLang();
-  const file = config.cv?.[lang];
-  const saveAs = file?.url ? downloadName("CV",contact.displayName, lang.toUpperCase(), file.url) : '';
+  const { open: openDoc } = useDocViewer();
 
+  const file = config.cv?.[lang];
   if (!file?.url) return null;
+
+  const saveAs = downloadName('CV', contact.displayName, lang.toUpperCase(), file.url);
+  const view = () => openDoc({ url: file.url, title: 'CV — ' + contact.displayName, downloadAs: saveAs });
 
   if (variant === 'inline') {
     return (
-      <div className="mt-7">
+      <div className="mt-7 flex flex-wrap items-center gap-2.5">
+        <button
+          onClick={view}
+          className="group inline-flex items-center gap-2.5 rounded-xl border border-accent-500/30 bg-accent-500/[0.07] px-5 py-3 text-sm font-medium text-accent-300 transition-colors hover:bg-accent-500/[0.15]"
+        >
+          <HiOutlineEye size={16} />
+          {ui('cv.view')}
+        </button>
+
+        {/* the quiet second action, for anyone who just wants the file */}
         <a
           href={asset(file.url)}
           download={saveAs}
-          className="group inline-flex items-center gap-2.5 rounded-xl border border-accent-500/30 bg-accent-500/[0.07] px-5 py-3 text-sm font-medium text-accent-300 transition-colors hover:bg-accent-500/[0.15]"
+          className="inline-flex items-center gap-2 rounded-xl border border-line px-4 py-3 text-sm text-zinc-400 transition-colors hover:border-accent-500/40 hover:text-accent-300"
         >
-          <HiOutlineDownload size={16} className="transition-transform group-hover:translate-y-0.5" />
-          {ui('about.downloadCv')}
+          <HiOutlineDownload size={15} />
+          {ui('doc.download')}
         </a>
       </div>
     );
@@ -65,22 +81,25 @@ export default function CvDownload({ variant = 'inline' }: { variant?: 'inline' 
         </div>
       </div>
 
-      <a
-        href={asset(file.url)}
-        download={saveAs}
-        className="group flex items-center gap-3 rounded-xl border border-line bg-ink-850/60 px-4 py-3 transition-colors hover:border-accent-500/40 hover:bg-accent-500/[0.06]"
-      >
-        <span className="min-w-0 flex-1">
-          <span className="block text-sm text-zinc-200 transition-colors group-hover:text-accent-300">
-            {ui('about.downloadCv')}
-          </span>
-          <span className="mt-0.5 block truncate font-mono text-[10px] text-zinc-600">{saveAs}</span>
-        </span>
-        <HiOutlineDownload
-          size={16}
-          className="shrink-0 text-zinc-600 transition-all group-hover:translate-y-0.5 group-hover:text-accent-500"
-        />
-      </a>
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={view}
+          className="group flex flex-1 items-center gap-3 rounded-xl border border-accent-500/30 bg-accent-500/[0.07] px-4 py-3 text-left transition-colors hover:bg-accent-500/[0.15]"
+        >
+          <HiOutlineEye size={17} className="shrink-0 text-accent-400" />
+          <span className="min-w-0 flex-1 text-sm font-medium text-accent-300">{ui('cv.view')}</span>
+        </button>
+
+        <a
+          href={asset(file.url)}
+          download={saveAs}
+          title={saveAs}
+          className="group flex items-center gap-2 rounded-xl border border-line bg-ink-850/60 px-4 py-3 text-sm text-zinc-400 transition-colors hover:border-accent-500/40 hover:text-accent-300"
+        >
+          <HiOutlineDownload size={16} />
+          {ui('doc.download')}
+        </a>
+      </div>
     </motion.div>
   );
 }

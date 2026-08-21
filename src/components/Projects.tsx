@@ -8,9 +8,9 @@ import { useLang } from '../lib/i18n';
 import { visibleProjects, projectTags, config, endYear, projectAssets, ASSET_LABEL } from '../lib/data';
 import { dur, on } from '../lib/anim';
 import type { AssetKind } from '../lib/types';
-import { asset } from '../lib/asset';
 import { cropStyle, resolveCrop } from '../lib/crop';
 import SafeImage from './SafeImage';
+import { useDocViewer } from './DocViewer';
 
 /* Each document type gets its own icon and tint, so a card's attachments are
    readable at a glance the way they are on a conference poster session. */
@@ -27,6 +27,7 @@ export default function Projects() {
   const [filter, setFilter] = useState<string>('__all');
   const [expanded, setExpanded] = useState<string | null>(null);
   // keep the page short: show a first row-and-a-bit, reveal the rest on demand
+  const { open: openDoc } = useDocViewer();
   const [showAll, setShowAll] = useState(false);
   const PREVIEW = 6;
 
@@ -153,21 +154,26 @@ export default function Projects() {
                           const { Icon, cls } = ASSET_STYLE[a.kind] ?? ASSET_STYLE.link;
                           const label = t(a.label)?.trim() || t(ASSET_LABEL[a.kind]);
                           const external = /^https?:/i.test(a.url);
-                          return (
-                            <a
-                              key={a.id}
-                              href={asset(a.url)}
-                              target="_blank"
-                              rel="noreferrer"
-                              {...(external ? {} : { download: '' })}
-                              className={
-                                'flex items-center gap-1.5 rounded-lg border bg-white/[0.02] px-2.5 py-1.5 text-[11px] font-medium transition-colors ' +
-                                cls
-                              }
-                            >
+                          const cn =
+                            'flex items-center gap-1.5 rounded-lg border bg-white/[0.02] px-2.5 py-1.5 text-[11px] font-medium transition-colors ' +
+                            cls;
+
+                          // external links still leave the site; our own files
+                          // preview in place rather than downloading unasked
+                          return external ? (
+                            <a key={a.id} href={a.url} target="_blank" rel="noreferrer" className={cn}>
                               <Icon size={13} />
                               {label}
                             </a>
+                          ) : (
+                            <button
+                              key={a.id}
+                              onClick={() => openDoc({ url: a.url, title: t(p.title) + ' — ' + label })}
+                              className={cn}
+                            >
+                              <Icon size={13} />
+                              {label}
+                            </button>
                           );
                         })}
                       </div>

@@ -1,6 +1,6 @@
 {
   "profile": {
-    "photo": "/Mohammed-TALHI-jpg-mt2z1gop.jpg",
+    "photo": "/Mohammed-TALHI-jpg-mt31o4ib.jpg",
     "resumeUrl": "",
     "githubUrl": "https://github.com/mohammed-amine-talhi",
     "headline": {
@@ -10,6 +10,11 @@
     "intro": {
       "en": "Hi, I'm Mohammed Amine. I'm finishing my engineering degree at EMINES – UM6P, majoring in Supply Chain Management, and I'll be available for a permanent role from October 2026.\n\nWhat I actually enjoy is the messy middle: the gap between a plant's real shop-floor data and the decision someone has to make at 6am. I build the models that close it — MILP sequencing, Lean diagnostics, forecasting, and the dashboards that make them usable. My final-year project at OCP is exactly that: optimizing the mine → washing plant → train-loading chain, where a Lean diagnostic showed a 0.15% process cycle efficiency hiding inside an 11.7-day lead time.\n\nI've done it in Morocco, in Brazil, in French warehouses. Off the clock, I captain the EMINES and UM6P basketball teams — which, it turns out, is also a scheduling problem.",
       "fr": "Bonjour, je suis Mohammed Amine. Je termine mon diplôme d'ingénieur à l'EMINES – UM6P, option Supply Chain Management, et je serai disponible en CDI dès octobre 2026.\n\nCe qui me passionne vraiment, c'est le terrain intermédiaire : l'écart entre les données réelles d'un site et la décision qu'il faut prendre à 6h du matin. Je construis les modèles qui comblent cet écart — ordonnancement MILP, diagnostics Lean, prévision, et les tableaux de bord qui les rendent exploitables. Mon PFE chez OCP, c'est exactement ça : optimiser la chaîne mine → laverie → chargement train, où un diagnostic Lean a révélé une efficacité de cycle de 0,15 % cachée dans un délai de 11,7 jours.\n\nJe l'ai fait au Maroc, au Brésil, dans des entrepôts français. En dehors, je suis capitaine des équipes de basketball de l'EMINES et de l'UM6P — ce qui, au fond, est aussi un problème d'ordonnancement."
+    },
+    "photoCrop": {
+      "x": 50,
+      "y": 50,
+      "zoom": 1
     }
   },
   "contact": {
@@ -30,8 +35,8 @@
   "cv": {
     "en": null,
     "fr": {
-      "url": "/cv/CV_Mohammed_Amine_TALHI--5--mt2awe20.pdf",
-      "updated": "2026-08-21T01:58:57.586Z"
+      "url": "/cv/CV-Mohammed-Amine-TALHI-FR-mt31yh1k.pdf",
+      "updated": "2026-08-21T14:36:24.404Z"
     }
   },
   "visits": {
@@ -118,7 +123,36 @@
       "387557e5-2858-455d-ab3d-ba9f842fbe37"
     ]
   },
-  "projectMeta": {},
+  "projectMeta": {
+    "proj-basketball": {
+      "cover": "/covers/IMG_6373-JPG-mt32boui.jpg",
+      "coverCrop": {
+        "x": 54.01039918263753,
+        "y": 73.37061811972605,
+        "zoom": 1.12
+      },
+      "assets": [
+        {
+          "id": "asset-1gfko4c",
+          "kind": "link",
+          "label": {
+            "en": "HOOP IQ - Website",
+            "fr": "HOOP IQ - Website"
+          },
+          "url": "https://sites.google.com/view/hoop-iq-website/"
+        },
+        {
+          "id": "asset-3jbxcwr",
+          "kind": "report",
+          "label": {
+            "en": "Definition File",
+            "fr": "Dossier de Definition"
+          },
+          "url": "/docs/Dossier_de_Definition-mt32nbii.pdf"
+        }
+      ]
+    }
+  },
   "customProjects": [],
   "leadership": [
     {
@@ -140,7 +174,7 @@
         "fr": "Capitaine des équipes de basketball de l'école et de l'université. Responsable de l'assiduité aux entraînements, des compositions et de la cohésion du groupe lors des tournois inter-écoles."
       },
       "images": [
-        "/leadership/IMG_3308-JPG-mt2tti2r.jpg"
+        "/leadership/IMG_3308-JPG-mt31zg9i.jpg"
       ],
       "tags": [
         "Basketball",
@@ -152,7 +186,7 @@
       "imageFit": "cover",
       "imageCrop": {
         "x": 47.708324591318764,
-        "y": 14.854776448910933,
+        "y": 10.062922512860752,
         "zoom": 1
       }
     },
@@ -201,10 +235,10 @@
         "fr": "Bénévole en tant qu'assistant entraîneur lors de la clinique officielle Jr. NBA à Benguerir, Maroc, organisée par NBA Africa en partenariat avec OCP. Collaboration avec les professionnels de la NBA Thierry Kita Matungulu, Ian Mahinmi et Didier Ilunga-Mbenga pour animer une session de développement basketball sur le terrain, axée sur les fondamentaux, l'esprit d'équipe et la passion du jeu."
       },
       "images": [
-        "/leadership/SaveClip-App_468799354_18039148763208882_1925469807165748983-mt2st4j7.jpg",
-        "/leadership/Capture-d--cran-2026-05-06-102033-mt2yrp4f.png",
-        "/leadership/Capture-d--cran-2026-05-06-102012-mt2ysax9.png",
-        "/leadership/Capture-d--cran-2026-05-06-101957-mt2ysays.png"
+        "/leadership/SaveClip-App_468799354_18039148763208882_1925469807165748983-mt31zxd3.jpg",
+        "/leadership/Capture-d--cran-2026-05-06-102033-mt320fb2.png",
+        "/leadership/Capture-d--cran-2026-05-06-102012-mt320fcw.png",
+        "/leadership/Capture-d--cran-2026-05-06-101957-mt320few.png"
       ],
       "tags": [
         "Sports",
@@ -235,8 +269,8 @@
       "imagePosition": "bottom",
       "imageFit": "cover",
       "imageCrop": {
-        "x": 43.95833810170491,
-        "y": 76.83437473009216,
+        "x": 37.70833015441894,
+        "y": 91.20991825877061,
         "zoom": 1
       }
     }

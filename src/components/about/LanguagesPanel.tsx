@@ -4,7 +4,7 @@ import { TbLanguage, TbCertificate, TbFileTypePdf } from 'react-icons/tb';
 import { useLang } from '../../lib/i18n';
 import { languageEntries, ASSET_LABEL } from '../../lib/data';
 import { dur, on } from '../../lib/anim';
-import { asset } from '../../lib/asset';
+import { useDocViewer } from '../DocViewer';
 import { usePreloadImages } from '../../lib/preload';
 import Lightbox from '../Lightbox';
 
@@ -26,6 +26,7 @@ function levelPct(level: string): number {
  */
 export default function LanguagesPanel() {
   const { t, ui, lang } = useLang();
+  const { open: openDoc } = useDocViewer();
   const langs = languageEntries(lang);
 
   // every certificate scan, flattened, so one lightbox can page through them
@@ -99,18 +100,19 @@ export default function LanguagesPanel() {
                       {ui('languages.certificate')}
                     </button>
                   ))}
-                  {docs.map((d) => (
-                    <a
-                      key={d.id}
-                      href={asset(d.url)}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex items-center gap-1.5 rounded-lg border border-rose-500/25 bg-white/[0.02] px-2 py-1 text-[10.5px] font-medium text-rose-300/90 transition-colors hover:bg-rose-500/10"
-                    >
-                      <TbFileTypePdf size={12} />
-                      {t(d.label)?.trim() || t(ASSET_LABEL[d.kind])}
-                    </a>
-                  ))}
+                  {docs.map((d) => {
+                    const label = t(d.label)?.trim() || t(ASSET_LABEL[d.kind]);
+                    return (
+                      <button
+                        key={d.id}
+                        onClick={() => openDoc({ url: d.url, title: l.name + ' — ' + label })}
+                        className="flex items-center gap-1.5 rounded-lg border border-rose-500/25 bg-white/[0.02] px-2 py-1 text-[10.5px] font-medium text-rose-300/90 transition-colors hover:bg-rose-500/10"
+                      >
+                        <TbFileTypePdf size={12} />
+                        {label}
+                      </button>
+                    );
+                  })}
                 </div>
               )}
             </motion.div>

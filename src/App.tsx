@@ -7,6 +7,7 @@ import SkillsSection from './components/SkillsSection';
 import Leadership from './components/Leadership';
 import Contact from './components/Contact';
 import Background from './components/Background';
+import { DocViewerProvider } from './components/DocViewer';
 
 /**
  * The admin panel is imported lazily AND behind `import.meta.env.DEV`.
@@ -37,6 +38,7 @@ export default function App() {
   }
 
   return (
+    <DocViewerProvider>
     <div className="relative min-h-screen overflow-x-hidden">
       <Background />
       <Nav />
@@ -49,5 +51,6 @@ export default function App() {
         <Contact />
       </main>
     </div>
+    </DocViewerProvider>
   );
 }

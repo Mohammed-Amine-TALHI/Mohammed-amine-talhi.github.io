@@ -81,6 +81,13 @@ const UI = {
   'visits.courses': { en: 'Relevant courses', fr: 'Cours pertinents' },
 
   'assets.open': { en: 'Open', fr: 'Ouvrir' },
+  'doc.download': { en: 'Download', fr: 'Télécharger' },
+  'doc.openTab': { en: 'Open in a tab', fr: 'Ouvrir dans un onglet' },
+  'doc.noPreview': {
+    en: 'This format can’t be previewed in the browser. Download it to open it.',
+    fr: 'Ce format ne peut pas être prévisualisé dans le navigateur. Téléchargez-le pour l’ouvrir.',
+  },
+  'cv.view': { en: 'View CV', fr: 'Voir le CV' },
 
   'footer.built': { en: 'Built with React, Tailwind & Framer Motion', fr: 'Conçu avec React, Tailwind & Framer Motion' },
 } satisfies Record<string, Loc>;

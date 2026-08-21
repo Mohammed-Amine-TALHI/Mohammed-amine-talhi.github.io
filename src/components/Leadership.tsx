@@ -7,6 +7,7 @@ import SectionHeading from './SectionHeading';
 import Lightbox from './Lightbox';
 import Portal from './Portal';
 import SafeImage from './SafeImage';
+import { useDocViewer } from './DocViewer';
 import { useLang } from '../lib/i18n';
 import { config, ASSET_LABEL } from '../lib/data';
 import { dur, on } from '../lib/anim';
@@ -184,6 +185,7 @@ function Journal({
   onClose: () => void;
 }) {
   const { t, lang } = useLang();
+  const { open: openDoc } = useDocViewer();
   const a = tint(e.accent);
   const docs = (e.assets ?? []).filter((x) => x.url);
   const paragraphs = t(e.description)
@@ -252,21 +254,24 @@ function Journal({
                 const { Icon, cls } = ASSET_STYLE[d.kind] ?? ASSET_STYLE.link;
                 const label = t(d.label)?.trim() || t(ASSET_LABEL[d.kind]);
                 const external = /^https?:/i.test(d.url);
-                return (
-                  <a
-                    key={d.id}
-                    href={asset(d.url)}
-                    target="_blank"
-                    rel="noreferrer"
-                    {...(external ? {} : { download: '' })}
-                    className={
-                      'flex items-center gap-1.5 rounded-lg border bg-white/[0.02] px-3 py-2 text-[12px] font-medium transition-colors ' +
-                      cls
-                    }
-                  >
+                const cn =
+                  'flex items-center gap-1.5 rounded-lg border bg-white/[0.02] px-3 py-2 text-[12px] font-medium transition-colors ' +
+                  cls;
+
+                return external ? (
+                  <a key={d.id} href={d.url} target="_blank" rel="noreferrer" className={cn}>
                     <Icon size={14} />
                     {label}
                   </a>
+                ) : (
+                  <button
+                    key={d.id}
+                    onClick={() => openDoc({ url: d.url, title: t(e.title) + ' — ' + label })}
+                    className={cn}
+                  >
+                    <Icon size={14} />
+                    {label}
+                  </button>
                 );
               })}
             </div>

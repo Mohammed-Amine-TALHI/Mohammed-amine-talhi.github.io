@@ -41,3 +41,21 @@ export function downloadName(prefix: string, displayName: string, kind: string, 
       .replace(/^-+|-+$/g, '');
   return [slugify(prefix), slugify(displayName), kind].filter(Boolean).join('-') + ext;
 }
+
+/**
+ * A readable filename derived from whatever the document is called on screen.
+ *
+ * Without this a saved report keeps its stored name — "__preview-test.pdf" or
+ * "rapport-mt2awe20.pdf" — which tells the visitor nothing once it is sitting
+ * in their Downloads folder.
+ */
+export function fileNameFromTitle(title: string, url: string): string {
+  const ext = (url.match(/\.[a-z0-9]+$/i)?.[0] ?? '.pdf').toLowerCase();
+  const slug = title
+    .normalize('NFD')
+    .replace(COMBINING, '')
+    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80);
+  return (slug || 'document') + ext;
+}

@@ -1,5 +1,5 @@
 import { motion, type Variants } from 'framer-motion';
-import { HiArrowDown, HiOutlineMail, HiOutlineDownload } from 'react-icons/hi';
+import { HiArrowDown, HiOutlineMail, HiOutlineEye } from 'react-icons/hi';
 import { FaLinkedinIn, FaGithub } from 'react-icons/fa6';
 import { useLang } from '../lib/i18n';
 import { contact, config } from '../lib/data';
@@ -7,7 +7,8 @@ import { dur, on } from '../lib/anim';
 import HeroName from './HeroName';
 import { CountUp, Magnet, ClickSpark } from './reactbits';
 import CountriesStat from './CountriesStat';
-import { asset, downloadName } from '../lib/asset';
+import { downloadName } from '../lib/asset';
+import { useDocViewer } from './DocViewer';
 
 const container: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } } };
 const item: Variants = {
@@ -18,6 +19,7 @@ const item: Variants = {
 export default function Hero() {
   const { ui, t, lang } = useLang();
   const reveal = on('scrollReveal');
+  const { open: openDoc } = useDocViewer();
 
   // only the CV matching the language the site is currently displayed in
   const cvFile = config.cv?.[lang]?.url ? config.cv[lang] : null;
@@ -77,16 +79,22 @@ export default function Hero() {
             {ui('hero.cta.contact')}
           </a>
 
-          {/* CV in the current site language only */}
+          {/* CV in the current site language — opens the viewer rather than
+              dropping a file into the visitor's Downloads unasked */}
           {cvFile && (
-            <a
-              href={asset(cvFile.url)}
-              download={downloadName('CV', contact.displayName, lang.toUpperCase(), cvFile.url)}
+            <button
+              onClick={() =>
+                openDoc({
+                  url: cvFile.url,
+                  title: 'CV — ' + contact.displayName,
+                  downloadAs: downloadName('CV', contact.displayName, lang.toUpperCase(), cvFile.url),
+                })
+              }
               className="group flex items-center gap-2 rounded-xl border border-accent-500/30 bg-accent-500/[0.07] px-4 py-3.5 text-sm font-medium text-accent-300 transition-colors hover:bg-accent-500/[0.15]"
             >
-              <HiOutlineDownload size={15} className="transition-transform group-hover:translate-y-0.5" />
-              {ui('about.downloadCv')}
-            </a>
+              <HiOutlineEye size={15} />
+              {ui('cv.view')}
+            </button>
           )}
 
           <div className="ml-1 flex items-center gap-2">
