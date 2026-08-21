@@ -170,7 +170,16 @@ export default function ProjectsPanel({
             <h2 className="font-display text-lg font-semibold text-zinc-100">Custom projects</h2>
             <p className="mt-0.5 text-xs text-zinc-500">Live only in the portfolio — never written back to ResumeApp</p>
           </div>
-          <Button variant="primary" onClick={() => set((d) => void d.customProjects.push(blankProject()))}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              // open the new one straight away — a collapsed "Untitled project"
+              // row would just need a second click to be useful
+              const fresh = blankProject();
+              set((d) => void d.customProjects.push(fresh));
+              setOpen(fresh.id);
+            }}
+          >
             <span className="flex items-center gap-1.5">
               <HiOutlinePlus size={13} /> New project
             </span>
@@ -179,19 +188,52 @@ export default function ProjectsPanel({
 
         <div className="space-y-3">
           {cfg.customProjects.map((p, i) => (
-            <Card key={p.id} className="space-y-4">
-              <div className="flex items-center justify-between gap-3">
-                <span className="font-mono text-[10px] text-zinc-600">{p.id}</span>
-                <div className="flex items-center gap-3">
-                  <Toggle
-                    on={cfg.visibility.projects[p.id] !== false}
-                    onChange={(v) => set((d) => void (d.visibility.projects[p.id] = v))}
-                  />
+            <Card key={p.id} className={cfg.visibility.projects[p.id] === false ? 'opacity-50' : ''}>
+              {/* Collapsed by default, exactly like a synced project — a form
+                  per custom project made the tab enormous. */}
+              <div className="flex items-center gap-3">
+                <Toggle
+                  on={cfg.visibility.projects[p.id] !== false}
+                  onChange={(v) => set((d) => void (d.visibility.projects[p.id] = v))}
+                />
+
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm text-zinc-200">
+                    {p.title.en || p.title.fr || <span className="text-zinc-600">Untitled project</span>}
+                  </div>
+                  <div className="mt-0.5 flex flex-wrap items-center gap-2 font-mono text-[10px] text-zinc-600">
+                    <span>{p.period.en || p.period.fr || '—'}</span>
+                    {(p.tag.en || p.tag.fr) && <span className="text-accent-600">· {p.tag.en || p.tag.fr}</span>}
+                    {(() => {
+                      const n = (cfg.projectMeta[p.id]?.assets ?? []).filter((a) => a.url).length;
+                      return n > 0 ? (
+                        <span className="rounded border border-line px-1.5 py-0.5 text-zinc-500">
+                          {n} doc{n > 1 ? 's' : ''}
+                        </span>
+                      ) : null;
+                    })()}
+                    {(() => {
+                      const n = (cfg.projectMeta[p.id]?.gallery ?? []).length;
+                      return n > 0 ? (
+                        <span className="rounded border border-line px-1.5 py-0.5 text-zinc-500">{n} photos</span>
+                      ) : null;
+                    })()}
+                  </div>
+                </div>
+
+                <div className="flex shrink-0 items-center gap-1">
+                  <Button onClick={() => setOpen(open === p.id ? null : p.id)}>
+                    {open === p.id ? 'Close' : 'Details'}
+                  </Button>
                   <Button variant="danger" onClick={() => set((d) => void d.customProjects.splice(i, 1))}>
                     Delete
                   </Button>
                 </div>
               </div>
+
+              {open === p.id && (
+              <div className="mt-4 space-y-4 border-t border-line pt-4">
+              <span className="block font-mono text-[10px] text-zinc-700">{p.id}</span>
 
               <LocField label="Title" value={p.title} onChange={(v) => set((d) => void (d.customProjects[i].title = v))} />
               <div className="grid gap-3 sm:grid-cols-2">
@@ -263,6 +305,8 @@ export default function ProjectsPanel({
               </Field>
 
               <AssetsFor id={p.id} />
+              </div>
+              )}
             </Card>
           ))}
 
