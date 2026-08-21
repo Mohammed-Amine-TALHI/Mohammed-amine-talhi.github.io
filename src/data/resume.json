@@ -1,0 +1,1274 @@
+{
+  "syncedAt": "2026-08-21T01:03:19.980Z",
+  "personal": {
+    "name": "Mohammed Amine TALHI",
+    "phone": {
+      "fr": "+212 679 879 707",
+      "en": "+212 679 879 707"
+    },
+    "email": "Mohammed.talhi@emines.um6p.ma",
+    "linkedin": "/mohammedaminetalhi",
+    "linkedinUrl": "https://www.linkedin.com/in/mohammedaminetalhi",
+    "summaries": [
+      {
+        "id": "sum-general",
+        "label": "General",
+        "text": {
+          "en": "Supply Chain Engineer (EMINES – UM6P), graduating September 2026 and available for a permanent role from October 2026. I combine operational excellence with digitalization: planning, scheduling and industrial flow optimization, from shop-floor data to decision. Seeking a supply chain, planning or operational excellence engineering role with real impact on the ground.",
+          "fr": "Ingénieur Supply Chain (EMINES – UM6P), diplômé en septembre 2026 et disponible en CDI dès octobre 2026. J'allie excellence opérationnelle et digitalisation : planification, ordonnancement et optimisation des flux industriels, de la donnée terrain à la décision. Je recherche un poste d'ingénieur supply chain, planification ou excellence opérationnelle à fort impact terrain."
+        }
+      },
+      {
+        "id": "sum-lean",
+        "label": "Digitalisation & Excellence opérationnelle",
+        "text": {
+          "en": "Supply Chain Engineer with a data and digitalization focus, available for a permanent role from October 2026. I build optimization models and decision-support tools that turn operational data into planning and scheduling decisions. Seeking a role driving supply chain digitalization on an industrial site.",
+          "fr": "Ingénieur Supply Chain orienté data et digitalisation, disponible en CDI dès octobre 2026. Je conçois des modèles d'optimisation et des outils décisionnels qui transforment les données d'exploitation en décisions de planification et d'ordonnancement. Je recherche un poste où piloter la digitalisation de la supply chain d'un site industriel."
+        }
+      }
+    ],
+    "emails": [
+      "Mohammed.talhi@emines.um6p.ma",
+      "Talhi.MohammedAmine@outlook.com"
+    ],
+    "phones": [
+      "+212 679 879 707",
+      "+33 7 51 33 52 30"
+    ]
+  },
+  "experiences": [
+    {
+      "id": "exp-pfe",
+      "role": {
+        "fr": "Ingénieur Supply Chain - (PFE)",
+        "en": "Supply Chain Engineer - Final-Year Project"
+      },
+      "org": {
+        "fr": "OCP Group",
+        "en": "OCP Group"
+      },
+      "location": {
+        "fr": "Ben Guerir, Maroc",
+        "en": "Ben Guerir, Morocco"
+      },
+      "period": {
+        "fr": "Avril 2026 – Sept. 2026",
+        "en": "April 2026 – Sept. 2026"
+      },
+      "bullets": [
+        {
+          "id": "exp-pfe-b1",
+          "text": {
+            "en": "Optimized multi-echelon sequencing across the mine → raw stockyard → washing plant → washed stockyard → train-loading chain (Ben Guerir phosphate washing plant): MILP model integrating a ~280-hour lead-time cascade, stockyard reclaiming capacities, and customer quality constraints.",
+            "fr": "Optimisation du séquencement multi-échelon de la chaîne mine → parc brut → laverie → parc lavé → chargement train (laverie de phosphate de Ben Guerir) : modélisation MILP intégrant une cascade de lead time de ~280 h, les capacités de reprise des parcs et les contraintes qualité clients."
+          },
+          "tags": [
+            "lean",
+            "supply-chain"
+          ]
+        },
+        {
+          "id": "exp-pfe-b2",
+          "text": {
+            "en": "Lean diagnostic on real operational data (VSM, 6M Ishikawa — 22 root causes, 5 Whys, SIPOC): revealed a 0.15% Process Cycle Efficiency (26 min of processing time against an 11.7-day lead time), proving that over 99% of the lead time is waiting and that stockyard sequencing — not the process units — is the primary improvement lever.",
+            "fr": "Diagnostic Lean sur données réelles d'exploitation (VSM, Ishikawa 6M — 22 causes, 5 Pourquoi, SIPOC) : mise en évidence d'un PCE de 0,15 % (26 min de temps de transformation pour 11,7 jours de lead time), démontrant que plus de 99 % du délai est de l'attente et que le séquencement des parcs — et non les unités process — constitue le levier prioritaire."
+          },
+          "tags": [
+            "lean",
+            "optimization"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exp-uff",
+      "role": {
+        "fr": "Stage Ingénieur",
+        "en": "Engineering Intern"
+      },
+      "org": {
+        "fr": "LAMMOC",
+        "en": "LAMMOC"
+      },
+      "location": {
+        "fr": "Rio de Janeiro, Brésil",
+        "en": "Rio de Janeiro, Brazil"
+      },
+      "period": {
+        "fr": "Juin 2025 – Sept. 2025",
+        "en": "June 2025 – Sept. 2025"
+      },
+      "bullets": [
+        {
+          "id": "exp-uff-b1",
+          "text": {
+            "en": "Developed ML models to forecast landslides in Petrópolis in response to the February 2022 disaster, which claimed 231 lives and displaced over 3,000 residents – the deadliest such event in the city's recorded history.",
+            "fr": "Développement de modèles de Machine Learning pour prévoir les glissements de terrain à Petrópolis, en réponse à la catastrophe de février 2022 (231 victimes et plus de 3 000 déplacés – l'événement le plus meurtrier de l'histoire de la ville)."
+          },
+          "tags": [
+            "machine-learning",
+            "data"
+          ]
+        },
+        {
+          "id": "exp-uff-b2",
+          "text": {
+            "en": "Analyzed data from 13 meteorological stations to address class imbalance and improve early-warning reliability for a city where 18% of territory is classified as high landslide risk.",
+            "fr": "Analyse des données de 13 stations météorologiques pour corriger le déséquilibre des classes et améliorer la fiabilité des alertes précoces, pour une ville dont 18% du territoire est classé à haut risque de glissement."
+          },
+          "tags": [
+            "data",
+            "optimization"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exp-mppdl",
+      "role": {
+        "fr": "Stage Shadowing",
+        "en": "Shadowing Internship"
+      },
+      "org": {
+        "fr": "MPPDL - UM6P",
+        "en": "MPPDL - UM6P"
+      },
+      "location": {
+        "fr": "Ben Guerir, Maroc",
+        "en": "Ben Guerir, Morocco"
+      },
+      "period": {
+        "fr": "Mars 2025 – Avril 2025",
+        "en": "March 2025 – April 2025"
+      },
+      "bullets": [
+        {
+          "id": "exp-mppdl-b1",
+          "text": {
+            "en": "Observed and analyzed complex project management methods and strategic decision-making processes in a high-level environment.",
+            "fr": "Observation des méthodes de pilotage de projets complexes et des processus décisionnels stratégiques."
+          },
+          "tags": [
+            "project-management"
+          ]
+        },
+        {
+          "id": "exp-mppdl-b2",
+          "text": {
+            "en": "Developed an understanding of relational dynamics and coordination challenges between entities within a large organization.",
+            "fr": "Analyse des dynamiques relationnelles et enjeux de coordination dans une grande organisation."
+          },
+          "tags": [
+            "project-management",
+            "leadership"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exp-treasurer",
+      "role": {
+        "fr": "Trésorier du Bureau des Élèves",
+        "en": "Student Council Treasurer"
+      },
+      "org": {
+        "fr": "EMINES",
+        "en": "EMINES"
+      },
+      "location": {
+        "fr": "Ben Guerir, Maroc",
+        "en": "Ben Guerir, Morocco"
+      },
+      "period": {
+        "fr": "Mars 2024 – Avril 2025",
+        "en": "March 2024 – April 2025"
+      },
+      "bullets": [
+        {
+          "id": "exp-treasurer-b1",
+          "text": {
+            "en": "Centralized treasury management and supervised financial flows from the student association to student clubs.",
+            "fr": "Gestion centralisée de la trésorerie et supervision des flux financiers de l'association vers les clubs étudiants."
+          },
+          "tags": [
+            "finance",
+            "leadership"
+          ]
+        },
+        {
+          "id": "exp-treasurer-b2",
+          "text": {
+            "en": "Ensured the financial stability of activities by tracking and redistributing funds from partnerships and sponsors.",
+            "fr": "Garanti la stabilité financière des activités en assurant le suivi et la redistribution des fonds issus des partenariats et des sponsors."
+          },
+          "tags": [
+            "finance"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exp-ocp-intro",
+      "role": {
+        "fr": "Stage d'initiation",
+        "en": "Introductory Internship"
+      },
+      "org": {
+        "fr": "OCP Group",
+        "en": "OCP Group"
+      },
+      "location": {
+        "fr": "Ben Guerir, Maroc",
+        "en": "Ben Guerir, Morocco"
+      },
+      "period": {
+        "fr": "Juin 2024 – Juil. 2024",
+        "en": "June 2024 – July 2024"
+      },
+      "bullets": [
+        {
+          "id": "exp-ocp-intro-b1",
+          "text": {
+            "en": "Hands-on discovery of the phosphate extraction chain and introduction to supply chain processes, in strict compliance with safety standards.",
+            "fr": "Découverte pratique de la chaîne d'extraction du phosphate et initiation aux processus de supply chain, dans le strict respect des normes de sécurité."
+          },
+          "tags": [
+            "supply-chain"
+          ]
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj-carprice",
+      "title": {
+        "fr": "Prédiction des Prix des Voitures d'Occasion",
+        "en": "Used Car Price Prediction"
+      },
+      "tag": {
+        "fr": "Machine Learning",
+        "en": "Machine Learning"
+      },
+      "period": {
+        "fr": "Fév. 2025 – Mai 2025",
+        "en": "Feb. 2025 – May 2025"
+      },
+      "bullets": [
+        {
+          "id": "proj-carprice-b1",
+          "text": {
+            "en": "Developed an advanced regression model to estimate used-vehicle prices from features such as mileage, age, brand, fuel type, and accident history.",
+            "fr": "Développement d'un modèle de régression avancé pour estimer le prix des véhicules d'occasion à partir de caractéristiques telles que le kilométrage, l'âge, la marque, le type de carburant et l'historique d'accidents."
+          },
+          "tags": [
+            "machine-learning",
+            "software"
+          ]
+        },
+        {
+          "id": "proj-carprice-b2",
+          "text": {
+            "en": "Trained and compared several models (Gradient Boosting, Random Forest, SVR) with hyperparameter optimization via Optuna and Grid Search.",
+            "fr": "Entraînement et comparaison de plusieurs modèles (Gradient Boosting, Random Forest, SVR) avec optimisation des hyperparamètres via Optuna et Grid Search."
+          },
+          "tags": [
+            "machine-learning",
+            "optimization"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca3769bf-a035-4a43-b4c1-a4e0cffc5321",
+      "title": {
+        "fr": "Solution de Gestion et de Planification des Congés",
+        "en": "Leave Management & Planning Solution"
+      },
+      "tag": {
+        "fr": "Excel VBA / Power BI",
+        "en": "Excel VBA / Power BI"
+      },
+      "period": {
+        "fr": "Mars 2025 – Avril 2025",
+        "en": "Mar. 2025 – Apr. 2025"
+      },
+      "bullets": [
+        {
+          "id": "0efcd2e4-95b9-4e67-9e55-6f5603abeca5",
+          "text": {
+            "fr": "Conception et déploiement d'un outil Excel VBA automatisant la saisie, la validation et le suivi des demandes de congés, remplaçant un processus manuel dispersé.",
+            "en": "Designed and deployed an Excel VBA tool automating leave request entry, approval, and tracking, replacing a scattered manual process."
+          },
+          "tags": [
+            "vba",
+            "power-bi",
+            "automation",
+            "dashboard"
+          ]
+        },
+        {
+          "id": "ecce2f7d-e2c5-4fda-a579-81d8e4c28f7b",
+          "text": {
+            "fr": "Développement d'un tableau de bord Power BI offrant une visibilité consolidée sur les soldes, les taux d'absence et la couverture des effectifs par période.",
+            "en": "Built a Power BI dashboard giving consolidated visibility on leave balances, absence rates, and staffing coverage by period."
+          },
+          "tags": [
+            "vba",
+            "power-bi",
+            "automation",
+            "dashboard"
+          ]
+        },
+        {
+          "id": "f4c44aa4-f3b1-490c-9035-daf7e3cc3e3b",
+          "text": {
+            "fr": "Structuration du modèle de données et des règles de gestion (droits, reports, chevauchements), garantissant la fiabilité de la planification et la conformité aux règles internes.",
+            "en": "Structured the data model and business rules (entitlements, carry-overs, overlaps), ensuring reliable planning and compliance with internal policy."
+          },
+          "tags": [
+            "vba",
+            "power-bi",
+            "automation",
+            "dashboard"
+          ]
+        },
+        {
+          "id": "ffb3c656-253c-43bf-a6dc-6f7803b264ab",
+          "text": {
+            "fr": "Immersion au sein d'une direction stratégique : analyse des méthodes de pilotage de projets complexes et des mécanismes de coordination inter-entités d'une grande organisation.",
+            "en": "Immersion within a strategic department: analyzed complex project steering methods and cross-entity coordination mechanisms in a large organization."
+          },
+          "tags": [
+            "vba",
+            "power-bi",
+            "automation",
+            "dashboard"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "proj-basketball",
+      "title": {
+        "fr": "Machine d'entraînement au Basketball",
+        "en": "Basketball Training Machine"
+      },
+      "tag": {
+        "fr": "Robotique",
+        "en": "Robotics"
+      },
+      "period": {
+        "fr": "Sept. 2024 – Avril 2025",
+        "en": "Sept. 2024 – April 2025"
+      },
+      "bullets": [
+        {
+          "id": "proj-basketball-b1",
+          "text": {
+            "en": "Designed the mechanical system of an autonomous machine (launcher, ball storage and guidance, rod-holder slide).",
+            "fr": "Conception et développement du système mécanique d'une machine autonome d'entraînement au basketball (lanceur, stockage et guidage des balles, glissière porte-tiges)."
+          },
+          "tags": [
+            "robotics",
+            "mechanical-design"
+          ]
+        },
+        {
+          "id": "proj-basketball-b2",
+          "text": {
+            "en": "Collaborated closely with the electrical, AI, and application teams to ensure full system integration and a smooth user experience.",
+            "fr": "Collaboration étroite avec les pôles électrique, IA et application pour assurer l'intégration complète du système et une expérience utilisateur fluide."
+          },
+          "tags": [
+            "software",
+            "teamwork"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "79d4c398-841d-423e-9e19-1681fd6639dd",
+      "title": {
+        "fr": "Analyse Statistique des Facteurs de Réussite Professionnelle",
+        "en": "Statistical Analysis of Career Success Factors"
+      },
+      "tag": {
+        "fr": "Statistiques ",
+        "en": "Statistics "
+      },
+      "period": {
+        "fr": "Dec. 2024 – Jan. 2025",
+        "en": "Dec. 2024 – Jan. 2025"
+      },
+      "bullets": [
+        {
+          "id": "c52921cd-0579-4411-afa2-19807112f46a",
+          "text": {
+            "fr": "Analyse statistique complète d'un jeu de données de 5 000 diplômés (20 variables) sous Python : nettoyage, normalisation (StandardScaler), statistiques descriptives et analyse de corrélation.",
+            "en": "Ran a full statistical analysis of a 5,000-graduate dataset (20 variables) in Python: cleaning, standardization (StandardScaler), descriptive statistics, and correlation analysis."
+          },
+          "tags": [
+            "statistics",
+            "machine-learning",
+            "python",
+            "data-analysis"
+          ]
+        },
+        {
+          "id": "39c26ba5-25f8-494d-87f7-14480a9e7104",
+          "text": {
+            "fr": "Application de tests d'hypothèses (Shapiro-Wilk, Chi-carré d'indépendance, V de Cramér, Breusch-Pagan) pour valider les dépendances entre variables académiques et professionnelles.",
+            "en": "Applied hypothesis testing (Shapiro-Wilk, chi-square independence, Cramér's V, Breusch-Pagan) to validate dependencies between academic and career variables."
+          },
+          "tags": [
+            "statistics",
+            "machine-learning",
+            "python",
+            "data-analysis"
+          ]
+        },
+        {
+          "id": "6a48758d-b8b7-4cc6-8b25-99982a62a904",
+          "text": {
+            "fr": "Construction d'un modèle de régression linéaire multiple prédisant le salaire de départ (R² = 0,83 ; RMSE = 4 026), validé par validation croisée K-Fold (σ = 0,008) et diagnostic complet des résidus.",
+            "en": "Built a multiple linear regression model predicting starting salary (R² = 0.83; RMSE = 4,026), validated by K-Fold cross-validation (σ = 0.008) and full residual diagnostics."
+          },
+          "tags": [
+            "statistics",
+            "machine-learning",
+            "python",
+            "data-analysis"
+          ]
+        },
+        {
+          "id": "4ecbb851-4c32-4d53-ba0c-6489a1513a46",
+          "text": {
+            "fr": "Segmentation de la population en 4 profils types par K-Means (méthode du coude) et classification par Random Forest des hauts salaires (Accuracy = 0,84 ; AUC = 0,92).",
+            "en": "Segmented the population into 4 archetype profiles via K-Means (elbow method) and classified high earners with Random Forest (Accuracy = 0.84; AUC = 0.92)."
+          },
+          "tags": [
+            "statistics",
+            "machine-learning",
+            "python",
+            "data-analysis"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "36357954-de95-472f-805c-c53f977dbec5",
+      "title": {
+        "fr": "Optimisation Linéaire de la Production de Fruits Rouges en Serres",
+        "en": "Linear Optimization of Greenhouse Berry Production"
+      },
+      "tag": {
+        "fr": "",
+        "en": ""
+      },
+      "period": {
+        "fr": "Mars 2024 - Mai 2024",
+        "en": "Mar. 2024 - May 2024"
+      },
+      "bullets": [
+        {
+          "id": "675790d2-fc5e-4b64-b6ce-1757e5cafee4",
+          "text": {
+            "fr": "Modélisation d'un problème d'affectation en programmation linéaire en nombres entiers (MILP) : allocation de 15 scénarios de plantation à 24 serres réparties sur 6 secteurs, avec pour objectif la maximisation du profit.",
+            "en": "Modeled an assignment problem as mixed-integer linear programming (MILP): allocating 15 planting scenarios across 24 greenhouses in 6 sectors, maximizing total profit."
+          },
+          "tags": [
+            "optimization",
+            "milp",
+            "operations-research",
+            "python"
+          ]
+        },
+        {
+          "id": "872e46eb-d45b-464e-8bbb-3b7f374d5572",
+          "text": {
+            "fr": "Formulation de variables de décision binaires tridimensionnelles X(serre, scénario, semaine) et d'une fonction objectif intégrant chiffre d'affaires et coûts variables sur un horizon de 37 semaines de production.",
+            "en": "Formulated three-dimensional binary decision variables X(greenhouse, scenario, week) and an objective function combining revenue and variable costs over a 37-week production horizon."
+          },
+          "tags": [
+            "optimization",
+            "milp",
+            "operations-research",
+            "python"
+          ]
+        },
+        {
+          "id": "2dd35370-8f09-435b-8f71-9fee1f19aea9",
+          "text": {
+            "fr": "Intégration de contraintes opérationnelles : unicité d'affectation par serre, restrictions sectorielles et limitations de surface (< 2,87 ha), garantissant la faisabilité industrielle de la solution.",
+            "en": "Integrated operational constraints: single-assignment per greenhouse, sector-level restrictions, and surface-area limits (< 2.87 ha), ensuring the solution's industrial feasibility."
+          },
+          "tags": [
+            "optimization",
+            "milp",
+            "operations-research",
+            "python"
+          ]
+        },
+        {
+          "id": "1b2b624a-a038-4bcf-bbaa-49fcbaaef3c5",
+          "text": {
+            "fr": "Résolution du modèle avec identification de la solution optimale (scénario 12, semaine 27 de plantation) générant un profit de 9,66 M MAD, couplant courbes de production hebdomadaires et prix de marché variables.",
+            "en": "Solved the model, identifying the optimal solution (scenario 12, planting week 27) yielding a profit of 9.66 M MAD, by coupling weekly production curves with time-varying market prices."
+          },
+          "tags": [
+            "optimization",
+            "milp",
+            "operations-research",
+            "python"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "32889b55-7765-4b67-9f80-98cdbda19151",
+      "title": {
+        "fr": "Potentiel de Production et de Valorisation des Carburants Synthétiques au Maroc",
+        "en": "Production and Valorization Potential of Synthetic Fuels in Morocco"
+      },
+      "tag": {
+        "fr": "",
+        "en": ""
+      },
+      "period": {
+        "fr": "Jan. 2024 - Mars 2024",
+        "en": "Jan. 2024 - March 2024"
+      },
+      "bullets": [
+        {
+          "id": "0c2b4376-95e2-4f00-9749-91468aac5480",
+          "text": {
+            "fr": "Étude stratégique du potentiel des e-carburants au Maroc pour la GIZ, couvrant le benchmark réglementaire international (Europe, Asie, Amérique du Nord) et la formulation d'une feuille de route réglementaire nationale à horizon 2050.",
+            "en": "Strategic study of Morocco's e-fuel potential for GIZ, covering an international regulatory benchmark (Europe, Asia, North America) and a proposed national regulatory roadmap through 2050."
+          },
+          "tags": [
+            "energy",
+            "strategy",
+            "market-analysis",
+            "techno-economic",
+            "sustainability"
+          ]
+        },
+        {
+          "id": "90f4a4ac-493b-408d-82dc-1b08b2373700",
+          "text": {
+            "fr": "Analyse de marché ciblant les secteurs aérien, maritime et transport lourd, avec modélisation de la demande nationale en kérosène à partir des données de vol réelles (API FlightRadar24) et extrapolation à l'horizon 2030.",
+            "en": "Market analysis targeting the aviation, maritime, and heavy-transport sectors, modeling national kerosene demand from real flight data (FlightRadar24 API) with extrapolation to 2030."
+          },
+          "tags": [
+            "energy",
+            "strategy",
+            "market-analysis",
+            "techno-economic",
+            "sustainability"
+          ]
+        },
+        {
+          "id": "3a478b0c-027d-4ba2-b704-0507b115435f",
+          "text": {
+            "fr": "Modélisation technico-économique complète de la chaîne de production (EnR, dessalement, électrolyse, captage CO₂, Fischer-Tropsch) avec courbes CAPEX/OPEX et prévisions de prix 2030 pour l'e-kérosène, l'e-méthanol et l'e-méthane.",
+            "en": "Full techno-economic modeling of the production chain (renewables, desalination, electrolysis, CO₂ capture, Fischer-Tropsch) with CAPEX/OPEX curves and 2030 price forecasts for e-kerosene, e-methanol, and e-methane."
+          },
+          "tags": [
+            "energy",
+            "strategy",
+            "market-analysis",
+            "techno-economic",
+            "sustainability"
+          ]
+        },
+        {
+          "id": "62d38bb4-c62f-4b48-a231-403b97a46f83",
+          "text": {
+            "fr": "Développement de trois cas d'usage chiffrés — compagnie aérienne nationale, port de Tanger Med, flotte de poids lourds — intégrant plan de transition, scénarios de taxe carbone et analyse de rentabilité.",
+            "en": "Developed three quantified use cases — national airline, Port of Tanger Med, heavy-truck fleet — including a transition plan, carbon-tax scenarios, and profitability analysis."
+          },
+          "tags": [
+            "energy",
+            "strategy",
+            "market-analysis",
+            "techno-economic",
+            "sustainability"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "651aa022-98b2-4e81-afc0-f294d041d55c",
+      "title": {
+        "fr": "Bourse aux Livres — Plateforme d'Échange de Manuels",
+        "en": "Book Exchange Platform"
+      },
+      "tag": {
+        "fr": "Développement Web Full-Stack",
+        "en": "Full-Stack Web Development"
+      },
+      "period": {
+        "fr": "Sept. 2023 - Jan. 2024",
+        "en": "Sept. 2023 - Jan. 2024"
+      },
+      "bullets": [
+        {
+          "id": "cb7f4806-3b91-4021-8422-2d448d5973ec",
+          "text": {
+            "fr": "Développement full-stack d'une plateforme d'échange de manuels entre étudiants : frontend React consommant une API REST Laravel, avec authentification et gestion des sessions utilisateurs.",
+            "en": "Full-stack development of a student textbook exchange platform: React frontend consuming a Laravel REST API, with authentication and user session management."
+          },
+          "tags": [
+            "react",
+            "laravel",
+            "php",
+            "full-stack",
+            "rest-api"
+          ]
+        },
+        {
+          "id": "6111abce-354a-427f-b63b-6f7127e52ae3",
+          "text": {
+            "fr": "Implémentation d'un moteur de recherche et de filtrage des annonces, couplé à un système d'upload et de stockage d'images pour la mise en ligne des ouvrages.",
+            "en": "Implemented a listing search-and-filter engine, coupled with an image upload and storage system for posting books."
+          },
+          "tags": [
+            "react",
+            "laravel",
+            "php",
+            "full-stack",
+            "rest-api"
+          ]
+        },
+        {
+          "id": "daacbfc2-82de-49f8-b980-266c318ce863",
+          "text": {
+            "fr": "Développement d'une messagerie interne permettant la mise en relation directe entre acheteurs et vendeurs, ainsi que d'un back-office de modération des annonces et des comptes.",
+            "en": "Built an in-app messaging system connecting buyers and sellers directly, plus an admin back-office for listing and account moderation."
+          },
+          "tags": [
+            "react",
+            "laravel",
+            "php",
+            "full-stack",
+            "rest-api"
+          ]
+        },
+        {
+          "id": "2a48d480-e72c-4c46-9265-4d8192d02bab",
+          "text": {
+            "fr": "Conception du modèle de données relationnel et des migrations Eloquent (utilisateurs, annonces, messages, rôles), en architecture découplée frontend/backend.",
+            "en": "Designed the relational data model and Eloquent migrations (users, listings, messages, roles), in a decoupled frontend/backend architecture."
+          },
+          "tags": [
+            "react",
+            "laravel",
+            "php",
+            "full-stack",
+            "rest-api"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "f89014ee-bb6a-4ac7-abe0-b55dae3222db",
+      "title": {
+        "fr": "Modélisation de la Diffusion de l'Oxygène dans l'Acinus Pulmonaire",
+        "en": "Modeling Oxygen Diffusion in the Pulmonary Acinus"
+      },
+      "tag": {
+        "fr": "Génie Biomédical",
+        "en": "Biomedical Engineering"
+      },
+      "period": {
+        "fr": "Oct. 2023 – Déc. 2023",
+        "en": "Oct. 2023 – Dec. 2023"
+      },
+      "bullets": [
+        {
+          "id": "881652eb-5434-4bb7-8ea2-fbf16488235c",
+          "text": {
+            "fr": "Modélisation de la diffusion de l'oxygène dans l'acinus pulmonaire par formulation et discrétisation des équations aux dérivées partielles régissant le transport en régime stationnaire.",
+            "en": "Modeled oxygen diffusion in the pulmonary acinus by formulating and discretizing the partial differential equations governing steady-state transport."
+          },
+          "tags": [
+            "modeling",
+            "numerical-methods",
+            "pde",
+            "simulation",
+            "python"
+          ]
+        },
+        {
+          "id": "52d51fe1-fa35-4e01-b3c1-cdf261a01833",
+          "text": {
+            "fr": "Développement d'un modèle 2D simplifié puis d'un modèle 2D général, comparés sur des cas d'étude stationnaires et quasi-stationnaires afin d'évaluer l'apport de la complexité géométrique.",
+            "en": "Developed a simplified 2D model then a general 2D model, compared across steady-state and quasi-steady-state case studies to assess the value added by geometric complexity."
+          },
+          "tags": [
+            "modeling",
+            "numerical-methods",
+            "pde",
+            "simulation",
+            "python"
+          ]
+        },
+        {
+          "id": "7fa1b3e8-261e-4609-b9fc-ab59315bede0",
+          "text": {
+            "fr": "Résolution numérique et visualisation des champs de concentration en oxygène, avec analyse de sensibilité du taux de transfert aux paramètres physiologiques du modèle.",
+            "en": "Solved the models numerically and visualized oxygen concentration fields, with sensitivity analysis of transfer rate to the model's physiological parameters."
+          },
+          "tags": [
+            "modeling",
+            "numerical-methods",
+            "pde",
+            "simulation",
+            "python"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "110b9ba6-913b-4378-9715-583458a7e334",
+      "title": {
+        "fr": "Application de Gestion de Tâches",
+        "en": "Task Management Application"
+      },
+      "tag": {
+        "fr": "Développement Logiciel",
+        "en": "Software Development"
+      },
+      "period": {
+        "fr": "Fév. 2023 – Juin 2023",
+        "en": "Feb. 2023 – Jun. 2023"
+      },
+      "bullets": [
+        {
+          "id": "7f1b65c8-4832-4041-91cc-e7bd51fc80d1",
+          "text": {
+            "fr": "Développement d'une application de bureau de gestion de tâches en Python avec le framework Flet, offrant un CRUD complet (création, édition en ligne, changement de statut, suppression) et un filtrage dynamique par onglets (Toutes / Actives / Terminées).",
+            "en": "Developed a Python desktop task-management application with the Flet framework, delivering full CRUD (create, inline edit, status toggle, delete) and dynamic tab-based filtering (All / Active / Completed)."
+          },
+          "tags": [
+            "python",
+            "software",
+            "database",
+            "orm",
+            "ui"
+          ]
+        },
+        {
+          "id": "a97537f8-b4df-4af0-a5c2-3d53959a8997",
+          "text": {
+            "fr": "Conception de la couche de persistance avec SQLAlchemy ORM sur base SQLite, assurant la synchronisation temps réel entre l'interface et la base ainsi que le rechargement automatique des tâches au démarrage.",
+            "en": "Designed the persistence layer with SQLAlchemy ORM over SQLite, ensuring real-time synchronization between the UI and the database plus automatic task reloading on startup."
+          },
+          "tags": [
+            "python",
+            "software",
+            "database",
+            "orm",
+            "ui"
+          ]
+        },
+        {
+          "id": "5d5d3c75-33ba-4d20-ad51-34e26acbf37b",
+          "text": {
+            "fr": "Architecture orientée composants basée sur des contrôles réutilisables et des fonctions de rappel (callbacks), découplant la logique métier de la logique d'affichage.",
+            "en": "Built a component-oriented architecture based on reusable controls and callbacks, decoupling business logic from display logic."
+          },
+          "tags": [
+            "python",
+            "software",
+            "database",
+            "orm",
+            "ui"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cb535df5-8f3e-4388-a261-15d92eca49f6",
+      "title": {
+        "fr": "Bras Robotisé SCARA",
+        "en": "SCARA Robotic Arm"
+      },
+      "tag": {
+        "fr": "Robotique",
+        "en": "Robotics"
+      },
+      "period": {
+        "fr": "Sept. 2022 – Fév. 2023",
+        "en": "Sept. 2022 – Feb. 2023"
+      },
+      "bullets": [
+        {
+          "id": "178e6f4f-c3ed-45d7-9484-e994b3e86ffd",
+          "text": {
+            "fr": "Analyse fonctionnelle et conception du bras SCARA sous SolidWorks, incluant schémas cinématiques et synoptiques.",
+            "en": "Ran the functional analysis and designed the SCARA arm in SolidWorks, including kinematic and block diagrams."
+          },
+          "tags": [
+            "robotics",
+            "control",
+            "python",
+            "electronics"
+          ]
+        },
+        {
+          "id": "69e07782-1839-4496-adb5-2682e8cf02e5",
+          "text": {
+            "fr": "Conception et simulation d'une alimentation stabilisée assurant une gestion fiable de la puissance.",
+            "en": "Designed and simulated a regulated power supply ensuring reliable power management."
+          },
+          "tags": [
+            "robotics",
+            "control",
+            "python",
+            "electronics"
+          ]
+        },
+        {
+          "id": "ad3aa108-cfb9-48dd-bdf5-16062c77828a",
+          "text": {
+            "fr": "Formulation des modèles cinématiques et causaux, analyse de l'espace de travail et de la résolution sous Python.",
+            "en": "Formulated kinematic and causal models, and analyzed workspace and resolution in Python."
+          },
+          "tags": [
+            "robotics",
+            "control",
+            "python",
+            "electronics"
+          ]
+        },
+        {
+          "id": "2108bfac-2f1c-4758-bbd2-91e465efb4f6",
+          "text": {
+            "fr": "Développement d'une interface de commande Python (Tkinter) couplée au firmware Arduino.",
+            "en": "Built a Python (Tkinter) control interface coupled with the Arduino firmware."
+          },
+          "tags": [
+            "robotics",
+            "control",
+            "python",
+            "electronics"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1f01525d-6b09-422e-b7e8-a2d3bf3b4bf6",
+      "title": {
+        "fr": "Système de Réservation de Bus en C",
+        "en": "Bus Reservation System in C"
+      },
+      "tag": {
+        "fr": "Développement Logiciel",
+        "en": "Software Development"
+      },
+      "period": {
+        "fr": "Mars 2022 – Juin 2022",
+        "en": "Mar. 2022 – Jun. 2022"
+      },
+      "bullets": [
+        {
+          "id": "0cb60886-7013-4a3c-9044-c0329a1df4fa",
+          "text": {
+            "fr": "Développement en C d'une application console de réservation de bus pour la ligne urbaine de Ben Guerir (5 bus, 32 places par véhicule), couvrant la réservation, l'annulation, la consultation du plan de salle et la réinitialisation administrateur.",
+            "en": "Built a C console application for bus booking on the Ben Guerir urban network (5 buses, 32 seats each), covering reservation, cancellation, seat-map lookup, and admin reset."
+          },
+          "tags": [
+            "c",
+            "software",
+            "file-io",
+            "algorithms"
+          ]
+        },
+        {
+          "id": "b39810e5-5efa-4831-95b3-500c79f51fc2",
+          "text": {
+            "fr": "Conception d'une persistance par fichiers texte (disponibilité, occupation des places, noms des passagers) garantissant la cohérence des données entre les sessions et empêchant toute double réservation.",
+            "en": "Designed a text-file persistence layer (availability, seat occupancy, passenger names) guaranteeing data consistency across sessions and preventing any double booking."
+          },
+          "tags": [
+            "c",
+            "software",
+            "file-io",
+            "algorithms"
+          ]
+        },
+        {
+          "id": "caa36225-165d-48b7-b16e-de830147aafd",
+          "text": {
+            "fr": "Implémentation d'une logique tarifaire conditionnelle (tarif enfant, tarif senior, plein tarif) et génération automatique de billets horodatés exportés en fichiers individuels.",
+            "en": "Implemented conditional pricing logic (child, senior, and full fare) with automatic generation of timestamped tickets exported as individual files."
+          },
+          "tags": [
+            "c",
+            "software",
+            "file-io",
+            "algorithms"
+          ]
+        },
+        {
+          "id": "e2ce6296-8f33-4d5c-ad07-86e99879cba7",
+          "text": {
+            "fr": "Développement d'un module d'authentification et d'une interface console structurée avec validation des saisies utilisateur sur l'ensemble des menus.",
+            "en": "Developed an authentication module and a structured console interface with input validation across all menus."
+          },
+          "tags": [
+            "c",
+            "software",
+            "file-io",
+            "algorithms"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "d11ea9a6-2215-4240-9e12-01b8c0e2f032",
+      "title": {
+        "fr": "Robot Delta Parallèle",
+        "en": "Parallel Delta Robot"
+      },
+      "tag": {
+        "fr": "Robotique",
+        "en": "Robotics"
+      },
+      "period": {
+        "fr": "Fév. 2022 – Juin 2022",
+        "en": "Feb. 2022 – Jun. 2022"
+      },
+      "bullets": [
+        {
+          "id": "230e59d7-9f85-41bf-8874-e3578d72e48e",
+          "text": {
+            "fr": "Modélisation des cinématiques directe et inverse, puis conception mécanique sous SolidWorks et fabrication des pièces sur mesure.",
+            "en": "- Modeled forward and inverse kinematics, then designed the mechanism in SolidWorks and produced custom parts."
+          },
+          "tags": [
+            "kinematics"
+          ]
+        },
+        {
+          "id": "4487ab39-e40c-484a-a2f2-08bfe1b98d85",
+          "text": {
+            "fr": "Simulation de la précision et de l'espace de travail sous Python et Scilab pour valider les choix de conception.",
+            "en": "Simulated accuracy and workspace in Python and Scilab to validate design trade-offs."
+          },
+          "tags": [
+            "simulation"
+          ]
+        },
+        {
+          "id": "480f5544-0dfd-4c1c-a92c-a298116173d7",
+          "text": {
+            "fr": "Programmation Arduino/Processing permettant le tracé de figures à partir de coordonnées saisies par l'utilisateur.",
+            "en": "Programmed Arduino/Processing control enabling figure tracing from user-entered coordinates."
+          },
+          "tags": [
+            "robotics",
+            "cad"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "387557e5-2858-455d-ab3d-ba9f842fbe37",
+      "title": {
+        "fr": "Plateforme Mobile Robotisée",
+        "en": "Robotic Mobile Platform"
+      },
+      "tag": {
+        "fr": "Robotique",
+        "en": "Robotics"
+      },
+      "period": {
+        "fr": "Sep. 2021 – Fév. 2022",
+        "en": "Sep. 2021 – Feb. 2022"
+      },
+      "bullets": [
+        {
+          "id": "87ceca7a-22e5-4802-aa91-7001b5b373fb",
+          "text": {
+            "fr": "Conception mécanique complète sous SolidWorks à partir d'une analyse fonctionnelle et d'un cahier des charges, jusqu'au suivi de fabrication des pièces.",
+            "en": "- Delivered the full mechanical design in SolidWorks, from functional analysis and specifications through to part manufacturing follow-up."
+          },
+          "tags": [
+            "robotics",
+            "cad",
+            "embedded",
+            "mechatronics"
+          ]
+        },
+        {
+          "id": "6fa52c1d-f066-46cb-bb9c-e9eb6643eb3f",
+          "text": {
+            "fr": "Dimensionnement et sélection des servomoteurs, motoréducteurs et microcontrôleurs selon des critères de couple, d'autonomie et de coût.",
+            "en": "Sized and selected servomotors, gearmotors, and microcontrollers against torque, autonomy, and cost criteria."
+          },
+          "tags": [
+            "robotics",
+            "cad",
+            "embedded",
+            "mechatronics"
+          ]
+        },
+        {
+          "id": "32adf8ba-0732-48cd-a978-f326335a7339",
+          "text": {
+            "fr": "Développement du programme de commande sous Arduino et d'une interface graphique de pilotage sous Processing.",
+            "en": "Developed the Arduino control firmware and a Processing-based graphical control interface."
+          },
+          "tags": [
+            "robotics",
+            "cad",
+            "embedded",
+            "mechatronics"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "id": "edu-emines",
+      "school": {
+        "fr": "EMINES – Mohammed VI Polytechnic University",
+        "en": "EMINES – Mohammed VI Polytechnic University"
+      },
+      "degree": {
+        "fr": "Diplôme d'ingénieur en management industriel / Option : Supply Chain Management",
+        "en": "Engineering Degree in Industrial Management / Minor: Supply Chain Management"
+      },
+      "location": {
+        "fr": "Ben Guerir, Maroc",
+        "en": "Ben Guerir, Morocco"
+      },
+      "period": {
+        "fr": "Sept. 2021 – Sept. 2026",
+        "en": "Sept. 2021 – Sept. 2026"
+      },
+      "bullets": [
+        {
+          "id": "edu-emines-visits",
+          "text": {
+            "fr": "",
+            "en": ""
+          },
+          "heading": {
+            "fr": "Visites Industrielles :",
+            "en": "Industrial Visits :"
+          },
+          "items": [
+            {
+              "id": "edu-emines-v1",
+              "text": {
+                "en": "WELDOM : automated warehouse and flow management in specialized retail.",
+                "fr": "WELDOM : entrepôt automatisé et gestion des flux en distribution spécialisée."
+              },
+              "location": {
+                "fr": "Brecé de Seuil, France",
+                "en": "Brecé de Seuil, France"
+              }
+            },
+            {
+              "id": "edu-emines-v2",
+              "text": {
+                "en": "Rungis Market : large-scale food logistics and freshness management.",
+                "fr": "Marché de Rungis : logistique alimentaire à grande échelle et gestion de la fraîcheur."
+              },
+              "location": {
+                "fr": "Rungis, France",
+                "en": "Rungis, France"
+              }
+            },
+            {
+              "id": "edu-emines-v3",
+              "text": {
+                "en": "ReFood : reverse logistics and circular economy, fighting food waste.",
+                "fr": "ReFood : logistique inverse et économie circulaire, lutte contre le gaspillage alimentaire."
+              },
+              "location": {
+                "fr": "Chantilly, France",
+                "en": "Chantilly, France"
+              }
+            },
+            {
+              "id": "edu-emines-v4",
+              "text": {
+                "en": "Stellantis : automotive supply chain, lean flows and Industry 4.0 technologies.",
+                "fr": "Stellantis : supply chain automobile, flux tendus et technologies industrie 4.0."
+              },
+              "location": {
+                "fr": "Poissy, France",
+                "en": "Poissy, France"
+              }
+            },
+            {
+              "id": "edu-emines-v5",
+              "text": {
+                "en": "Carrefour : supply management and demand forecasting in retail.",
+                "fr": "Carrefour : pilotage des approvisionnements et prévision de la demande en retail."
+              },
+              "location": {
+                "fr": "Crépy-en-Valois, France",
+                "en": "Crépy-en-Valois, France"
+              }
+            },
+            {
+              "id": "edu-emines-v6",
+              "text": {
+                "en": "FM Logistic : WMS systems and order picking.",
+                "fr": "FM Logistic : systèmes WMS et préparation de commandes."
+              },
+              "location": {
+                "fr": "Crépy-en-Valois, France",
+                "en": "Crépy-en-Valois, France"
+              }
+            }
+          ],
+          "inline": false
+        },
+        {
+          "id": "edu-emines-courses",
+          "text": {
+            "fr": "",
+            "en": ""
+          },
+          "heading": {
+            "fr": "Cours pertinents :",
+            "en": "Relevant courses:"
+          },
+          "items": [
+            {
+              "id": "edu-emines-course-1",
+              "text": {
+                "en": "Operations Research & optimization",
+                "fr": "Recherche opérationnelle & optimisation"
+              }
+            },
+            {
+              "id": "edu-emines-course-2",
+              "text": {
+                "en": "Production & logistics systems",
+                "fr": "Systèmes de production & logistique"
+              }
+            },
+            {
+              "id": "edu-emines-course-3",
+              "text": {
+                "en": "Information systems (ERP/SAP)",
+                "fr": "Systèmes d'information (ERP/SAP)"
+              }
+            },
+            {
+              "id": "edu-emines-course-4",
+              "text": {
+                "en": "Flow management",
+                "fr": "Gestion des flux"
+              }
+            },
+            {
+              "id": "edu-emines-course-5",
+              "text": {
+                "en": "Statistics & probability",
+                "fr": "Statistiques & probabilités"
+              }
+            },
+            {
+              "id": "edu-emines-course-6",
+              "text": {
+                "en": "Industrial planning",
+                "fr": "Planification industrielle"
+              }
+            },
+            {
+              "id": "edu-emines-course-7",
+              "text": {
+                "en": "Industrial cost evaluation",
+                "fr": "Évaluation des coûts industriels"
+              }
+            },
+            {
+              "id": "edu-emines-course-8",
+              "text": {
+                "en": "Robotics",
+                "fr": "Robotique"
+              }
+            }
+          ],
+          "inline": true
+        }
+      ]
+    },
+    {
+      "id": "edu-bac",
+      "school": {
+        "fr": "Groupe Scolaire La Résidence",
+        "en": "Groupe Scolaire La Résidence"
+      },
+      "degree": {
+        "fr": "Baccalauréat Sciences Mathématiques A",
+        "en": "Baccalaureate – Mathematics A"
+      },
+      "location": {
+        "fr": "Ben Guerir, Maroc",
+        "en": "Ben Guerir, Morocco"
+      },
+      "period": {
+        "fr": "2021",
+        "en": "2021"
+      },
+      "bullets": []
+    }
+  ],
+  "skills": [
+    {
+      "id": "sk-software",
+      "label": {
+        "fr": "Logiciels",
+        "en": "Software & Tools"
+      },
+      "value": {
+        "en": "Python, SAP S/4HANA (PP,DS,MM), Power BI, Advanced Excel (Power Query, Pivot Tables), MS Project, Power Automate, Simul8, @Risk, MySQL, MATLAB, SolidWorks, VBA, Java, ReactJS, Laravel, Illustrator, Arduino.",
+        "fr": "Python, SAP S/4HANA (PP,DS,MM), Power BI, Excel avancé (Power Query, TCD), MS Project, Power Automate, Simul8, @Risk, MySQL, MATLAB, SolidWorks, VBA, Java, ReactJS, Laravel, Illustrator, Arduino."
+      }
+    },
+    {
+      "id": "sk-lang",
+      "label": {
+        "fr": "Langues",
+        "en": "Languages"
+      },
+      "value": {
+        "en": "Arabic (Native), French (Fluent), English (Full professional proficiency — TOEIC 900/990), Portuguese (Basic).",
+        "fr": "Arabe (Maternelle), Français (Courant), Anglais (Professionnel courant — TOEIC 900/990), Portugais (Notions)."
+      }
+    },
+    {
+      "id": "sk-soft",
+      "label": {
+        "fr": "Soft Skills",
+        "en": "Soft Skills"
+      },
+      "value": {
+        "en": "Teamwork, Leadership, Time Management, Communication, Adaptability, Autonomy, Curiosity.",
+        "fr": "Esprit d'équipe, Leadership, Gestion du temps, Communication, Adaptabilité, Autonomie, Curiosité."
+      }
+    },
+    {
+      "id": "sk-activities",
+      "label": {
+        "fr": "Activités",
+        "en": "Activities"
+      },
+      "value": {
+        "en": "Captain of the EMINES and UM6P University basketball teams.",
+        "fr": "Capitaine des équipes de basketball d'EMINES et de l'université UM6P."
+      }
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+name: Deploy portfolio
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # lets you redeploy by hand from the Actions tab
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# never let two deploys race each other
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Work out where the site will be served from:
+      #   <user>.github.io          -> https://<user>.github.io/            base "/"
+      #   any other repo name       -> https://<user>.github.io/<repo>/     base "/<repo>/"
+      #   a CNAME file present      -> a custom domain at its root          base "/"
+      # Getting this wrong is what makes a Pages deploy render a blank page.
+      - name: Resolve base path
+        id: base
+        run: |
+          REPO="${GITHUB_REPOSITORY#*/}"
+          if [ -f public/CNAME ] || [ -f CNAME ]; then
+            BASE="/"
+            WHY="custom domain (CNAME present)"
+          elif [ "$REPO" = "${GITHUB_REPOSITORY_OWNER}.github.io" ]; then
+            BASE="/"
+            WHY="user page"
+          else
+            BASE="/$REPO/"
+            WHY="project page"
+          fi
+          echo "BASE_PATH=$BASE" >> "$GITHUB_ENV"
+          echo "Serving as a $WHY — base path: $BASE"
+
+      - run: npm run build
+
+      # GitHub Pages serves a 404 for unknown paths; reusing index.html keeps
+      # deep links and refreshes working.
+      - run: cp dist/index.html dist/404.html
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

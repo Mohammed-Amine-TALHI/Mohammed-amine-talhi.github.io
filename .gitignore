@@ -1,0 +1,33 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.vite/
+*.tsbuildinfo
+
+# Claude Code — local tooling, not part of the site
+.claude/
+CLAUDE.md
+.claude-*/
+
+# editor / OS
+.DS_Store
+Thumbs.db
+*.local
+.idea/
+.vscode/
+
+# logs
+npm-debug.log*
+yarn-error.log*
+
+# NOTE
+# src/data/portfolio.config.json IS committed on purpose — it is the content of
+# your site (which projects show, leadership entries, intro text).
+# public/leadership/ and public/covers/ are committed too, for the same reason.
+#
+# If you would rather keep the admin UI source out of GitHub entirely, add:
+#   src/admin/
+# ...and delete the lazy import at the top of src/App.tsx. It is inert either
+# way: the admin needs the Vite dev server to run and is stripped from builds.

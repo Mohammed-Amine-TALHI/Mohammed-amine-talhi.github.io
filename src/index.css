@@ -1,0 +1,160 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   Design tokens — a single dark palette with an amber→orange accent.
+   Tailwind v4 reads these and generates `bg-ink-900`, `text-accent-400`, …
+--------------------------------------------------------------------------- */
+@theme {
+  --color-ink-950: #08080b;
+  --color-ink-900: #0c0c11;
+  --color-ink-850: #101017;
+  --color-ink-800: #15151e;
+  --color-ink-700: #1c1c27;
+  --color-line: #242430;
+
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #ea580c;
+  --color-accent-700: #c2410c;
+
+  --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* offset anchors so the fixed navbar never covers a section heading */
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-ink-950);
+  overflow-x: hidden;
+}
+
+/* Ambient grid + glow that sits behind the whole page */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Gradient text used for names / section numbers */
+.text-gradient {
+  background: linear-gradient(120deg, var(--color-accent-300), var(--color-accent-600));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Thin custom scrollbar so it doesn't break the dark theme */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink-950);
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a38;
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-600);
+}
+
+::selection {
+  background: var(--color-accent-500);
+  color: #0b0b0f;
+}
+
+/* Respect users who asked the OS to calm animations down */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   StrokeText (React Bits)
+
+   The outline is the real text node; the sweeping fill is a ::after pseudo
+   element carrying a copy via `content: attr(data-text)`. Doing it this way
+   keeps a single copy of the name in the DOM — stacking two <span>s made the
+   <h1> read "Mohammed Amine TALHIMohammed Amine TALHI" to crawlers — and the
+   sweep runs as a compositor-friendly CSS animation instead of on rAF.
+--------------------------------------------------------------------------- */
+.stroke-text {
+  position: relative;
+  display: inline-block;
+  color: transparent;
+  -webkit-text-stroke-width: var(--stroke-w, clamp(1px, 0.28vw, 3px));
+  -webkit-text-stroke-color: var(--stroke-c, rgba(228, 228, 231, 0.62));
+}
+
+.stroke-text::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  -webkit-text-stroke: 0;
+  color: transparent;
+  background-image: linear-gradient(
+    100deg,
+    transparent 30%,
+    var(--color-accent-300) 42%,
+    var(--color-accent-500) 50%,
+    var(--color-accent-600) 58%,
+    transparent 70%
+  );
+  background-size: 260% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-position: 170% 0;
+  animation: stroke-sweep var(--sweep-dur, 6.3s) cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.stroke-text[data-sweep='off']::after {
+  animation: none;
+  background-position: 50% 0;
+}
+
+@keyframes stroke-sweep {
+  0% {
+    background-position: 170% 0;
+  }
+  72%,
+  100% {
+    background-position: -70% 0;
+  }
+}
+
+/* Flash a jumped-to element so the destination is unmistakable — used by the
+   country links in the hero stat row. */
+.flash-target {
+  animation: flash-target 1.8s ease-out;
+}
+
+@keyframes flash-target {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  15% {
+    box-shadow: 0 0 0 2px var(--color-accent-500), 0 0 34px -4px var(--color-accent-600);
+  }
+  60% {
+    box-shadow: 0 0 0 2px var(--color-accent-500), 0 0 34px -4px var(--color-accent-600);
+  }
+}
