@@ -12,7 +12,8 @@
     "admin": "vite --open /#/admin",
     "publish": "node scripts/publish.mjs",
     "check-assets": "node scripts/check-assets.mjs",
-    "fix-assets": "node scripts/check-assets.mjs --prune"
+    "fix-assets": "node scripts/check-assets.mjs --prune",
+    "optimize-images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.23.12",
@@ -26,6 +27,7 @@
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^5.0.2",
+    "sharp": "^0.35.3",
     "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2",
     "vite": "^7.1.4"

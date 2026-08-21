@@ -3,6 +3,7 @@ import { HiOutlineUpload, HiOutlineTrash, HiOutlineDocumentText, HiOutlineExtern
 import type { Loc } from '../lib/types';
 import CropBox from './CropBox';
 import { resolveCrop, type Crop } from '../lib/crop';
+import { downscaleImage, formatBytes } from './imageTools';
 
 /* Small building blocks shared by every admin panel. Deliberately plain —
    this UI never ships to production, so it optimises for speed of editing. */
@@ -175,16 +176,33 @@ export function Card({ children, className = '' }: { children: ReactNode; classN
 /* ------------------------------------------------------------------ */
 
 async function uploadOne(file: File, folder: string): Promise<string | null> {
-  const dataUrl = await new Promise<string>((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(String(r.result));
-    r.onerror = rej;
-    r.readAsDataURL(file);
-  });
+  // Images are downscaled in the browser first — a raw phone photo is ~10 MB,
+  // which would dominate the page weight for no visible benefit.
+  const isImage = /^image\//i.test(file.type);
+  const prepared = isImage
+    ? await downscaleImage(file)
+    : {
+        dataUrl: await new Promise<string>((res, rej) => {
+          const r = new FileReader();
+          r.onload = () => res(String(r.result));
+          r.onerror = rej;
+          r.readAsDataURL(file);
+        }),
+        filename: file.name,
+        originalBytes: file.size,
+        bytes: file.size,
+      };
+
+  if (isImage && prepared.bytes < prepared.originalBytes) {
+    console.info(
+      `[upload] ${file.name}: ${formatBytes(prepared.originalBytes)} -> ${formatBytes(prepared.bytes)}`,
+    );
+  }
+
   const resp = await fetch('/__admin/upload', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ filename: file.name, folder, dataUrl }),
+    body: JSON.stringify({ filename: prepared.filename, folder, dataUrl: prepared.dataUrl }),
   });
   const json = await resp.json();
   if (json.url) return json.url;
