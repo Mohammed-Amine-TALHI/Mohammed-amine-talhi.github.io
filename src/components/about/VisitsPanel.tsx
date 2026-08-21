@@ -6,7 +6,7 @@ import { useLang } from '../../lib/i18n';
 import { config, industrialVisits, splitVisit } from '../../lib/data';
 import { dur, on } from '../../lib/anim';
 import Lightbox from '../Lightbox';
-import { asset } from '../../lib/asset';
+import SafeImage from '../SafeImage';
 
 /**
  * Industrial visits.
@@ -69,9 +69,8 @@ export default function VisitsPanel() {
               onClick={() => setShot(i)}
               className="group relative h-28 w-40 shrink-0 overflow-hidden rounded-xl border border-line"
             >
-              <img
-                src={asset(src)}
-                alt=""
+              <SafeImage
+                src={src}
                 className="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
               />
               <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/60 to-transparent" />

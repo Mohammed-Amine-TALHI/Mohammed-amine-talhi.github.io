@@ -10,6 +10,7 @@ import { dur, on } from '../lib/anim';
 import type { AssetKind } from '../lib/types';
 import { asset } from '../lib/asset';
 import { cropStyle, resolveCrop } from '../lib/crop';
+import SafeImage from './SafeImage';
 
 /* Each document type gets its own icon and tint, so a card's attachments are
    readable at a glance the way they are on a conference poster session. */
@@ -98,9 +99,8 @@ export default function Projects() {
 
                   {meta?.cover && (
                     <div className="relative h-36 overflow-hidden border-b border-line">
-                      <img
-                        src={asset(meta.cover)}
-                        alt=""
+                      <SafeImage
+                        src={meta.cover}
                         style={cropStyle(resolveCrop({ imageCrop: meta.coverCrop }))}
                         className="h-full w-full opacity-70 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
                       />

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { HiOutlineX, HiOutlinePhotograph, HiOutlineDocumentText, HiOutlineArrowNarrowRight } from 'react-icons/hi';
+import { HiOutlineX, HiOutlineDocumentText, HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { TbUsersGroup, TbFileTypePdf, TbPresentation, TbLayoutBoardSplit, TbBrandGithub } from 'react-icons/tb';
 import type { IconType } from 'react-icons';
 import SectionHeading from './SectionHeading';
 import Lightbox from './Lightbox';
 import Portal from './Portal';
+import SafeImage from './SafeImage';
 import { useLang } from '../lib/i18n';
 import { config, ASSET_LABEL } from '../lib/data';
 import { dur, on } from '../lib/anim';
@@ -75,26 +76,23 @@ function Card({
         }
       />
 
-      {/* cover — its own box, fixed height, no text inside it */}
+      {/* cover — its own box, fixed height, no text inside it.
+          A deleted file falls back to the same plate an entry with no photo
+          gets, rather than the browser's broken-image icon. */}
       {cover ? (
-        <span className="relative block h-40 shrink-0 overflow-hidden border-b border-line">
-          {/* framing comes from the manual crop set in the admin panel;
-              `contain` letterboxes against a dark plate so tall shots
-              (posters, portraits) are shown whole rather than cropped */}
-          <img
-            src={asset(cover)}
-            alt=""
-            style={cropStyle(resolveCrop(e), e.imageFit ?? 'cover')}
-            className={'h-full w-full ' + (e.imageFit === 'contain' ? 'bg-ink-950 p-1' : '')}
-          />
-          <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/80 via-transparent to-transparent" />
-          {e.images.length > 1 && (
-            <span className="absolute bottom-2 right-2 flex items-center gap-1 rounded-md bg-ink-950/80 px-2 py-1 font-mono text-[10px] text-zinc-300">
-              <HiOutlinePhotograph size={11} />
-              {e.images.length}
+        <SafeImage
+          src={cover}
+          style={cropStyle(resolveCrop(e), e.imageFit ?? 'cover')}
+          className={
+            'block h-40 w-full shrink-0 border-b border-line ' +
+            (e.imageFit === 'contain' ? 'bg-ink-950 p-1' : '')
+          }
+          fallback={
+            <span className={'flex h-24 shrink-0 items-center justify-center border-b border-line ' + a.glow}>
+              <TbUsersGroup className={a.text} size={26} />
             </span>
-          )}
-        </span>
+          }
+        />
       ) : (
         <span className={'flex h-24 shrink-0 items-center justify-center border-b border-line ' + a.glow}>
           <TbUsersGroup className={a.text} size={26} />
@@ -145,6 +143,31 @@ function Card({
         </span>
       </span>
     </motion.button>
+  );
+}
+
+/**
+ * One photo in the journal grid.
+ *
+ * Unmounts itself if the file is missing, so a deleted upload leaves no gap and
+ * no broken-image icon — the grid simply has one fewer tile.
+ */
+function GalleryTile({ src, onOpen }: { src: string; onOpen: () => void }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return null;
+
+  return (
+    <button
+      onClick={onOpen}
+      className="group/img relative aspect-[4/3] overflow-hidden rounded-xl border border-line"
+    >
+      <img
+        src={asset(src)}
+        alt=""
+        onError={() => setFailed(true)}
+        className="h-full w-full object-cover transition-transform duration-500 group-hover/img:scale-105"
+      />
+    </button>
   );
 }
 
@@ -258,17 +281,7 @@ function Journal({
             </p>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
               {e.images.map((src, i) => (
-                <button
-                  key={src}
-                  onClick={() => onShot(i)}
-                  className="group/img relative aspect-[4/3] overflow-hidden rounded-xl border border-line"
-                >
-                  <img
-                    src={asset(src)}
-                    alt=""
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover/img:scale-105"
-                  />
-                </button>
+                <GalleryTile key={src} src={src} onOpen={() => onShot(i)} />
               ))}
             </div>
           </div>
