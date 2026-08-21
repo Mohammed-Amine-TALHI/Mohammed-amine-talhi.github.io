@@ -12,7 +12,7 @@ import { useLang } from '../lib/i18n';
 import { config, ASSET_LABEL } from '../lib/data';
 import { dur, on } from '../lib/anim';
 import { usePreloadImages } from '../lib/preload';
-import { cropStyle, resolveCrop } from '../lib/crop';
+import { cropStyle, resolveCrop, cropFor } from '../lib/crop';
 import type { AssetKind, LeadershipEntry } from '../lib/types';
 import { asset } from '../lib/asset';
 
@@ -166,7 +166,8 @@ function GalleryTile({ src, onOpen }: { src: string; onOpen: () => void }) {
         src={asset(src)}
         alt=""
         onError={() => setFailed(true)}
-        className="h-full w-full object-cover transition-transform duration-500 group-hover/img:scale-105"
+        style={cropStyle(cropFor(src))}
+        className="h-full w-full transition-transform duration-500 group-hover/img:scale-105"
       />
     </button>
   );

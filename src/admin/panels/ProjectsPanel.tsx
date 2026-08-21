@@ -146,6 +146,11 @@ export default function ProjectsPanel({
                         onChange={(imgs) =>
                           set((d) => void (d.projectMeta[p.id] = { ...(d.projectMeta[p.id] ?? {}), gallery: imgs }))
                         }
+                        itemCrops={{
+                          get: (url) => resolveCrop({ imageCrop: cfg.crops?.[url] }),
+                          set: (url, c) => set((d) => void ((d.crops ??= {})[url] = c)),
+                          aspect: 4 / 3,
+                        }}
                       />
                     </Field>
 
@@ -249,6 +254,11 @@ export default function ProjectsPanel({
                   onChange={(imgs) =>
                     set((d) => void (d.projectMeta[p.id] = { ...(d.projectMeta[p.id] ?? {}), gallery: imgs }))
                   }
+                  itemCrops={{
+                    get: (url) => resolveCrop({ imageCrop: cfg.crops?.[url] }),
+                    set: (url, c) => set((d) => void ((d.crops ??= {})[url] = c)),
+                    aspect: 4 / 3,
+                  }}
                 />
               </Field>
 

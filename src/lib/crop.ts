@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { config } from './data';
 
 /**
  * Non-destructive image framing.
@@ -52,4 +53,11 @@ export function cropStyle(crop: Crop, fit: 'cover' | 'contain' = 'cover'): CSSPr
     transform: crop.zoom === 1 ? undefined : `scale(${crop.zoom})`,
     transformOrigin: `${crop.x}% ${crop.y}%`,
   };
+}
+
+/** The stored framing for one photo, by URL. Defaults to centred, unzoomed. */
+export function cropFor(url?: string | null): Crop {
+  if (!url) return { ...DEFAULT_CROP };
+  const stored = config.crops?.[url];
+  return stored ? resolveCrop({ imageCrop: stored }) : { ...DEFAULT_CROP };
 }

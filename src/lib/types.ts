@@ -224,4 +224,10 @@ export interface PortfolioConfig {
   skills: SkillItem[];
   /** keyed by the English language name, so it survives the FR/EN switch */
   languageProof: Record<string, LanguageProof>;
+  /**
+   * Framing for individual photos, keyed by their URL. Galleries are arrays of
+   * URLs with no per-item record of their own, so the crop lives here and
+   * applies wherever that photo is shown.
+   */
+  crops: Record<string, { x: number; y: number; zoom: number }>;
 }

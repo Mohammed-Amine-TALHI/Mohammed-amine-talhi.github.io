@@ -163,6 +163,11 @@ export default function LeadershipPanel({
                 fit={e.imageFit ?? 'cover'}
                 crop={resolveCrop(e)}
                 onCrop={(c) => set((d) => void (d.leadership[i].imageCrop = c))}
+                itemCrops={{
+                  get: (url) => resolveCrop({ imageCrop: cfg.crops?.[url] }),
+                  set: (url, c) => set((d) => void ((d.crops ??= {})[url] = c)),
+                  aspect: 4 / 3,
+                }}
               />
             </Field>
 

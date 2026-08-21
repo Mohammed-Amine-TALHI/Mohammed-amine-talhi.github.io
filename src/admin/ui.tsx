@@ -1,8 +1,16 @@
 import { useRef, useState, type ReactNode } from 'react';
-import { HiOutlineUpload, HiOutlineTrash, HiOutlineDocumentText, HiOutlineExternalLink } from 'react-icons/hi';
+import {
+  HiOutlineUpload,
+  HiOutlineTrash,
+  HiOutlineDocumentText,
+  HiOutlineExternalLink,
+  HiChevronLeft,
+  HiChevronRight,
+  HiOutlineScissors,
+} from 'react-icons/hi';
 import type { Loc } from '../lib/types';
 import CropBox from './CropBox';
-import { resolveCrop, type Crop } from '../lib/crop';
+import { resolveCrop, cropStyle, type Crop } from '../lib/crop';
 import { downscaleImage, formatBytes } from './imageTools';
 
 /* Small building blocks shared by every admin panel. Deliberately plain —
@@ -219,6 +227,7 @@ export function ImageDrop({
   onCrop,
   aspect,
   fit = 'cover',
+  itemCrops,
 }: {
   images: string[];
   onChange: (next: string[]) => void;
@@ -229,11 +238,24 @@ export function ImageDrop({
   onCrop?: (c: Crop) => void;
   aspect?: number;
   fit?: 'cover' | 'contain';
+  /** per-photo framing for galleries, keyed by URL */
+  itemCrops?: { get: (url: string) => Crop; set: (url: string, c: Crop) => void; aspect?: number };
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
-  // the picture the crop frame acts on — the cover, i.e. the first one
+  /** which gallery photo is currently being reframed */
+  const [cropping, setCropping] = useState<string | null>(null);
+  // the picture the single-image crop frame acts on — the cover
   const cropTarget = images[0];
+
+  /** Order matters: the first photo is the cover, and the rest read left to right. */
+  const move = (index: number, dir: -1 | 1) => {
+    const next = index + dir;
+    if (next < 0 || next >= images.length) return;
+    const list = [...images];
+    [list[index], list[next]] = [list[next], list[index]];
+    onChange(list);
+  };
 
   async function upload(files: FileList | null) {
     if (!files?.length) return;
@@ -250,16 +272,77 @@ export function ImageDrop({
   return (
     <div>
       <div className="flex flex-wrap gap-2">
-        {images.map((src) => (
-          <div key={src} className="group relative h-20 w-20 overflow-hidden rounded-lg border border-line">
-            <img src={src} alt="" className="h-full w-full object-cover" />
+        {images.map((src, i) => (
+          <div key={src} className="w-28 overflow-hidden rounded-lg border border-line bg-ink-950">
             <button
-              onClick={() => onChange(images.filter((i) => i !== src))}
-              className="absolute inset-0 grid place-items-center bg-ink-950/80 opacity-0 transition-opacity group-hover:opacity-100"
-              title="Remove from this entry"
+              type="button"
+              onClick={() => itemCrops && setCropping(cropping === src ? null : src)}
+              title={itemCrops ? 'Adjust this photo' : undefined}
+              className="block h-20 w-full"
             >
-              <HiOutlineTrash className="text-red-400" size={16} />
+              <img
+                src={src}
+                alt=""
+                style={itemCrops ? cropStyle(itemCrops.get(src)) : { objectFit: 'cover' }}
+                className="h-full w-full"
+              />
             </button>
+
+            {/* reorder / crop / remove, per photo. A single-image field (a
+                cover) has nothing to reorder against, so it keeps just the
+                delete control. */}
+            <div className="flex items-center justify-between border-t border-line px-1 py-1">
+              {single ? (
+                <button
+                  onClick={() => onChange([])}
+                  title="Remove"
+                  className="mx-auto grid h-6 w-6 place-items-center rounded text-zinc-500 hover:text-red-400"
+                >
+                  <HiOutlineTrash size={12} />
+                </button>
+              ) : (
+                <>
+              <button
+                onClick={() => move(i, -1)}
+                disabled={i === 0}
+                title="Move earlier"
+                className="grid h-6 w-6 place-items-center rounded text-zinc-500 hover:text-zinc-200 disabled:opacity-25"
+              >
+                <HiChevronLeft size={13} />
+              </button>
+
+              {itemCrops && (
+                <button
+                  onClick={() => setCropping(cropping === src ? null : src)}
+                  title="Crop"
+                  className={
+                    'grid h-6 w-6 place-items-center rounded ' +
+                    (cropping === src ? 'text-accent-400' : 'text-zinc-500 hover:text-accent-400')
+                  }
+                >
+                  <HiOutlineScissors size={12} />
+                </button>
+              )}
+
+              <button
+                onClick={() => onChange(images.filter((x) => x !== src))}
+                title="Remove"
+                className="grid h-6 w-6 place-items-center rounded text-zinc-500 hover:text-red-400"
+              >
+                <HiOutlineTrash size={12} />
+              </button>
+
+              <button
+                onClick={() => move(i, 1)}
+                disabled={i === images.length - 1}
+                title="Move later"
+                className="grid h-6 w-6 place-items-center rounded text-zinc-500 hover:text-zinc-200 disabled:opacity-25"
+              >
+                <HiChevronRight size={13} />
+              </button>
+                </>
+              )}
+            </div>
           </div>
         ))}
 
@@ -286,6 +369,24 @@ export function ImageDrop({
       <p className="mt-2 font-mono text-[10px] text-zinc-600">
         saved to public/{folder || ''}/ — commit these files so they appear on the live site
       </p>
+
+      {/* reframing one gallery photo */}
+      {itemCrops && cropping && (
+        <div className="mt-4 rounded-xl border border-accent-500/30 bg-ink-950/40 p-3">
+          <div className="mb-2 flex items-center justify-between">
+            <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-accent-400">
+              Framing photo {images.indexOf(cropping) + 1} of {images.length}
+            </p>
+            <Button onClick={() => setCropping(null)}>Done</Button>
+          </div>
+          <CropBox
+            src={cropping}
+            aspect={itemCrops.aspect ?? 4 / 3}
+            crop={itemCrops.get(cropping)}
+            onChange={(c) => itemCrops.set(cropping, c)}
+          />
+        </div>
+      )}
 
       {/* the crop frame appears as soon as there is something to crop, rather
           than sitting in a separate field further down the form */}

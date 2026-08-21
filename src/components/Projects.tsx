@@ -19,7 +19,7 @@ import { useDocViewer } from './DocViewer';
 import { useLang } from '../lib/i18n';
 import { visibleProjects, projectTags, config, endYear, projectAssets, ASSET_LABEL } from '../lib/data';
 import { dur, on } from '../lib/anim';
-import { cropStyle, resolveCrop } from '../lib/crop';
+import { cropStyle, resolveCrop, cropFor } from '../lib/crop';
 import { usePreloadImages } from '../lib/preload';
 import { asset } from '../lib/asset';
 import type { AssetKind, Project } from '../lib/types';
@@ -138,7 +138,8 @@ function GalleryTile({ src, onOpen }: { src: string; onOpen: () => void }) {
         src={asset(src)}
         alt=""
         onError={() => setFailed(true)}
-        className="h-full w-full object-cover transition-transform duration-500 group-hover/img:scale-105"
+        style={cropStyle(cropFor(src))}
+        className="h-full w-full transition-transform duration-500 group-hover/img:scale-105"
       />
     </button>
   );
