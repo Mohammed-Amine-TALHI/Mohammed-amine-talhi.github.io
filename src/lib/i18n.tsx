@@ -43,6 +43,7 @@ const UI = {
   'about.experience': { en: 'Experience', fr: 'Expérience' },
   'about.education': { en: 'Education', fr: 'Formation' },
   'about.languages': { en: 'Languages', fr: 'Langues' },
+  'languages.certificate': { en: 'Certificate', fr: 'Attestation' },
   'about.downloadCv': { en: 'Download CV', fr: 'Télécharger le CV' },
 
   'projects.eyebrow': { en: 'Selected work', fr: 'Travaux sélectionnés' },

@@ -188,6 +188,14 @@ export interface SkillItem {
   assets?: ProjectAsset[];
 }
 
+/** Proof attached to a language: a certificate scan and/or a PDF. */
+export interface LanguageProof {
+  images: string[];
+  assets: ProjectAsset[];
+  /** short badge shown on the card, e.g. "TOEIC 900" or "DELF B2" */
+  label: string;
+}
+
 export interface PortfolioConfig {
   profile: {
     photo: string;
@@ -212,4 +220,6 @@ export interface PortfolioConfig {
   customProjects: Project[];
   leadership: LeadershipEntry[];
   skills: SkillItem[];
+  /** keyed by the English language name, so it survives the FR/EN switch */
+  languageProof: Record<string, LanguageProof>;
 }

@@ -67,6 +67,24 @@ export function languages(lang: 'en' | 'fr') {
     });
 }
 
+/** Stable key for a language, derived from its English name. */
+export const languageKey = (enName: string) =>
+  enName.toLowerCase().normalize('NFD').replace(/[^a-z]/g, '');
+
+/**
+ * Languages in the display language, each carrying the stable key its
+ * certificate is filed under — the FR and EN lists are parsed from different
+ * strings, so position alone would not survive a language switch.
+ */
+export function languageEntries(lang: 'en' | 'fr') {
+  const english = languages('en');
+  return languages(lang).map((l, i) => ({
+    ...l,
+    key: languageKey(english[i]?.name ?? l.name),
+    proof: config.languageProof?.[languageKey(english[i]?.name ?? l.name)],
+  }));
+}
+
 /** "Teamwork, Leadership, …" → ["Teamwork", "Leadership", …] */
 export function softSkills(lang: 'en' | 'fr') {
   const raw = skillGroup('sk-soft')?.value?.[lang] ?? '';

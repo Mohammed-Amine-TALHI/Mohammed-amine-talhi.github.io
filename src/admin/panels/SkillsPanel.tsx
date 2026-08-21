@@ -3,7 +3,8 @@ import { HiChevronDown, HiChevronUp, HiOutlinePlus, HiOutlineTrash, HiOutlineSea
 import { Card, Button, Input, Select, Field } from '../ui';
 import { autoMatch } from '../../lib/skillLinks';
 import AssetEditor from '../AssetEditor';
-import { resume } from '../../lib/data';
+import { resume, languageEntries } from '../../lib/data';
+import { ImageDrop } from '../ui';
 import { ICONS, resolveIcon, searchIcons } from '../../lib/iconRegistry';
 import { FAMILY_DOT, FAMILY_LABEL, FAMILIES } from '../../lib/skills';
 import type { PortfolioConfig, SkillFamily, SkillItem } from '../../lib/types';
@@ -266,6 +267,58 @@ export default function SkillsAdminPanel({
           );
         })}
       </div>
+
+      {/* ------------------------- languages ------------------------- */}
+      <section className="border-t border-line pt-6">
+        <h2 className="mb-1 font-display text-lg font-semibold text-zinc-100">Language certificates</h2>
+        <p className="mb-4 text-xs text-zinc-500">
+          The languages themselves come from your CV. Attach the proof here — a scan of the TOEIC or DELF/DALF
+          certificate shows as a viewable image, a PDF opens in a new tab.
+        </p>
+
+        <div className="space-y-2">
+          {languageEntries('en').map((l) => {
+            const proof = cfg.languageProof?.[l.key] ?? { images: [], assets: [], label: '' };
+            const write = (next: Partial<typeof proof>) =>
+              set((d) => {
+                d.languageProof ??= {};
+                const current = d.languageProof[l.key] ?? { images: [], assets: [], label: '' };
+                d.languageProof[l.key] = { ...current, ...next };
+              });
+
+            return (
+              <Card key={l.key} className="space-y-4">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="text-sm font-medium text-zinc-200">{l.name}</span>
+                  <span className="font-mono text-[10px] text-zinc-600">{l.level}</span>
+                  <div className="ml-auto w-48">
+                    <Input
+                      value={proof.label ?? ''}
+                      placeholder="Badge — e.g. TOEIC 900"
+                      onChange={(e) => write({ label: e.target.value })}
+                    />
+                  </div>
+                </div>
+
+                <Field label="Certificate scan" hint="shown as an image the visitor can open full-screen">
+                  <ImageDrop
+                    folder="docs"
+                    images={proof.images ?? []}
+                    onChange={(imgs) => write({ images: imgs })}
+                  />
+                </Field>
+
+                <AssetEditor
+                  assets={proof.assets ?? []}
+                  onChange={(next) => write({ assets: next })}
+                  label="Certificate PDF"
+                  hint="optional — opens in a new tab"
+                />
+              </Card>
+            );
+          })}
+        </div>
+      </section>
 
       {picking !== null && list[picking] && (
         <IconPicker

@@ -86,6 +86,7 @@ const blankConfig = {
   customProjects: [],
   leadership: [],
   skills: [],
+  languageProof: {},
 };
 
 /** Seeded once, then owned by the admin panel's Skills tab. */
@@ -133,6 +134,7 @@ config.animation = { ...blankConfig.animation, ...(config.animation ?? {}) };
 
 // seed the toolbox the first time; afterwards the admin owns it
 if (!Array.isArray(config.skills) || config.skills.length === 0) config.skills = DEFAULT_SKILLS;
+config.languageProof ??= {};
 
 // seed contact details from the CV the first time round
 const p = resume.personal;

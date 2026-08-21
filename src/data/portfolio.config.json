@@ -1,6 +1,6 @@
 {
   "profile": {
-    "photo": "/Mohammed-TALHI-jpg-mt295xjf.jpg",
+    "photo": "/Mohammed-TALHI-jpg-mt2z1gop.jpg",
     "resumeUrl": "",
     "githubUrl": "https://github.com/mohammed-amine-talhi",
     "headline": {
@@ -15,9 +15,9 @@
   "contact": {
     "displayName": "Mohammed Amine TALHI",
     "email": "Talhi.MohammedAmine@outlook.com",
-    "emailAlt": "",
+    "emailAlt": "Talhi.MohammedAmine@outlook.com",
     "phone": "+212 679 879 707",
-    "phoneAlt": "",
+    "phoneAlt": "+33 7 51 33 52 30",
     "location": {
       "en": "Ben Guerir, Morocco",
       "fr": "Ben Guerir, Maroc"
@@ -65,17 +65,17 @@
     }
   },
   "animation": {
-    "preset": "balanced",
-    "speed": 1,
+    "preset": "subtle",
+    "speed": 1.25,
     "nameEffect": "shine",
     "backgroundBlooms": true,
+    "liquidEther": false,
+    "etherIntensity": 0.65,
     "orbitDots": false,
     "flowConsole": true,
-    "timelinePulse": true,
+    "timelinePulse": false,
     "hoverLift": true,
-    "scrollReveal": true,
-    "liquidEther": false,
-    "etherIntensity": 0.5
+    "scrollReveal": true
   },
   "visibility": {
     "projects": {
@@ -202,9 +202,9 @@
       },
       "images": [
         "/leadership/SaveClip-App_468799354_18039148763208882_1925469807165748983-mt2st4j7.jpg",
-        "/leadership/Capture-d--cran-2026-05-06-102012-mt2suazu.png",
-        "/leadership/Capture-d--cran-2026-05-06-101957-mt2sub1s.png",
-        "/leadership/Capture-d--cran-2026-05-06-102033-mt2u3yxh.png"
+        "/leadership/Capture-d--cran-2026-05-06-102033-mt2yrp4f.png",
+        "/leadership/Capture-d--cran-2026-05-06-102012-mt2ysax9.png",
+        "/leadership/Capture-d--cran-2026-05-06-101957-mt2ysays.png"
       ],
       "tags": [
         "Sports",
@@ -368,5 +368,6 @@
       "icon": "stack",
       "family": "scm"
     }
-  ]
+  ],
+  "languageProof": {}
 }
