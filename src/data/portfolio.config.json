@@ -54,12 +54,14 @@
       },
       "edu-emines-v5": {
         "images": [
-          "/visits/linkedin-image-mt2amel9.jpg"
+          "/visits/linkedin-image-mt2amel9.jpg",
+          "/visits/20260122_112929570_iOS-mt7fqugd.jpg"
         ]
       },
       "edu-emines-v2": {
         "images": [
-          "/visits/WhatsApp-Image-2026-08-21-at-2-52-45-AM-mt2arelq.jpeg"
+          "/visits/WhatsApp-Image-2026-08-21-at-2-52-45-AM-mt2arelq.jpeg",
+          "/visits/20260120_043729965_iOS-mt7fqphs.jpg"
         ]
       },
       "edu-emines-v1": {
@@ -163,7 +165,18 @@
         "Vector design",
         "Print production"
       ],
-      "gallery": []
+      "gallery": [
+        "/covers/Capture-d--cran-2026-08-24-173733-mt7h3je2.png",
+        "/covers/WhatsApp-Image-2026-08-24-at-5-47-06-PM-mt7gyx2p.jpeg",
+        "/covers/Capture-d--cran-2026-08-24-173817-mt7gses4.png",
+        "/covers/IMG_3517-mt7gjxof.jpg",
+        "/covers/Capture-d--cran-2026-08-24-17390s5-mt7gserg.png",
+        "/covers/WhatsApp-Image-2026-08-24-at-5-41-01-PM--1--mt7gsepx.jpeg",
+        "/covers/Post-insta-hoodie-copie1-mt7gioc5.jpg",
+        "/covers/WhatsApp-Image-2026-08-24-at-5-41-01-PM--2--mt7gsetl.jpeg",
+        "/covers/WhatsApp-Image-2026-08-24-at-5-41-01-PM-mt7h0u04.jpeg"
+      ],
+      "cover": "/covers/WhatsApp-Image-2025-12-10---02-30-38_efd63cee-mt7gw6am.jpg"
     },
     "custom-8zi9hk0": {
       "assets": [
@@ -575,6 +588,46 @@
       "x": 55.871216456095375,
       "y": 50,
       "zoom": 1.1
+    },
+    "/covers/Post-insta-hoodie-copie1-mt7gioc5.jpg": {
+      "x": 48.75000317891438,
+      "y": 29.166666666666668,
+      "zoom": 1
+    },
+    "/covers/IMG_3517-mt7gjxof.jpg": {
+      "x": 31.402144788369082,
+      "y": 65.3296876066844,
+      "zoom": 1.48
+    },
+    "/covers/IMG_3306-mt7gi82y.jpg": {
+      "x": 50,
+      "y": 50,
+      "zoom": 1.12
+    },
+    "/covers/WhatsApp-Image-2025-12-10---02-30-38_efd63cee-mt7gj2te.jpg": {
+      "x": 50.186023258027575,
+      "y": 50.7440551878914,
+      "zoom": 1.12
+    },
+    "/covers/Capture-d--cran-2026-08-24-173733-mt7gsesv.png": {
+      "x": 50.416652361551925,
+      "y": 28.611108991834854,
+      "zoom": 1
+    },
+    "/covers/WhatsApp-Image-2026-08-24-at-5-41-01-PM-mt7gseqp.jpeg": {
+      "x": 48.333350817362465,
+      "y": 29.166656070285374,
+      "zoom": 1
+    },
+    "/covers/WhatsApp-Image-2026-08-24-at-5-41-01-PM--2--mt7gsetl.jpeg": {
+      "x": 63.33333651224772,
+      "y": 31.38888676961263,
+      "zoom": 1
+    },
+    "/covers/WhatsApp-Image-2026-08-24-at-5-41-01-PM-mt7h0u04.jpeg": {
+      "x": 48.541673024495445,
+      "y": 37.22222646077474,
+      "zoom": 1
     }
   }
 }
