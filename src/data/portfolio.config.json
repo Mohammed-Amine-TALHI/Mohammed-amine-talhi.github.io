@@ -125,11 +125,11 @@
   },
   "projectMeta": {
     "proj-basketball": {
-      "cover": "/covers/IMG_6373-JPG-mt32boui.jpg",
+      "cover": "/covers/IMG_6373-mt3fq4cx.jpg",
       "coverCrop": {
-        "x": 54.01039918263753,
-        "y": 73.37061811972605,
-        "zoom": 1.12
+        "x": 37.480705685611596,
+        "y": 74.95286822668695,
+        "zoom": 1.3
       },
       "assets": [
         {
@@ -152,8 +152,9 @@
         }
       ],
       "gallery": [
-        "/covers/IMG_6369-JPG-mt32bcc6.jpg",
-        "/covers/IMG_6088-JPG-mt32bjkz.jpg"
+        "/covers/IMG_6371-mt3fvrl0.jpg",
+        "/covers/IMG_6088--1--mt3fs2c5.jpg",
+        "/covers/IMG_6096-mt3fs2ta.jpg"
       ]
     },
     "custom-design-apparel": {
@@ -163,6 +164,47 @@
         "Print production"
       ],
       "gallery": []
+    },
+    "custom-8zi9hk0": {
+      "assets": [
+        {
+          "id": "asset-p7x806u",
+          "kind": "poster",
+          "label": {
+            "en": "",
+            "fr": ""
+          },
+          "url": "/docs/poster-mt3fjri5.pdf"
+        },
+        {
+          "id": "asset-a3vztst",
+          "kind": "report",
+          "label": {
+            "en": "",
+            "fr": ""
+          },
+          "url": "/docs/report-mt3fjxz9.pdf"
+        }
+      ]
+    },
+    "proj-carprice": {
+      "assets": [
+        {
+          "id": "asset-nxm27fg",
+          "kind": "presentation",
+          "label": {
+            "en": "",
+            "fr": ""
+          },
+          "url": "/docs/Projet-Analytics-Edge-mt3fzgc5.pdf"
+        }
+      ],
+      "cover": "/covers/Capture-d--cran-2026-08-21-220951-mt3g11bi.png",
+      "coverCrop": {
+        "x": 49.791669845581055,
+        "y": 72.89517064657862,
+        "zoom": 1
+      }
     }
   },
   "customProjects": [
@@ -200,6 +242,30 @@
           "text": {
             "en": "All four pieces were produced and worn by the team — the photographs below are the finished kit in use, not mockups.",
             "fr": "Les quatre pièces ont été produites et portées par l'équipe — les photos ci-dessous montrent les tenues réelles en usage, et non des maquettes."
+          }
+        }
+      ]
+    },
+    {
+      "id": "custom-8zi9hk0",
+      "title": {
+        "en": "Teachy : Online Language Learning Platform",
+        "fr": "Teachy : Plateforme d'Apprentissage des Langues"
+      },
+      "tag": {
+        "en": "Entrepreneurship / EdTech",
+        "fr": "Entrepreneurship / EdTech"
+      },
+      "period": {
+        "en": "",
+        "fr": ""
+      },
+      "bullets": [
+        {
+          "id": "b-0qilv1z",
+          "text": {
+            "en": "Designed an innovative online language learning platform connecting learners with native speakers for live interactive immersion, personalized courses, and pedagogical resources.",
+            "fr": "Conception d'une plateforme innovante d'apprentissage des langues connectant apprenants et locuteurs natifs pour une immersion interactive en direct, cours personnalisés et ressources pédagogiques."
           }
         }
       ]
@@ -494,6 +560,21 @@
       "x": 51.04405729818271,
       "y": 34.303016999533284,
       "zoom": 1.24
+    },
+    "/covers/IMG_6096-mt3fs2ta.jpg": {
+      "x": 51.666673024495445,
+      "y": 61.38889524671767,
+      "zoom": 1
+    },
+    "/covers/IMG_6088--1--mt3fs2c5.jpg": {
+      "x": 50.41665236155192,
+      "y": 42.22224553426107,
+      "zoom": 1
+    },
+    "/covers/IMG_6371-mt3fvrl0.jpg": {
+      "x": 55.871216456095375,
+      "y": 50,
+      "zoom": 1.1
     }
   }
 }

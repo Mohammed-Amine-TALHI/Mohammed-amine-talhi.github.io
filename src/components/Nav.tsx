@@ -61,7 +61,7 @@ export default function Nav() {
         <nav className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-5 sm:px-8">
           <a href="#top" className="group flex items-center gap-2.5" aria-label="Home">
             <span className="relative inline-grid place-items-center rounded-xl bg-gradient-to-br from-accent-400 to-accent-700 px-3 py-2 font-display text-sm font-bold text-ink-950">
-              TALHI
+              TALHI Mohammed Amine
             <span className="absolute inset-0 rounded-xl bg-accent-500/40 blur-md transition-opacity duration-300 group-hover:opacity-100 md:opacity-0" />
             </span>
           </a>
