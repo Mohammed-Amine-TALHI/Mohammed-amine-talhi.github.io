@@ -77,7 +77,7 @@ export default function SkillsPanel() {
 
                 {/* how many projects this skill links to */}
                 {counts[id] > 0 && (
-                  <span className="pointer-events-none absolute -bottom-1 -right-1 grid h-4 min-w-4 place-items-center rounded-full border border-ink-950 bg-accent-500 px-1 font-mono text-[9px] font-bold text-ink-950">
+                  <span className="pointer-events-none absolute -bottom-1 -right-1 grid h-4 min-w-4 place-items-center rounded-full border border-ink-950 bg-accent-500 px-1 font-mono text-[9px] font-bold text-[color:var(--on-accent)]">
                     {counts[id]}
                   </span>
                 )}

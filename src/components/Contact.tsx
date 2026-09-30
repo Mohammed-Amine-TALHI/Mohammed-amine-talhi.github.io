@@ -54,7 +54,7 @@ export default function Contact() {
             </p>
             <a
               href={'mailto:' + contact.email}
-              className="group relative mt-8 inline-flex items-center gap-2.5 overflow-hidden rounded-xl bg-gradient-to-r from-accent-400 to-accent-600 px-6 py-3.5 text-sm font-semibold text-ink-950 transition-transform hover:scale-[1.03]"
+              className="group relative mt-8 inline-flex items-center gap-2.5 overflow-hidden rounded-xl bg-gradient-to-r from-accent-400 to-accent-600 px-6 py-3.5 text-sm font-semibold text-[color:var(--on-accent)] transition-transform hover:scale-[1.03]"
             >
               <HiOutlineMail size={17} className="relative z-10" />
               <span className="relative z-10">{ui('contact.email')}</span>

@@ -668,7 +668,7 @@
   "theme": {
     "default": "dark",
     "toggle": true,
-    "palette": "custom",
+    "palette": "classic",
     "ink": "neutral",
     "accent": "#ffffff"
   },

@@ -44,9 +44,11 @@ export function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) =
     >
       {/* 44px pill − 2×2px padding − 20px knob = 20px of travel.
           Inline style rather than ml-* so it never depends on JIT class detection. */}
+      {/* the knob takes the ink that reads on the accent — so a white accent
+          gives a white pill with a dark knob instead of white on white */}
       <span
-        style={{ marginLeft: on ? 20 : 0 }}
-        className="block h-5 w-5 rounded-full bg-white shadow-sm transition-[margin-left] duration-200 ease-out"
+        style={{ marginLeft: on ? 20 : 0, background: on ? 'var(--on-accent)' : '#ffffff' }}
+        className="block h-5 w-5 rounded-full shadow-sm transition-[margin-left,background] duration-200 ease-out"
       />
     </button>
   );
@@ -163,7 +165,7 @@ export function Button({
   ...rest
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'ghost' | 'danger' }) {
   const styles = {
-    primary: 'bg-accent-500 text-ink-950 hover:bg-accent-400 font-semibold',
+    primary: 'bg-accent-500 text-[color:var(--on-accent)] hover:bg-accent-400 font-semibold',
     ghost: 'border border-line text-zinc-300 hover:border-zinc-600 hover:text-zinc-100',
     danger: 'border border-red-900/60 text-red-400 hover:bg-red-950/40',
   }[variant];

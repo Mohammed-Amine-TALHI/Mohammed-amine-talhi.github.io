@@ -236,7 +236,7 @@ export default function SkillsAdminPanel({
                             <span
                               className={
                                 'grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[4px] border text-[8px] ' +
-                                (linked ? 'border-accent-500 bg-accent-500 text-ink-950' : 'border-zinc-700')
+                                (linked ? 'border-accent-500 bg-accent-500 text-[color:var(--on-accent)]' : 'border-zinc-700')
                               }
                             >
                               {linked ? '✓' : ''}

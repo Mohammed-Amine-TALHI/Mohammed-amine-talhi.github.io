@@ -106,7 +106,7 @@ export function DocViewerProvider({ children }: { children: ReactNode }) {
                   <a
                     href={href}
                     download={external ? undefined : saveAs}
-                    className="flex h-9 shrink-0 items-center gap-1.5 rounded-lg bg-gradient-to-r from-accent-400 to-accent-600 px-3 text-[11.5px] font-semibold text-ink-950 transition-transform hover:scale-[1.03] sm:px-4"
+                    className="flex h-9 shrink-0 items-center gap-1.5 rounded-lg bg-gradient-to-r from-accent-400 to-accent-600 px-3 text-[11.5px] font-semibold text-[color:var(--on-accent)] transition-transform hover:scale-[1.03] sm:px-4"
                   >
                     <HiOutlineDownload size={14} />
                     {ui('doc.download')}

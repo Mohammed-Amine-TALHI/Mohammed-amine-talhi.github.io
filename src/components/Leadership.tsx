@@ -214,7 +214,7 @@ function Journal({
         <button
           onClick={onClose}
           aria-label="Close"
-          className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/15 bg-ink-950/60 text-zinc-300 transition-all hover:scale-105 hover:border-accent-500/60 hover:bg-accent-500 hover:text-ink-950"
+          className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/15 bg-ink-950/60 text-zinc-300 transition-all hover:scale-105 hover:border-accent-500/60 hover:bg-accent-500 hover:text-[color:var(--on-accent)]"
         >
           <HiOutlineX size={19} />
         </button>

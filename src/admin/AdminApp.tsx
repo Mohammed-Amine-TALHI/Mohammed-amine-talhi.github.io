@@ -145,7 +145,7 @@ export default function AdminApp() {
     <div className="min-h-screen bg-ink-950 text-zinc-300">
       <header className="sticky top-0 z-40 border-b border-line bg-ink-950/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-3 px-5 py-3.5">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-accent-400 to-accent-700 font-display text-xs font-bold text-ink-950">
+          <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-accent-400 to-accent-700 font-display text-xs font-bold text-[color:var(--on-accent)]">
             MA
           </span>
           <div className="mr-auto">

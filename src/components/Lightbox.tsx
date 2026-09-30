@@ -87,7 +87,7 @@ export default function Lightbox({
           <button
             onClick={onClose}
             aria-label="Close"
-            className="absolute right-4 top-4 z-10 grid h-12 w-12 place-items-center rounded-full border border-white/20 bg-ink-950/85 text-zinc-200 shadow-lg backdrop-blur transition-all hover:scale-105 hover:border-accent-500/60 hover:bg-accent-500 hover:text-ink-950 sm:right-6 sm:top-6"
+            className="absolute right-4 top-4 z-10 grid h-12 w-12 place-items-center rounded-full border border-white/20 bg-ink-950/85 text-zinc-200 shadow-lg backdrop-blur transition-all hover:scale-105 hover:border-accent-500/60 hover:bg-accent-500 hover:text-[color:var(--on-accent)] sm:right-6 sm:top-6"
           >
             <HiOutlineX size={22} />
           </button>
