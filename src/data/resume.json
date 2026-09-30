@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-30T06:23:20.921Z",
+  "syncedAt": "2026-09-30T21:39:34.582Z",
   "personal": {
     "name": "Mohammed Amine TALHI",
     "phone": {
@@ -87,8 +87,8 @@
         {
           "id": "exp-pfe-b1",
           "text": {
-            "fr": "Modèle MILP de la chaîne mine → parc brut → laverie → parc lavé → train (Python / PuLP, solveur HiGHS, validé sous MATLAB) : réglages dépendants de la séquence, interdiction de sauter un tas, couloirs qualité (BPL, SiO2, MgO, Cd), dates dues des trains.",
-            "en": "MILP model of the mine → raw stockyard → washing plant → washed stockyard → train chain (Python / PuLP, HiGHS solver, validated in MATLAB): sequence-dependent setups, no-pile-skipping rule, quality corridors (BPL, SiO2, MgO, Cd), train due dates."
+            "fr": "Modèle MILP de la chaîne mine → parc brut → laverie → parc lavé → parc HC → train (Python / PuLP, solveur HiGHS) : réglages dépendants de la séquence, interdiction de sauter un tas, couloirs qualité (BPL, SiO2, MgO, Cd), dates dues des trains.",
+            "en": "MILP model of the mine → raw stockyard → washing plant → washed stockyard → HC stockyard → train chain (Python / PuLP, HiGHS solver): sequence-dependent setups, no-pile-skipping rule, quality corridors (BPL, SiO2, MgO, Cd), train due dates."
           },
           "tags": [
             "optimization",
@@ -134,8 +134,8 @@
         {
           "id": "exp-pfe-b5",
           "text": {
-            "fr": "Digitalisation maintenance : référentiel web des tambours de convoyeurs (React / Laravel / MySQL) — schéma interactif, recherche globale, fiches techniques, import Excel, gestion des rôles — 22 tambours et 44 composants, après 377 arrêts convoyeurs en 6 mois.",
-            "en": "Maintenance digitalization: web referential of conveyor drums (React / Laravel / MySQL) — interactive plant diagram, global search, technical sheets, Excel import, role-based access — 22 drums and 44 components, following 377 conveyor stoppages in 6 months."
+            "fr": "Digitalisation maintenance : référentiel web des tambours de convoyeurs (React / Laravel / MySQL) — schéma interactif de l'installation, recherche globale, fiches techniques (arbre, virole, plans, rechanges), import Excel, gestion des rôles.",
+            "en": "Maintenance digitalization: web referential of conveyor drums (React / Laravel / MySQL) — interactive plant diagram, global search, technical sheets (shaft, shell, drawings, spares), Excel import, role-based access."
           },
           "tags": [
             "digitalization",
@@ -1105,8 +1105,8 @@
         "en": "EMINES – Mohammed VI Polytechnic University"
       },
       "degree": {
-        "fr": "Diplôme d'ingénieur en management industriel — Option Supply Chain Management (obtenu en 2026)",
-        "en": "Engineering Degree in Industrial Management — Supply Chain Management option (awarded 2026)"
+        "fr": "Diplôme d'ingénieur en management industriel — Option Supply Chain Management",
+        "en": "Engineering Degree in Industrial Management — Supply Chain Management option"
       },
       "location": {
         "fr": "Ben Guerir, Maroc",
@@ -1298,8 +1298,8 @@
         "en": "Software & Tools"
       },
       "value": {
-        "en": "SAP S/4HANA (PP, MM, SD, DS), Python (PuLP, pandas), Power BI, Advanced Excel (Power Query, Pivot Tables, VBA), SQL / MySQL, MATLAB, ReactJS, Laravel, MS Project, Power Automate, Simul8, @Risk, SolidWorks, Java, Arduino.",
-        "fr": "SAP S/4HANA (PP, MM, SD, DS), Python (PuLP, pandas), Power BI, Excel avancé (Power Query, TCD, VBA), SQL / MySQL, MATLAB, ReactJS, Laravel, MS Project, Power Automate, Simul8, @Risk, SolidWorks, Java, Arduino."
+        "en": "SAP S/4HANA (PP, MM, SD), Python (PuLP, pandas), Power BI, Advanced Excel (Power Query, Pivot Tables, VBA), SQL / MySQL, MATLAB, ReactJS, Laravel, MS Project, Power Automate, Simul8, @Risk, SolidWorks, Java, Arduino.",
+        "fr": "SAP S/4HANA (PP, MM, SD), Python (PuLP, pandas), Power BI, Excel avancé (Power Query, TCD, VBA), SQL / MySQL, MATLAB, ReactJS, Laravel, MS Project, Power Automate, Simul8, @Risk, SolidWorks, Java, Arduino."
       }
     },
     {
@@ -1309,8 +1309,8 @@
         "en": "Methods"
       },
       "value": {
-        "en": "Production planning & scheduling, MRP / S&OP, Lean Six Sigma (VSM, SIPOC, Ishikawa, 5 Whys, Kaizen), operations research (MILP), business process mapping (BPMN), fit-gap analysis, functional specifications, UAT, key-user training, project management.",
-        "fr": "Planification & ordonnancement de production, MRP / S&OP, Lean Six Sigma (VSM, SIPOC, Ishikawa, 5 Pourquoi, Kaizen), recherche opérationnelle (MILP), cartographie des processus (BPMN), analyse fit-gap, spécifications fonctionnelles, recette (UAT), formation key users, gestion de projet."
+        "en": "Production planning & scheduling, MRP / S&OP, Lean Six Sigma (VSM, SIPOC, Ishikawa, 5 Whys, Kaizen), operations research (MILP), business process mapping, project management.",
+        "fr": "Planification & ordonnancement de production, MRP / S&OP, Lean Six Sigma (VSM, SIPOC, Ishikawa, 5 Pourquoi, Kaizen), recherche opérationnelle (MILP), cartographie des processus, gestion de projet."
       }
     },
     {

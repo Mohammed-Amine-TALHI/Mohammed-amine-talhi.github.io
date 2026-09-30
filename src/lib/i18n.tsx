@@ -116,9 +116,11 @@ const STORAGE_KEY = 'portfolio.lang';
 
 export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>(() => {
+    // a visitor who already used the switch keeps their choice; everyone
+    // else lands on French, whatever their browser language says
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved === 'en' || saved === 'fr') return saved;
-    return navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'en';
+    return 'fr';
   });
 
   useEffect(() => {

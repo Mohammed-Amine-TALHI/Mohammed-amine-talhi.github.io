@@ -1,6 +1,6 @@
 {
   "profile": {
-    "photo": "/Mohammed-TALHI-jpg-mt31o4ib.jpg",
+    "photo": "/DSC03556-munu9hv7.jpg",
     "resumeUrl": "",
     "githubUrl": "https://github.com/mohammed-amine-talhi",
     "headline": {
@@ -12,9 +12,9 @@
       "fr": "Bonjour, je suis Mohammed Amine — ingénieur Supply Chain, diplômé de l'EMINES – UM6P (School of Industrial Management), ouvert à un CDI en supply chain, process & production ou conseil IT/ERP.\n\nCe qui me passionne vraiment, c'est le terrain intermédiaire : l'écart entre les données réelles d'un site et la décision qu'il faut prendre à 6h du matin. Je construis les modèles qui comblent cet écart — ordonnancement MILP, diagnostics Lean, prévision — et la couche digitale qui les rend exploitables : tableaux de bord, flux ERP (SAP S/4HANA), cartographies de processus. Mon PFE chez OCP, c'était exactement ça : optimiser la chaîne mine → laverie → chargement train, où un diagnostic Lean a révélé une efficacité de cycle de 0,15 % cachée dans un délai de 11,7 jours.\n\nJe l'ai fait au Maroc, au Brésil, dans des entrepôts français. En dehors, j'ai été capitaine des équipes de basketball de l'EMINES et de l'UM6P — ce qui, au fond, est aussi un problème d'ordonnancement."
     },
     "photoCrop": {
-      "x": 50,
-      "y": 50,
-      "zoom": 1
+      "x": 55.119605123260875,
+      "y": 65.92593281357377,
+      "zoom": 1.2
     },
     "schoolLogo": "/logos/emines-rmbgj-munqsy7a.png"
   },
@@ -73,14 +73,14 @@
     }
   },
   "animation": {
-    "preset": "subtle",
+    "preset": "balanced",
     "speed": 1.25,
-    "nameEffect": "shine",
+    "nameEffect": "typewriter",
     "backgroundBlooms": true,
     "liquidEther": false,
-    "etherIntensity": 0.55,
-    "orbitDots": false,
-    "flowConsole": false,
+    "etherIntensity": 0.65,
+    "orbitDots": true,
+    "flowConsole": true,
     "timelinePulse": true,
     "hoverLift": true,
     "scrollReveal": true,
@@ -161,6 +161,7 @@
       "gallery": [
         "/covers/IMG_6371-mt3fvrl0.jpg",
         "/covers/IMG_6088--1--mt3fs2c5.jpg",
+        "/covers/maquette-PNG-muo1hsm0.png",
         "/covers/IMG_6096-mt3fs2ta.jpg"
       ]
     },
@@ -223,6 +224,19 @@
         "y": 72.89517064657862,
         "zoom": 1
       }
+    },
+    "387557e5-2858-455d-ab3d-ba9f842fbe37": {
+      "cover": "/covers/2022_02_25_05_30_IMG_6179-muo0xfjx.jpg",
+      "coverCrop": {
+        "x": 32.08332856496176,
+        "y": 65.97333708142679,
+        "zoom": 1
+      },
+      "gallery": [
+        "/covers/2022_02_25_05_30_IMG_6177-muo0yv1h.jpg",
+        "/covers/2022_02_25_05_30_IMG_6180-muo0yvrb.jpg",
+        "/covers/Capture-d--cran-2023-07-09-114551-muo2c2ie.png"
+      ]
     }
   },
   "customProjects": [
@@ -663,12 +677,27 @@
       "x": 49.791669845581055,
       "y": 76.66665183173285,
       "zoom": 1
+    },
+    "/covers/2022_02_25_05_30_IMG_6177-muo0yv1h.jpg": {
+      "x": 51.250012715657554,
+      "y": 69.44444444444444,
+      "zoom": 1
+    },
+    "/covers/2022_02_25_05_30_IMG_6180-muo0yvrb.jpg": {
+      "x": 51.450912157694496,
+      "y": 0,
+      "zoom": 1
+    },
+    "/covers/2022_02_25_06_13_IMG_6184-muo0yuwp.jpg": {
+      "x": 57.08333651224772,
+      "y": 58.61112806532119,
+      "zoom": 1
     }
   },
   "theme": {
-    "default": "dark",
+    "default": "light",
     "toggle": true,
-    "palette": "classic",
+    "palette": "brand",
     "ink": "neutral",
     "accent": "#ffffff"
   },
@@ -694,7 +723,7 @@
       "/graduation/DSC03550-munqxmkx.jpg",
       "/graduation/DSC03513-munqyhdu.jpg"
     ],
-    "postUrl": "",
+    "postUrl": "https://lnkd.in/p/eF-DW9Xa",
     "postLabel": {
       "en": "",
       "fr": ""
