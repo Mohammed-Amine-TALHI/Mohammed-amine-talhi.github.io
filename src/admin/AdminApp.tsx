@@ -10,15 +10,19 @@ import ContactPanel from './panels/ContactPanel';
 import VisitsAdminPanel from './panels/VisitsPanel';
 import AnimationsPanel from './panels/AnimationsPanel';
 import SkillsAdminPanel from './panels/SkillsPanel';
+import GraduationPanel from './panels/GraduationPanel';
+import SectionsPanel from './panels/SectionsPanel';
 
 const TABS = [
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
   { id: 'leadership', label: 'Leadership' },
   { id: 'visits', label: 'Visits' },
+  { id: 'graduation', label: 'Graduation' },
+  { id: 'sections', label: 'Sections' },
   { id: 'profile', label: 'Profile' },
   { id: 'contact', label: 'Contact & CV' },
-  { id: 'animations', label: 'Animations' },
+  { id: 'animations', label: 'Animations & Theme' },
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];
@@ -96,7 +100,8 @@ export default function AdminApp() {
 
       baseMtime.current = json.mtime ?? baseMtime.current;
       setDirty(false);
-      flash('Saved to ' + json.path);
+      const n = (json.pruned ?? []).length;
+      flash('Saved to ' + json.path + (n ? ` · ${n} unused file${n > 1 ? 's' : ''} removed` : ''));
     } catch (err) {
       flash((err as Error).message, true);
     } finally {
@@ -226,6 +231,8 @@ export default function AdminApp() {
         {tab === 'skills' && <SkillsAdminPanel cfg={cfg} set={set} />}
         {tab === 'leadership' && <LeadershipPanel cfg={cfg} set={set} />}
         {tab === 'visits' && <VisitsAdminPanel cfg={cfg} set={set} />}
+        {tab === 'graduation' && <GraduationPanel cfg={cfg} set={set} />}
+        {tab === 'sections' && <SectionsPanel cfg={cfg} set={set} />}
         {tab === 'profile' && <ProfilePanel cfg={cfg} set={set} />}
         {tab === 'contact' && <ContactPanel cfg={cfg} set={set} />}
         {tab === 'animations' && <AnimationsPanel cfg={cfg} set={set} />}

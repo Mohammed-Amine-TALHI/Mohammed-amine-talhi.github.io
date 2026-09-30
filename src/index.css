@@ -1,26 +1,182 @@
 @import 'tailwindcss';
 
 /* ---------------------------------------------------------------------------
-   Design tokens — a single dark palette with an amber→orange accent.
-   Tailwind v4 reads these and generates `bg-ink-900`, `text-accent-400`, …
+   Design tokens.
+
+   Two colours drive the whole site — `--accent` (buttons, links, numbers) and
+   `--brand` (the second hue: nav name, blooms, sketch pencil) — plus an "ink"
+   family for the dark backgrounds. Every Tailwind scale below is *derived*
+   from those with color-mix(), so the admin can switch the palette (or type
+   its own two hexes) by setting three things on <html>:
+
+     style="--accent: #e8412a; --brand: #1d2b5a"   the two hues
+     data-ink="navy" | "neutral"                     dark background family
+     data-theme="light" | "dark"                     the visitor's theme
+
+   Presets live in src/lib/theme.tsx. Tailwind v4 emits `bg-accent-500` as
+   `var(--color-accent-500)`, which is why re-declaring the variables here is
+   enough — no component has to know which palette is active.
 --------------------------------------------------------------------------- */
 @theme {
+  /* placeholders so Tailwind generates the utilities; the real values are the
+     :root rules further down, which win because they come later */
+  --color-ink-950: #0a0f1f;
+  --color-ink-900: #0e152a;
+  --color-ink-850: #121a33;
+  --color-ink-800: #17203d;
+  --color-ink-700: #1e2a4c;
+  --color-line: #27345c;
+
+  --color-accent-300: #ff9a85;
+  --color-accent-400: #ff7a60;
+  --color-accent-500: #e8412a;
+  --color-accent-600: #c9331c;
+  --color-accent-700: #9e2712;
+
+  --color-brand-300: #8fa3d9;
+  --color-brand-400: #5b73b8;
+  --color-brand-500: #34488a;
+  --color-brand-600: #1d2b5a;
+  --color-brand-700: #14203f;
+
+  --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* ------------------------------ the two hues ------------------------------ */
+:root {
+  --accent: #e8412a; /* UM6P orange */
+  --brand: #1d2b5a; /* EMINES navy */
+  /* contrast-safe variants, recomputed by lib/theme.tsx for custom palettes */
+  --accent-deep: #c9331c; /* dark enough for text on paper */
+  --accent-lit: #ff7a60; /* light enough for text on navy */
+  --brand-deep: #14203f; /* headings on paper */
+  --brand-lit: #8fa3d9; /* brand-coloured text on navy */
+  --on-accent: #ffffff; /* ink on an accent-filled button */
+  --on-brand: #ffffff; /* ink on a brand-filled tile */
+}
+
+/* ------------------------------- dark theme ------------------------------- */
+:root {
+  color-scheme: dark;
+
+  /* navy ink: the dark theme reads as the same brand as the white one */
+  --color-ink-950: color-mix(in oklab, var(--brand) 22%, #06080f);
+  --color-ink-900: color-mix(in oklab, var(--brand) 30%, #06080f);
+  --color-ink-850: color-mix(in oklab, var(--brand) 36%, #06080f);
+  --color-ink-800: color-mix(in oklab, var(--brand) 44%, #06080f);
+  --color-ink-700: color-mix(in oklab, var(--brand) 56%, #06080f);
+  --color-line: color-mix(in oklab, var(--brand) 66%, #0a0d18);
+
+  /* text-weight steps come from the "lit" variant, guaranteed readable on navy */
+  --color-accent-300: color-mix(in oklab, var(--accent-lit) 75%, white);
+  --color-accent-400: var(--accent-lit);
+  --color-accent-500: color-mix(in oklab, var(--accent-lit) 50%, var(--accent));
+  --color-accent-600: var(--accent);
+  --color-accent-700: color-mix(in oklab, var(--accent) 82%, black);
+
+  --color-brand-300: color-mix(in oklab, var(--brand-lit) 75%, white);
+  --color-brand-400: var(--brand-lit);
+  --color-brand-500: color-mix(in oklab, var(--brand-lit) 40%, var(--brand));
+  --color-brand-600: var(--brand);
+  --color-brand-700: color-mix(in oklab, var(--brand) 75%, black);
+
+  --sketch-pencil: #e4e4ec;
+  --sketch-alpha: 0.42;
+  --grid-line: rgba(255, 255, 255, 0.035);
+  --vignette: color-mix(in srgb, var(--color-ink-950) 88%, transparent);
+  --halo: color-mix(in srgb, var(--color-ink-950) 55%, transparent);
+  --console-node: var(--color-ink-900);
+  --console-ring: var(--color-brand-500);
+  --shine-base: #e4e4e7;
+  --name-color: var(--color-accent-400);
+}
+
+/* neutral ink: the original near-black backgrounds (Classic palette) */
+:root[data-ink='neutral'] {
   --color-ink-950: #08080b;
   --color-ink-900: #0c0c11;
   --color-ink-850: #101017;
   --color-ink-800: #15151e;
   --color-ink-700: #1c1c27;
   --color-line: #242430;
+  --console-ring: #2f2f3d;
+}
 
-  --color-accent-300: #fcd34d;
-  --color-accent-400: #fbbf24;
-  --color-accent-500: #f59e0b;
-  --color-accent-600: #ea580c;
-  --color-accent-700: #c2410c;
+/* ------------------------------ light theme ------------------------------- */
+:root[data-theme='light'] {
+  color-scheme: light;
 
-  --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --color-ink-950: #ffffff;
+  --color-ink-900: color-mix(in oklab, var(--brand) 3%, white);
+  --color-ink-850: color-mix(in oklab, var(--brand) 5%, white);
+  --color-ink-800: color-mix(in oklab, var(--brand) 8%, white);
+  --color-ink-700: color-mix(in oklab, var(--brand) 12%, white);
+  --color-line: color-mix(in oklab, var(--brand) 11%, white);
+
+  /* text scale, tinted towards the brand hue — from the "deep" variant so a
+     light brand colour never produces light text on paper */
+  --color-zinc-50: color-mix(in oklab, var(--brand-deep) 40%, #05070f);
+  --color-zinc-100: color-mix(in oklab, var(--brand-deep) 70%, #05070f);
+  --color-zinc-200: var(--brand-deep);
+  --color-zinc-300: color-mix(in oklab, var(--brand-deep) 80%, #9aa3bd);
+  --color-zinc-400: color-mix(in oklab, var(--brand-deep) 55%, #9aa3bd);
+  --color-zinc-500: color-mix(in oklab, var(--brand-deep) 32%, #9aa3bd);
+  --color-zinc-600: color-mix(in oklab, var(--brand-deep) 14%, #9aa3bd);
+  --color-zinc-700: color-mix(in oklab, #9aa3bd 70%, white);
+  --color-zinc-800: color-mix(in oklab, #9aa3bd 40%, white);
+  --color-zinc-900: color-mix(in oklab, #9aa3bd 18%, white);
+  --color-zinc-950: color-mix(in oklab, #9aa3bd 8%, white);
+
+  --color-white: color-mix(in oklab, var(--brand-deep) 85%, black);
+
+  /* text-weight accent steps from the "deep" variant, readable on paper */
+  --color-accent-300: color-mix(in oklab, var(--accent-deep) 85%, black);
+  --color-accent-400: var(--accent-deep);
+  --color-accent-500: var(--accent);
+  --color-accent-600: color-mix(in oklab, var(--accent-deep) 60%, var(--accent));
+  --color-accent-700: color-mix(in oklab, var(--accent-deep) 75%, black);
+
+  --color-brand-300: color-mix(in oklab, var(--brand-deep) 70%, white);
+  --color-brand-400: color-mix(in oklab, var(--brand-deep) 85%, white);
+  --color-brand-500: var(--brand-deep);
+  --color-brand-600: color-mix(in oklab, var(--brand-deep) 85%, black);
+  --color-brand-700: color-mix(in oklab, var(--brand-deep) 65%, black);
+
+  --sketch-pencil: var(--brand-deep);
+  --sketch-alpha: 0.4;
+  --grid-line: color-mix(in srgb, var(--brand) 6%, transparent);
+  --vignette: rgba(255, 255, 255, 0.85);
+  --halo: rgba(255, 255, 255, 0.72);
+  --console-node: var(--color-ink-900);
+  --console-ring: var(--color-brand-300);
+  --shine-base: var(--color-zinc-200);
+  --name-color: var(--color-brand-600);
+}
+
+/* neutral text on paper (Classic palette): plain greys, accent-coloured name */
+:root[data-ink='neutral'][data-theme='light'] {
+  --color-zinc-50: #09090b;
+  --color-zinc-100: #111116;
+  --color-zinc-200: #1f1f27;
+  --color-zinc-300: #33333d;
+  --color-zinc-400: #4b4b57;
+  --color-zinc-500: #6b6b78;
+  --color-zinc-600: #8b8b98;
+  --color-zinc-700: #b3b3be;
+  --color-zinc-800: #d4d4dc;
+  --color-zinc-900: #ececf1;
+  --color-zinc-950: #f6f6f8;
+  --color-white: #0b0b10;
+  --color-ink-900: #f8f8fa;
+  --color-ink-850: #f3f3f6;
+  --color-ink-800: #ececf1;
+  --color-ink-700: #e2e2e9;
+  --color-line: #e4e4ec;
+  --sketch-pencil: #18181f;
+  --grid-line: rgba(10, 10, 20, 0.05);
+  --name-color: var(--color-accent-500);
 }
 
 html {
@@ -38,14 +194,14 @@ body {
 /* Ambient grid + glow that sits behind the whole page */
 .bg-grid {
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 56px 56px;
 }
 
 /* Gradient text used for names / section numbers */
 .text-gradient {
-  background: linear-gradient(120deg, var(--color-accent-300), var(--color-accent-600));
+  background: linear-gradient(120deg, var(--color-accent-500), var(--color-accent-700));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -60,7 +216,7 @@ body {
   background: var(--color-ink-950);
 }
 ::-webkit-scrollbar-thumb {
-  background: #2a2a38;
+  background: var(--color-ink-700);
   border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -69,7 +225,119 @@ body {
 
 ::selection {
   background: var(--color-accent-500);
-  color: #0b0b0f;
+  color: var(--color-ink-950);
+}
+
+/* ---------------------------------------------------------------------------
+   Catchy surfaces.
+
+   The hero buttons and stat boxes need more presence on paper than the flat
+   translucent panels the dark theme gets away with: a real gradient with a
+   coloured glow, crisp white secondaries with a lifted shadow, and cards that
+   sit on the page instead of dissolving into the sketches.
+--------------------------------------------------------------------------- */
+:root {
+  --pop-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  --pop-shadow-hover: 0 18px 40px -14px rgba(0, 0, 0, 0.8);
+  --glow: 0 12px 34px -10px color-mix(in srgb, var(--accent) 55%, transparent);
+  --glow-hover: 0 18px 44px -10px color-mix(in srgb, var(--accent) 75%, transparent);
+  --surface: color-mix(in srgb, var(--color-ink-900) 90%, transparent);
+  --surface-strong: color-mix(in srgb, var(--color-ink-850) 96%, transparent);
+}
+:root[data-theme='light'] {
+  --pop-shadow: 0 10px 30px -14px rgba(20, 20, 40, 0.28), 0 1px 2px rgba(20, 20, 40, 0.06);
+  --pop-shadow-hover: 0 20px 44px -16px rgba(20, 20, 40, 0.35);
+  --glow: 0 12px 34px -10px color-mix(in srgb, var(--accent) 50%, transparent);
+  --glow-hover: 0 18px 44px -10px color-mix(in srgb, var(--accent) 65%, transparent);
+  --surface: rgba(255, 255, 255, 0.92);
+  --surface-strong: #ffffff;
+}
+
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  color: var(--on-accent);
+  border: 1px solid color-mix(in oklab, var(--accent) 70%, var(--on-accent));
+  background-image: linear-gradient(120deg, var(--color-accent-400) 0%, var(--color-accent-500) 45%, var(--color-accent-700) 100%);
+  background-size: 160% 100%;
+  box-shadow: var(--glow);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s, background-position 0.6s;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glow-hover);
+  background-position: 100% 0;
+}
+
+.btn-secondary {
+  background: var(--surface-strong);
+  border: 1px solid var(--color-line);
+  box-shadow: var(--pop-shadow);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s, border-color 0.25s, color 0.25s;
+}
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--pop-shadow-hover);
+  border-color: color-mix(in oklab, var(--color-accent-500) 45%, transparent);
+}
+
+.card-pop {
+  background: var(--surface);
+  box-shadow: var(--pop-shadow);
+}
+
+/* The name in the navbar: brand hue on paper, accent on the dark theme. */
+.brand-name {
+  color: var(--name-color);
+}
+
+/* The school logo is navy on transparent, so it vanishes on the dark theme.
+   Light keeps it bare (no box); dark slips a paper plate underneath it. */
+.logo-plate {
+  display: inline-block;
+  border-radius: 1rem;
+  transition: background-color 0.3s, padding 0.3s, box-shadow 0.3s;
+}
+:root:not([data-theme='light']) .logo-plate {
+  background: #ffffff;
+  padding: 0.6rem 1.1rem;
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* ---------------------------------------------------------------------------
+   Pencil sketches.
+
+   The schemas behind the page are plain SVG line art. `stroke` uses the theme
+   pencil colour; the turbulence filter roughens every line a little so they
+   read as drawn by hand rather than plotted.
+--------------------------------------------------------------------------- */
+.sketch {
+  color: color-mix(in srgb, var(--sketch-pencil) calc(var(--sketch-alpha) * 100%), transparent);
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: url(#pencil);
+}
+.sketch text {
+  fill: currentColor;
+  stroke: none;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+.sketch .hatch {
+  stroke-width: 0.9;
+  opacity: 0.7;
+}
+.sketch .thin {
+  stroke-width: 0.9;
+}
+.sketch .bold {
+  stroke-width: 2;
+}
+html.low-power .sketch {
+  filter: none;
 }
 
 /* Respect users who asked the OS to calm animations down */
@@ -100,7 +368,7 @@ body {
   display: inline-block;
   color: transparent;
   -webkit-text-stroke-width: var(--stroke-w, clamp(1px, 0.28vw, 3px));
-  -webkit-text-stroke-color: var(--stroke-c, rgba(228, 228, 231, 0.62));
+  -webkit-text-stroke-color: var(--stroke-c, color-mix(in srgb, var(--sketch-pencil) 62%, transparent));
 }
 
 .stroke-text::after {

@@ -16,7 +16,7 @@ export default function SkillsSection() {
   return (
     <section id="skills" className="relative scroll-mt-24 px-5 py-24 sm:px-8 sm:py-32">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading index="03" eyebrow={ui('skills.eyebrow')} title={ui('skills.title')} />
+        <SectionHeading index="03" section="skills" eyebrow={ui('skills.eyebrow')} title={ui('skills.title')} />
 
         <div className="space-y-24 sm:space-y-28">
           <SkillsPanel />

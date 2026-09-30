@@ -2,12 +2,13 @@ import { motion } from 'framer-motion';
 import { HiOutlineMail, HiOutlinePhone } from 'react-icons/hi';
 import { FaLinkedinIn, FaGithub } from 'react-icons/fa6';
 import SectionHeading from './SectionHeading';
+import { pick, sectionText } from '../lib/sections';
 import { useLang } from '../lib/i18n';
 import { contact } from '../lib/data';
 import CvDownload from './CvDownload';
 
 export default function Contact() {
-  const { ui, t } = useLang();
+  const { ui, t, lang } = useLang();
 
   const tel = (n: string) => 'tel:' + n.replace(/[^+\d]/g, '');
 
@@ -39,7 +40,7 @@ export default function Contact() {
   return (
     <section id="contact" className="relative px-5 pb-16 pt-24 sm:px-8 sm:pt-32">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading index="05" eyebrow={ui('contact.eyebrow')} title={ui('contact.title')} />
+        <SectionHeading index="06" section="contact" eyebrow={ui('contact.eyebrow')} title={ui('contact.title')} />
 
         <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <motion.div
@@ -48,7 +49,9 @@ export default function Contact() {
             viewport={{ once: true, margin: '-70px' }}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="text-lg leading-relaxed text-zinc-400">{ui('contact.blurb')}</p>
+            <p className="whitespace-pre-line text-lg leading-relaxed text-zinc-400">
+              {pick(lang, sectionText('contact').blurb, ui('contact.blurb'))}
+            </p>
             <a
               href={'mailto:' + contact.email}
               className="group relative mt-8 inline-flex items-center gap-2.5 overflow-hidden rounded-xl bg-gradient-to-r from-accent-400 to-accent-600 px-6 py-3.5 text-sm font-semibold text-ink-950 transition-transform hover:scale-[1.03]"

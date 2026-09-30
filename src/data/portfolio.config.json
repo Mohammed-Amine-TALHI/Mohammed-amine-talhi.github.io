@@ -8,14 +8,15 @@
       "fr": "Ingénieur Supply Chain qui transforme la donnée industrielle en décisions."
     },
     "intro": {
-      "en": "Hi, I'm Mohammed Amine. I'm finishing my engineering degree at EMINES – UM6P, majoring in Supply Chain Management, and I'll be available for a permanent role from October 2026.\n\nWhat I actually enjoy is the messy middle: the gap between a plant's real shop-floor data and the decision someone has to make at 6am. I build the models that close it — MILP sequencing, Lean diagnostics, forecasting, and the dashboards that make them usable. My final-year project at OCP is exactly that: optimizing the mine → washing plant → train-loading chain, where a Lean diagnostic showed a 0.15% process cycle efficiency hiding inside an 11.7-day lead time.\n\nI've done it in Morocco, in Brazil, in French warehouses. Off the clock, I captain the EMINES and UM6P basketball teams — which, it turns out, is also a scheduling problem.",
-      "fr": "Bonjour, je suis Mohammed Amine. Je termine mon diplôme d'ingénieur à l'EMINES – UM6P, option Supply Chain Management, et je serai disponible en CDI dès octobre 2026.\n\nCe qui me passionne vraiment, c'est le terrain intermédiaire : l'écart entre les données réelles d'un site et la décision qu'il faut prendre à 6h du matin. Je construis les modèles qui comblent cet écart — ordonnancement MILP, diagnostics Lean, prévision, et les tableaux de bord qui les rendent exploitables. Mon PFE chez OCP, c'est exactement ça : optimiser la chaîne mine → laverie → chargement train, où un diagnostic Lean a révélé une efficacité de cycle de 0,15 % cachée dans un délai de 11,7 jours.\n\nJe l'ai fait au Maroc, au Brésil, dans des entrepôts français. En dehors, je suis capitaine des équipes de basketball de l'EMINES et de l'UM6P — ce qui, au fond, est aussi un problème d'ordonnancement."
+      "en": "Hi, I'm Mohammed Amine — a Supply Chain Engineer, graduated from EMINES – UM6P (School of Industrial Management), and open to a permanent role in supply chain, process & production or IT/ERP consulting.\n\nWhat I actually enjoy is the messy middle: the gap between a plant's real shop-floor data and the decision someone has to make at 6am. I build the models that close it — MILP sequencing, Lean diagnostics, forecasting — and the digital layer that makes them usable: dashboards, ERP flows (SAP S/4HANA), process maps. My final-year project at OCP was exactly that: optimizing the mine → washing plant → train-loading chain, where a Lean diagnostic showed a 0.15% process cycle efficiency hiding inside an 11.7-day lead time.\n\nI've done it in Morocco, in Brazil, in French warehouses. Off the clock, I captained the EMINES and UM6P basketball teams — which, it turns out, is also a scheduling problem.",
+      "fr": "Bonjour, je suis Mohammed Amine — ingénieur Supply Chain, diplômé de l'EMINES – UM6P (School of Industrial Management), ouvert à un CDI en supply chain, process & production ou conseil IT/ERP.\n\nCe qui me passionne vraiment, c'est le terrain intermédiaire : l'écart entre les données réelles d'un site et la décision qu'il faut prendre à 6h du matin. Je construis les modèles qui comblent cet écart — ordonnancement MILP, diagnostics Lean, prévision — et la couche digitale qui les rend exploitables : tableaux de bord, flux ERP (SAP S/4HANA), cartographies de processus. Mon PFE chez OCP, c'était exactement ça : optimiser la chaîne mine → laverie → chargement train, où un diagnostic Lean a révélé une efficacité de cycle de 0,15 % cachée dans un délai de 11,7 jours.\n\nJe l'ai fait au Maroc, au Brésil, dans des entrepôts français. En dehors, j'ai été capitaine des équipes de basketball de l'EMINES et de l'UM6P — ce qui, au fond, est aussi un problème d'ordonnancement."
     },
     "photoCrop": {
       "x": 50,
       "y": 50,
       "zoom": 1
-    }
+    },
+    "schoolLogo": "/logos/emines-rmbgj-munqsy7a.png"
   },
   "contact": {
     "displayName": "Mohammed Amine TALHI",
@@ -77,12 +78,16 @@
     "nameEffect": "shine",
     "backgroundBlooms": true,
     "liquidEther": false,
-    "etherIntensity": 0.65,
+    "etherIntensity": 0.55,
     "orbitDots": false,
-    "flowConsole": true,
-    "timelinePulse": false,
+    "flowConsole": false,
+    "timelinePulse": true,
     "hoverLift": true,
-    "scrollReveal": true
+    "scrollReveal": true,
+    "sketches": true,
+    "sketchDrift": true,
+    "sketchOpacity": 0.6,
+    "sketchSet": {}
   },
   "visibility": {
     "projects": {
@@ -628,6 +633,77 @@
       "x": 48.541673024495445,
       "y": 37.22222646077474,
       "zoom": 1
+    },
+    "/graduation/IMG_1643-munqun3t.jpg": {
+      "x": 49.58332379659017,
+      "y": 61.111111111111114,
+      "zoom": 1
+    },
+    "/graduation/Mohammed-Amine-TALHI-munqv8v1.jpg": {
+      "x": 48.12499682108561,
+      "y": 63.61110475328233,
+      "zoom": 1
+    },
+    "/graduation/DSC03556-munqyu5d.jpg": {
+      "x": 48.5416571299235,
+      "y": 85.55556403266058,
+      "zoom": 1
+    },
+    "/graduation/IMG_4382-munrycty.jpg": {
+      "x": 49.58333969116211,
+      "y": 78.33333545260959,
+      "zoom": 1
+    },
+    "/graduation/IMG_4396-munscy1f.jpg": {
+      "x": 50,
+      "y": 50,
+      "zoom": 1
+    },
+    "/graduation/IMG_4397-munsd7e4.jpg": {
+      "x": 49.791669845581055,
+      "y": 76.66665183173285,
+      "zoom": 1
+    }
+  },
+  "theme": {
+    "default": "dark",
+    "toggle": true,
+    "palette": "brand",
+    "ink": "neutral",
+    "accent": "#ffffff"
+  },
+  "graduation": {
+    "enabled": true,
+    "title": {
+      "en": "",
+      "fr": ""
+    },
+    "caption": {
+      "en": "Engineering degree in Supply Chain Management from EMINES – School of Industrial Management, Mohammed VI Polytechnic University. Five years, one final-year project at OCP, and a lot of basketball.",
+      "fr": "Diplôme d'ingénieur en Supply Chain Management de l'EMINES – School of Industrial Management, Université Mohammed VI Polytechnique. Cinq ans, un PFE chez OCP, et beaucoup de basket."
+    },
+    "date": {
+      "en": "2026",
+      "fr": "2026"
+    },
+    "images": [
+      "/graduation/IMG_1643-munqun3t.jpg",
+      "/graduation/IMG_4382-munrycty.jpg",
+      "/graduation/IMG_4397-munsd7e4.jpg",
+      "/graduation/IMG_1642-munqw5et.jpg",
+      "/graduation/DSC03550-munqxmkx.jpg",
+      "/graduation/DSC03513-munqyhdu.jpg"
+    ],
+    "postUrl": "",
+    "postLabel": {
+      "en": "",
+      "fr": ""
+    }
+  },
+  "sections": {
+    "graduation": {
+      "size": "lg",
+      "oneLine": true
     }
   }
 }

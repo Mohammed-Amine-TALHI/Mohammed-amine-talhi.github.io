@@ -11,7 +11,7 @@ import {
 import type { Loc } from '../lib/types';
 import CropBox from './CropBox';
 import { resolveCrop, cropStyle, type Crop } from '../lib/crop';
-import { downscaleImage, formatBytes } from './imageTools';
+import { downscaleImage, formatBytes, isHeic, warmHeicDecoder } from './imageTools';
 
 /* Small building blocks shared by every admin panel. Deliberately plain —
    this UI never ships to production, so it optimises for speed of editing. */
@@ -186,7 +186,7 @@ export function Card({ children, className = '' }: { children: ReactNode; classN
 async function uploadOne(file: File, folder: string): Promise<string | null> {
   // Images are downscaled in the browser first — a raw phone photo is ~10 MB,
   // which would dominate the page weight for no visible benefit.
-  const isImage = /^image\//i.test(file.type);
+  const isImage = /^image\//i.test(file.type) || isHeic(file);
   const prepared = isImage
     ? await downscaleImage(file)
     : {
@@ -243,6 +243,8 @@ export function ImageDrop({
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
+  /** "3/8" while a batch is in flight */
+  const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
   /** which gallery photo is currently being reframed */
   const [cropping, setCropping] = useState<string | null>(null);
   // the picture the single-image crop frame acts on — the cover
@@ -259,13 +261,23 @@ export function ImageDrop({
 
   async function upload(files: FileList | null) {
     if (!files?.length) return;
+    const list = Array.from(files);
     setBusy(true);
-    const uploaded: string[] = [];
-    for (const file of Array.from(files)) {
-      const url = await uploadOne(file, folder);
-      if (url) uploaded.push(url);
-    }
+    setProgress({ done: 0, total: list.length });
+    // all at once: HEIC decoding is spread over the worker pool and the
+    // uploads overlap, while the result keeps the order the files were picked in
+    let done = 0;
+    const results = await Promise.all(
+      list.map(async (file) => {
+        const url = await uploadOne(file, folder);
+        done += 1;
+        setProgress({ done, total: list.length });
+        return url;
+      }),
+    );
+    const uploaded = results.filter((u): u is string => Boolean(u));
     setBusy(false);
+    setProgress(null);
     onChange(single ? uploaded.slice(-1) : [...images, ...uploaded]);
   }
 
@@ -348,17 +360,24 @@ export function ImageDrop({
 
         <button
           onClick={() => inputRef.current?.click()}
+          onMouseEnter={warmHeicDecoder}
           disabled={busy}
           className="grid h-20 w-20 place-items-center rounded-lg border border-dashed border-line text-zinc-600 transition-colors hover:border-accent-500/50 hover:text-accent-500 disabled:opacity-50"
         >
-          {busy ? <span className="font-mono text-[10px]">…</span> : <HiOutlineUpload size={18} />}
+          {busy ? (
+            <span className="font-mono text-[10px] text-accent-400">
+              {progress ? `${progress.done}/${progress.total}` : '…'}
+            </span>
+          ) : (
+            <HiOutlineUpload size={18} />
+          )}
         </button>
       </div>
 
       <input
         ref={inputRef}
         type="file"
-        accept="image/*"
+        accept="image/*,.heic,.heif"
         multiple={!single}
         hidden
         onChange={(e) => {

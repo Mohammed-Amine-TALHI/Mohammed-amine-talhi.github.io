@@ -11,6 +11,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { referencedUrls } from './lib/uploads.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const CONFIG = resolve(ROOT, 'src/data/portfolio.config.json');
@@ -25,30 +26,8 @@ const note = (u, where) => {
   if (u && u.startsWith('/') && !alive(u)) dead.push({ url: u, where });
 };
 
-// ---- walk everything that can hold a file path ----
-note(cfg.profile?.photo, 'profile photo');
-for (const l of ['en', 'fr']) note(cfg.cv?.[l]?.url, `CV ${l.toUpperCase()}`);
-
-for (const e of cfg.leadership ?? []) {
-  const name = (e.title?.en || e.title?.fr || e.id).slice(0, 28);
-  (e.images ?? []).forEach((u) => note(u, `leadership · ${name}`));
-  (e.assets ?? []).forEach((a) => note(a.url, `leadership doc · ${name}`));
-}
-for (const [id, m] of Object.entries(cfg.projectMeta ?? {})) {
-  note(m.cover, `project cover · ${id}`);
-  (m.assets ?? []).forEach((a) => note(a.url, `project doc · ${id}`));
-}
-(cfg.visits?.images ?? []).forEach((u) => note(u, 'visits'));
-for (const v of Object.values(cfg.visits?.perVisit ?? {})) {
-  (v.images ?? []).forEach((u) => note(u, 'visit photo'));
-}
-for (const [k, p] of Object.entries(cfg.languageProof ?? {})) {
-  (p.images ?? []).forEach((u) => note(u, `language · ${k}`));
-  (p.assets ?? []).forEach((a) => note(a.url, `language doc · ${k}`));
-}
-for (const s of cfg.skills ?? []) {
-  (s.assets ?? []).forEach((a) => note(a.url, `skill · ${s.name}`));
-}
+// ---- walk everything that can hold a file path (see scripts/lib/uploads.mjs) ----
+for (const r of referencedUrls(cfg)) note(r.url, r.where);
 
 if (!dead.length) {
   console.log('\x1b[32m  ✓ every referenced file exists\x1b[0m');
@@ -67,6 +46,8 @@ if (!prune) {
 // ---- --prune: strip the dead references ----
 const keep = (u) => alive(u);
 if (!alive(cfg.profile?.photo)) cfg.profile.photo = '';
+if (!alive(cfg.profile?.schoolLogo)) cfg.profile.schoolLogo = '';
+if (cfg.graduation) cfg.graduation.images = (cfg.graduation.images ?? []).filter(keep);
 for (const l of ['en', 'fr']) if (cfg.cv?.[l] && !alive(cfg.cv[l].url)) cfg.cv[l] = null;
 
 for (const e of cfg.leadership ?? []) {

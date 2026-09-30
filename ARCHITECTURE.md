@@ -66,6 +66,8 @@ no way to write anything.
 | `npm run preview` | Serve the built `dist/` locally, to check before shipping. |
 | `npm run check-assets` | List config entries pointing at deleted files. |
 | `npm run fix-assets` | Drop those dead references from the config. |
+| `npm run unused-uploads` | List files in `public/` that the config no longer uses. |
+| `npm run prune-uploads` | Delete them. Also runs on every admin save and inside `publish`. |
 
 The normal loop:
 
@@ -102,7 +104,10 @@ made `npm run publish` produce a commit even when nothing had changed.
 | `contact` | Name, both emails, both phones, location, LinkedIn/GitHub |
 | `cv` | `{ en, fr }` — one PDF per language, or `null` |
 | `visits` | EMINES post link, trip photos, per-visit photos/links |
-| `animation` | Preset, speed, hero-name effect, per-effect switches, ether brightness |
+| `animation` | Preset, speed, hero-name effect, per-effect switches, ether brightness, background sketches |
+| `theme` | `default` (`light` / `dark`), the bottom-right switch, and the colour `palette` (`brand` / `classic` / `custom` + two hexes) |
+| `sections` | Per-section heading overrides: eyebrow, title, intro, title size, one-line |
+| `graduation` | Photos, caption, date, LinkedIn post link for the graduation section |
 | `visibility` | `projects` / `experiences` → `{ id: boolean }` |
 | `order.projects` | Project ids in display order |
 | `projectMeta` | Per project: cover + crop, stack chips, documents |
@@ -123,6 +128,8 @@ made `npm run publish` produce a commit even when nothing had changed.
 | `public/cv/` | The two CV PDFs |
 | `public/leadership/` | Club and basketball photos |
 | `public/visits/` | Industrial-visit photos |
+| `public/graduation/` | Graduation photos |
+| `public/logos/` | The EMINES – UM6P logo (`profile.schoolLogo`) |
 
 Accepted: `.jpg .jpeg .png .webp .gif .avif` and `.pdf .pptx .ppt .docx .doc .xlsx .zip`.
 60 MB per file.
@@ -135,16 +142,17 @@ the same name never collide. That's why CV downloads are renamed on the way out
 
 ## 4. The publish pipeline
 
-`scripts/publish.mjs` runs five steps. Any failure stops it **before** anything
+`scripts/publish.mjs` runs six steps. Any failure stops it **before** anything
 is committed or pushed.
 
 ```
-[1/5] Syncing CV data      node scripts/sync-resume.mjs
-[2/5] Checking files       node scripts/check-assets.mjs
-[3/5] Building             npm run build          (tsc -b && vite build)
-[4/5] Committing           git add -A
+[1/6] Syncing CV data      node scripts/sync-resume.mjs
+[2/6] Checking files       node scripts/check-assets.mjs
+[3/6] Removing unused      node scripts/prune-uploads.mjs
+[4/6] Building             npm run build          (tsc -b && vite build)
+[5/6] Committing           git add -A
                            git commit -q -m "Update portfolio — <timestamp>"
-[5/5] Pushing              git push -q origin main
+[6/6] Pushing              git push -q origin main
 ```
 
 It reads state with `git status --porcelain`, and **exits without committing if
@@ -250,9 +258,11 @@ silently overwrite. This exists because it happened.
 | **Skills** | Toolbox (name, icon from a 104-icon searchable picker, family), project links, attachments; language certificates |
 | **Leadership** | Story, photos + crop, fill/fit, documents, accent colour |
 | **Visits** | EMINES post link, trip photos, per-visit photos and links |
-| **Profile** | Photo + crop, headline, intro, experience visibility |
+| **Graduation** | Photos (+ crop), title, date, caption, LinkedIn post link |
+| **Sections** | Every heading on the page (EN + FR), title size, keep-on-one-line, intro paragraphs |
+| **Profile** | Photo + crop, school logo, headline, intro, experience visibility |
 | **Contact & CV** | All contact fields, one CV per language |
-| **Animations** | Presets, speed, ether brightness, hero-name effect, per-effect switches |
+| **Animations & Theme** | Presets, speed, ether brightness, default theme + switch, background sketches (which ones, pencil strength, drift), hero-name effect, per-effect switches |
 
 ---
 
@@ -265,7 +275,9 @@ silently overwrite. This exists because it happened.
 | `src/main.tsx` | Entry. Adds the `low-power` class on modest devices. |
 | `src/App.tsx` | Section order, and the dev-only `#/admin` route. |
 | `Nav.tsx` | Fixed navbar, scroll progress bar, scroll-spy, FR/EN switch. |
-| `Background.tsx` | Fixed ambient layer: CSS blooms, LiquidEther, grid, vignette. |
+| `Background.tsx` | Fixed ambient layer: CSS blooms, LiquidEther, grid, pencil sketches, halo, vignette. |
+| `Sketches.tsx` | The eight hand-drawn schemas (VSM, Ishikawa, S/4HANA map, BPMN, DMAIC, Gantt, Kanban, network). `SKETCH_META` feeds the admin list. |
+| `ThemeToggle.tsx` | Sun / moon button, bottom-right. Hidden when `theme.toggle` is false. |
 | `Portal.tsx` | Renders overlays into `<body>`. **Load-bearing — see traps.** |
 | `SectionHeading.tsx` | Shared eyebrow + animated title + rule. |
 | `Lightbox.tsx` | Full-screen image viewer. Arrow keys, Escape, counter. |
@@ -284,6 +296,7 @@ silently overwrite. This exists because it happened.
 | `about/VisitsPanel.tsx` | Visits as single-line rows, photos, EMINES link |
 | `Projects.tsx` | Filterable grid, 6 then "show all", documents |
 | `SkillsSection.tsx` | Wraps skills + languages |
+| `Graduation.tsx` | Photo mosaic + card with logo, date, caption and the LinkedIn post (or a "coming soon" badge) |
 | `about/SkillsPanel.tsx` | Icon grid; click swaps the right panel |
 | `about/FlowConsole.tsx` | The animated supply-chain readout |
 | `about/SkillProjects.tsx` | Replaces the console when a skill is picked |
@@ -317,6 +330,7 @@ instead of ~600 kB of engine.
 | `data.ts` | Merges resume + config. `visibleProjects()`, `languageEntries()`, … |
 | `i18n.tsx` | FR/EN context. `t(loc)` for CV data, `ui(key)` for chrome text. |
 | `anim.ts` | Animation settings, presets, **and the device performance tier**. |
+| `theme.tsx` | Light / dark: reads the visitor's saved choice, falls back to the admin default. The palette itself is CSS variables in `index.css` keyed on `html[data-theme]`. |
 | `asset.ts` | `asset()` for base paths, `downloadName()` for clean downloads. |
 | `crop.ts` | Non-destructive framing: focal point + zoom → CSS. |
 | `skills.ts` | Config skills → icon components. |
@@ -445,8 +459,30 @@ project by hand than to defend a wrong one in an interview.
 
 **Use `loopOn()` for perpetual animations,** not `on()`, so they stop on phones.
 
+**Colours are two hues, not a stylesheet.** `--accent` and `--brand` on `<html>`
+(set by `applyPalette()` in `lib/theme.tsx`) feed every Tailwind scale through
+`color-mix()` in `index.css`. `applyPalette()` also publishes contrast-safe
+variants — `--accent-deep` / `--brand-deep` for text on paper, `--accent-lit` /
+`--brand-lit` for text on the dark theme, `--on-accent` / `--on-brand` for ink
+on a filled button — so a custom palette of, say, pure white still reads. Use
+those on anything that puts text over a hue fill; never hard-code `#fff`.
+
+**The light theme is a variable swap, not a second stylesheet.** Tailwind v4 emits
+`var(--color-zinc-400)` etc., so `index.css` re-maps the ink / zinc / accent
+scales under `:root[data-theme='light']`. Two consequences: `--color-white` is
+remapped to near-black there (so `bg-white/5` still reads as a faint tint), so
+anything that must be *actually* white on both themes — the logo plate, the
+LinkedIn button text — uses `bg-[#fff]` / `text-[#fff]`; and any new hard-coded
+`#hex` or `rgba()` in a component will not switch — put it behind a variable.
+
 **Deleting an upload doesn't unlink it.** Always `npm run check-assets` — or
 just let `npm run publish` do it for you.
+
+**Removing a photo in the admin deletes the file on save.** The save handler
+runs `pruneUnused()` from `scripts/lib/uploads.mjs`: anything under `public/`
+that no config field points at is unlinked. That list of fields lives in
+`referencedUrls()` — **if you add a new config field that stores a file path,
+add it there first**, or the next save will delete its files.
 
 ---
 

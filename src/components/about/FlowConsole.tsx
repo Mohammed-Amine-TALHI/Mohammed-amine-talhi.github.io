@@ -57,7 +57,7 @@ export default function FlowConsole({ focus }: { focus: string | null }) {
       {/* fake window chrome */}
       <div className="flex items-center gap-2 border-b border-line px-4 py-3">
         <span className="h-2.5 w-2.5 rounded-full bg-red-500/60" />
-        <span className="h-2.5 w-2.5 rounded-full bg-amber-500/60" />
+        <span className="h-2.5 w-2.5 rounded-full bg-accent-500/60" />
         <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/60" />
         <span className="ml-2 truncate font-mono text-[11px] text-zinc-500">{focus ?? 'flow_optimizer.py'}</span>
         <span className="ml-auto flex items-center gap-1.5">
@@ -128,7 +128,7 @@ export default function FlowConsole({ focus }: { focus: string | null }) {
               transition={{ duration: dur(3.2), repeat: Infinity, ease: 'easeInOut', delay: dur(i * 0.8) }}
               style={{ transformOrigin: x + 'px ' + RAIL_Y + 'px' }}
             />
-            <circle cx={x} cy={RAIL_Y} r="11" fill="#0c0c11" stroke="#2f2f3d" strokeWidth="1.5" />
+            <circle cx={x} cy={RAIL_Y} r="11" fill="var(--console-node)" stroke="var(--console-ring)" strokeWidth="1.5" />
             <motion.circle
               cx={x}
               cy={RAIL_Y}

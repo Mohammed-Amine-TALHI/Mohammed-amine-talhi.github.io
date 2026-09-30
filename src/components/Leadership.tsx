@@ -338,7 +338,7 @@ export default function Leadership() {
   return (
     <section id="leadership" className="relative scroll-mt-24 px-5 py-24 sm:px-8 sm:py-32">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading index="04" eyebrow={ui('leadership.eyebrow')} title={ui('leadership.title')} />
+        <SectionHeading index="05" section="leadership" eyebrow={ui('leadership.eyebrow')} title={ui('leadership.title')} />
 
         {!entries.length ? (
           <p className="rounded-2xl border border-dashed border-line py-16 text-center text-sm text-zinc-600">

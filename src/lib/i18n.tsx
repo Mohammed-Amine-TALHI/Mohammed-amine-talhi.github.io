@@ -12,11 +12,12 @@ const UI = {
   'nav.projects': { en: 'Projects', fr: 'Projets' },
   'nav.skills': { en: 'Skills', fr: 'Compétences' },
   'nav.languages': { en: 'Languages', fr: 'Langues' },
+  'nav.graduation': { en: 'Graduation', fr: 'Diplôme' },
   'nav.leadership': { en: 'Leadership', fr: 'Engagement' },
   'nav.contact': { en: 'Contact', fr: 'Contact' },
 
-  'hero.available': { en: 'Available for a permanent role — Oct. 2026', fr: 'Disponible en CDI — Oct. 2026' },
   'hero.role': { en: 'Supply Chain Engineer', fr: 'Ingénieur Supply Chain' },
+  'hero.school': { en: 'EMINES – UM6P graduate', fr: 'Diplômé EMINES – UM6P' },
   'hero.cta.work': { en: 'See my work', fr: 'Voir mes travaux' },
   'hero.cta.contact': { en: 'Get in touch', fr: 'Me contacter' },
   'hero.scroll': { en: 'Scroll', fr: 'Défiler' },
@@ -60,6 +61,12 @@ const UI = {
     en: 'Add your clubs, basketball and student-life photos from the local admin panel.',
     fr: 'Ajoutez vos clubs, le basketball et vos photos de vie associative depuis le panneau admin local.',
   },
+
+  'graduation.eyebrow': { en: 'Milestone', fr: 'Étape' },
+  'graduation.title': { en: 'Graduation — Engineer, EMINES – UM6P', fr: 'Diplôme — Ingénieur, EMINES – UM6P' },
+  'graduation.post': { en: 'Read the LinkedIn post', fr: 'Lire le post LinkedIn' },
+  'graduation.soon': { en: 'LinkedIn post coming soon', fr: 'Post LinkedIn à venir' },
+  'graduation.photos': { en: 'photos', fr: 'photos' },
 
   'contact.eyebrow': { en: 'Contact', fr: 'Contact' },
   'contact.title': { en: "Let's talk", fr: 'Discutons' },

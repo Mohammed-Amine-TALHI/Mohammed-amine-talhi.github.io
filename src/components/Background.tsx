@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { anim, dur, on, loopOn } from '../lib/anim';
 import { LiquidEther } from './reactbits';
+import Sketches from './Sketches';
 
 /**
  * Fixed ambient layer behind the whole page.
@@ -8,7 +9,9 @@ import { LiquidEther } from './reactbits';
  * With `liquidEther` on, a WebGL ether flows behind everything and reacts to the
  * cursor. The CSS blooms sit underneath it as the fallback for browsers without
  * WebGL — and as the whole background when the effect is switched off in the
- * admin panel. A scrim above the canvas keeps foreground text legible.
+ * admin panel. A scrim above the canvas keeps foreground text legible. The
+ * pencil sketches sit above the grid and under the vignette, so they fade out
+ * towards the edges like the rest of the ambience.
  */
 export default function Background() {
   const drift = loopOn('backgroundBlooms');
@@ -23,7 +26,7 @@ export default function Background() {
         transition={{ duration: dur(22), repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
-        className="absolute -bottom-52 -right-40 h-[42rem] w-[42rem] rounded-full bg-accent-700/10 blur-[150px]"
+        className="absolute -bottom-52 -right-40 h-[42rem] w-[42rem] rounded-full bg-brand-500/14 blur-[150px]"
         animate={drift ? { x: [0, -70, 0], y: [0, -30, 0], scale: [1, 1.18, 1] } : undefined}
         transition={{ duration: dur(28), repeat: Infinity, ease: 'easeInOut', delay: dur(3) }}
       />
@@ -43,8 +46,14 @@ export default function Background() {
       {/* faint grid reads on top of the ether */}
       <div className="bg-grid absolute inset-0 opacity-[0.4]" />
 
+      {/* pencil-sketched supply-chain / ERP schemas, switchable in the admin */}
+      <Sketches />
+
+      {/* a soft halo down the middle keeps the sketches away from the text column */}
+      <div className="absolute inset-0 bg-[radial-gradient(48%_60%_at_50%_45%,var(--halo)_0%,transparent_100%)]" />
+
       {/* vignette keeps the page edges dark and the centre readable */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_38%,rgba(8,8,11,0.88)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_38%,var(--vignette)_100%)]" />
     </div>
   );
 }

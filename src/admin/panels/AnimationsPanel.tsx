@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, Field, Toggle, Select } from '../ui';
-import { PRESETS, PRESET_LABEL } from '../../lib/anim';
-import type { AnimationPreset, AnimationSettings, NameEffect, PortfolioConfig } from '../../lib/types';
+import { PRESETS, PRESET_LABEL, type Channel } from '../../lib/anim';
+import { SKETCH_META } from '../../components/Sketches';
+import { PALETTES } from '../../lib/theme';
+import type { AnimationPreset, NameEffect, PaletteId, PortfolioConfig, SketchId } from '../../lib/types';
 
 /* -------------------------------------------------------------------------- */
 /*  Live previews                                                             */
@@ -139,8 +141,31 @@ function RevealPreview({ live, s }: { live: boolean; s: number }) {
   );
 }
 
-/** Only the boolean on/off channels — `etherIntensity` is a slider, not a switch. */
-type ChannelKey = keyof Omit<AnimationSettings, 'preset' | 'speed' | 'nameEffect' | 'etherIntensity'>;
+function SketchPreview({ live, s }: { live: boolean; s: number }) {
+  return (
+    <Frame>
+      <motion.svg
+        viewBox="0 0 96 56"
+        className="absolute inset-0 h-full w-full"
+        fill="none"
+        stroke="rgba(228,228,236,0.7)"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        animate={live ? { x: [0, 4, 0], y: [0, -3, 0] } : undefined}
+        transition={{ duration: 6 * s, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <path d="M10 28 H70" />
+        <path d="M70 20 h16 l4 8 l-4 8 h-16 l3 -8 z" />
+        <path d="M24 12 L34 28 M40 12 L50 28 M24 44 L34 28 M40 44 L50 28" />
+        <rect x="12" y="6" width="14" height="6" rx="1" />
+        <rect x="28" y="6" width="14" height="6" rx="1" />
+      </motion.svg>
+    </Frame>
+  );
+}
+
+/** Only the boolean on/off channels — sliders and the sketch set are handled separately. */
+type ChannelKey = Channel;
 
 const CHANNELS: {
   key: ChannelKey;
@@ -158,6 +183,7 @@ const CHANNELS: {
   { key: 'orbitDots', name: 'Portrait orbit', where: 'About · rotating ring and orbiting dots', Preview: OrbitPreview },
   { key: 'flowConsole', name: 'Flow console', where: 'About · packets, scan line, KPI counter', Preview: FlowPreview },
   { key: 'timelinePulse', name: 'Timeline pulse', where: 'About · the looping bar down the experience rail', Preview: PulsePreview },
+  { key: 'sketchDrift', name: 'Sketch drift', where: 'Page background · the pencil schemas slowly float', Preview: SketchPreview },
   { key: 'hoverLift', name: 'Hover lift', where: 'Every card, on mouse-over', Preview: LiftPreview },
   { key: 'scrollReveal', name: 'Scroll reveal', where: 'Everything that fades up as you scroll', Preview: RevealPreview },
 ];
@@ -276,8 +302,12 @@ export default function AnimationsPanel({
   /** Applying a preset overwrites every channel but keeps the name effect. */
   const applyPreset = (preset: AnimationPreset) =>
     set((d) => {
-      d.animation = { ...d.animation, ...PRESETS[preset], preset };
+      // which schemas are drawn is a content choice, not a motion one — keep it
+      d.animation = { ...d.animation, ...PRESETS[preset], preset, sketchSet: d.animation.sketchSet ?? {} };
     });
+
+  /** Keys a preset does not decide: sliders and the sketch selection. */
+  const FREE: (keyof typeof PRESETS.balanced)[] = ['speed', 'etherIntensity', 'sketchOpacity', 'sketchSet'];
 
   /** Flipping a single switch means the config no longer matches a preset. */
   const setChannel = (key: ChannelKey, v: boolean) =>
@@ -285,7 +315,7 @@ export default function AnimationsPanel({
       d.animation[key] = v;
       const match = (Object.keys(PRESETS) as AnimationPreset[]).find((p) =>
         (Object.keys(PRESETS[p]) as (keyof typeof PRESETS.balanced)[]).every(
-          (k) => k === 'speed' || k === 'etherIntensity' || PRESETS[p][k] === d.animation[k as ChannelKey],
+          (k) => FREE.includes(k) || PRESETS[p][k] === (d.animation[k as ChannelKey] ?? true),
         ),
       );
       d.animation.preset = match ?? d.animation.preset;
@@ -416,6 +446,177 @@ export default function AnimationsPanel({
           </Card>
         </section>
       )}
+
+      {/* ------------------------------ theme ------------------------------ */}
+      <section>
+        <h2 className="mb-1 font-display text-lg font-semibold text-zinc-100">Theme</h2>
+        <p className="mb-4 text-xs text-zinc-500">
+          What a first-time visitor sees. Once they use the switch, their own choice is remembered on their device.
+        </p>
+        <Card className="space-y-4">
+          <div className="grid gap-2 sm:grid-cols-2">
+            {(['light', 'dark'] as const).map((th) => {
+              const active = (cfg.theme?.default ?? 'light') === th;
+              return (
+                <button
+                  key={th}
+                  onClick={() => set((d) => void (d.theme = { ...d.theme, default: th }))}
+                  className={
+                    'flex items-center gap-3 rounded-xl border p-3 text-left transition-colors ' +
+                    (active ? 'border-accent-500/60 bg-accent-500/[0.08]' : 'border-line bg-ink-950 hover:border-zinc-600')
+                  }
+                >
+                  <span
+                    className={
+                      'grid h-10 w-14 shrink-0 place-items-center rounded-lg border font-mono text-[9px] ' +
+                      (th === 'light' ? 'border-zinc-300 bg-[#fff] text-zinc-800' : 'border-zinc-700 bg-[#08080b] text-zinc-300')
+                    }
+                  >
+                    Aa
+                  </span>
+                  <span>
+                    <span className={'block text-sm font-semibold ' + (active ? 'text-accent-300' : 'text-zinc-200')}>
+                      {th === 'light' ? 'White — default' : 'Dark'}
+                    </span>
+                    <span className="block text-[11px] text-zinc-500">
+                      {th === 'light' ? 'Paper background, graphite sketches.' : 'Ink background, chalk sketches.'}
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          {/* ---- colours ---- */}
+          <Field label="Colours" hint="two hues drive every shade on the site">
+            <div className="grid gap-2 sm:grid-cols-3">
+              {(['brand', 'classic', 'custom'] as PaletteId[]).map((id) => {
+                const active = (cfg.theme?.palette ?? 'brand') === id;
+                const swatch = id === 'custom'
+                  ? { accent: cfg.theme?.accent || '#e8412a', brand: cfg.theme?.brand || '#1d2b5a' }
+                  : PALETTES[id];
+                return (
+                  <button
+                    key={id}
+                    onClick={() => set((d) => void (d.theme = { ...d.theme, palette: id }))}
+                    className={
+                      'flex items-center gap-3 rounded-xl border p-3 text-left transition-colors ' +
+                      (active ? 'border-accent-500/60 bg-accent-500/[0.08]' : 'border-line bg-ink-950 hover:border-zinc-600')
+                    }
+                  >
+                    <span className="flex shrink-0 -space-x-1.5">
+                      <span className="h-6 w-6 rounded-full ring-2 ring-ink-950" style={{ background: swatch.accent }} />
+                      <span className="h-6 w-6 rounded-full ring-2 ring-ink-950" style={{ background: swatch.brand }} />
+                    </span>
+                    <span className="min-w-0">
+                      <span className={'block text-sm font-semibold ' + (active ? 'text-accent-300' : 'text-zinc-200')}>
+                        {id === 'custom' ? 'Custom' : PALETTES[id].name}
+                      </span>
+                      <span className="block truncate text-[11px] text-zinc-500">
+                        {id === 'custom' ? 'Pick your own two colours.' : PALETTES[id].hint}
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {(cfg.theme?.palette ?? 'brand') === 'custom' && (
+              <div className="mt-3 grid gap-3 sm:grid-cols-3">
+                {(['accent', 'brand'] as const).map((k) => (
+                  <label key={k} className="flex items-center gap-3 rounded-lg border border-line bg-ink-950 px-3 py-2">
+                    <input
+                      type="color"
+                      value={cfg.theme?.[k] || (k === 'accent' ? '#e8412a' : '#1d2b5a')}
+                      onChange={(e) => set((d) => void (d.theme = { ...d.theme, [k]: e.target.value }))}
+                      className="h-8 w-10 cursor-pointer rounded border-0 bg-transparent p-0"
+                    />
+                    <span>
+                      <span className="block text-sm text-zinc-200">{k === 'accent' ? 'Accent' : 'Brand'}</span>
+                      <span className="block font-mono text-[10px] text-zinc-500">
+                        {k === 'accent' ? 'buttons, links, numbers' : 'headings tint, name, sketches'}
+                      </span>
+                    </span>
+                  </label>
+                ))}
+                <Select
+                  value={cfg.theme?.ink ?? 'navy'}
+                  onChange={(v) => set((d) => void (d.theme = { ...d.theme, ink: v as 'navy' | 'neutral' }))}
+                  options={[
+                    { value: 'navy', label: 'Dark theme tinted with the brand colour' },
+                    { value: 'neutral', label: 'Dark theme near-black, neutral greys' },
+                  ]}
+                />
+              </div>
+            )}
+          </Field>
+
+          <div className="flex items-center gap-4">
+            <Toggle on={cfg.theme?.toggle !== false} onChange={(v) => set((d) => void (d.theme = { ...d.theme, toggle: v }))} />
+            <div>
+              <div className="text-sm text-zinc-200">Show the sun / moon switch</div>
+              <div className="text-[11px] text-zinc-500">Bottom-right corner of every page. Off = visitors get the default only.</div>
+            </div>
+          </div>
+        </Card>
+      </section>
+
+      {/* ------------------------------ sketches ------------------------------ */}
+      <section>
+        <h2 className="mb-1 font-display text-lg font-semibold text-zinc-100">Background sketches</h2>
+        <p className="mb-4 text-xs text-zinc-500">
+          Hand-drawn supply-chain, Lean and ERP schemas behind the page. Pick which ones are drawn and how strong the pencil is.
+        </p>
+        <Card className="space-y-5">
+          <div className="flex items-center gap-4">
+            <Toggle on={a.sketches !== false} onChange={(v) => setChannel('sketches', v)} />
+            <div>
+              <div className="text-sm text-zinc-200">Draw the sketches</div>
+              <div className="text-[11px] text-zinc-500">Master switch. Drift (the slow float) is its own switch further down.</div>
+            </div>
+          </div>
+
+          {a.sketches !== false && (
+            <>
+              <Field label="Pencil strength" hint="how visible the drawings are">
+                <div className="flex items-center gap-4">
+                  <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-zinc-600">faint</span>
+                  <input
+                    type="range"
+                    min={0.2}
+                    max={1.5}
+                    step={0.05}
+                    value={a.sketchOpacity ?? 0.6}
+                    onChange={(e) => set((d) => void (d.animation.sketchOpacity = Number(e.target.value)))}
+                    className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-ink-800 accent-accent-500"
+                  />
+                  <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-zinc-600">bold</span>
+                  <span className="w-14 shrink-0 text-right font-mono text-sm text-accent-400">
+                    {(a.sketchOpacity ?? 0.6).toFixed(2)}×
+                  </span>
+                </div>
+              </Field>
+
+              <div className="grid gap-2 sm:grid-cols-2">
+                {(Object.keys(SKETCH_META) as SketchId[]).map((id) => {
+                  const live = a.sketchSet?.[id] !== false;
+                  return (
+                    <div key={id} className="flex items-center gap-3 rounded-lg border border-line bg-ink-950 px-3 py-2.5">
+                      <div className="min-w-0 flex-1">
+                        <div className="text-sm text-zinc-200">{SKETCH_META[id].name}</div>
+                        <div className="truncate text-[11px] text-zinc-500">{SKETCH_META[id].where}</div>
+                      </div>
+                      <Toggle
+                        on={live}
+                        onChange={(v) => set((d) => void (d.animation.sketchSet = { ...(d.animation.sketchSet ?? {}), [id]: v }))}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </Card>
+      </section>
 
       {/* ------------------------------ hero name ------------------------------ */}
       <section>

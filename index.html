@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#08080b" />
+    <meta name="theme-color" content="#ffffff" />
     <title>Mohammed Amine TALHI — Supply Chain Engineer</title>
     <meta
       name="description"
@@ -17,6 +17,17 @@
     <meta property="og:type" content="website" />
     <meta property="og:image" content="/profile.jpg" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Apply the visitor's saved theme before the first paint. The admin default
+         lives in the config bundle, which main.tsx applies once it has loaded. -->
+    <script>
+      try {
+        var t = localStorage.getItem('portfolio.theme');
+        if (t === 'dark' || t === 'light') {
+          document.documentElement.dataset.theme = t;
+          if (t === 'dark') document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -24,7 +35,7 @@
       rel="stylesheet"
     />
   </head>
-  <body class="bg-ink-950 text-zinc-200 antialiased">
+  <body class="bg-ink-950 text-zinc-200 antialiased transition-colors duration-300">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

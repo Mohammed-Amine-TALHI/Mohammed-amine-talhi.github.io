@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, unlinkSync, statSync } from 'node:fs';
 import { resolve, extname, basename } from 'node:path';
+// @ts-expect-error plain ESM helper shared with the scripts/ folder
+import { pruneUnused } from './scripts/lib/uploads.mjs';
 
 const ROOT = process.cwd();
 const CONFIG_PATH = resolve(ROOT, 'src/data/portfolio.config.json');
@@ -21,8 +23,8 @@ function readBody(req: any): Promise<string> {
   });
 }
 
-const ALLOWED_FOLDERS = new Set(['leadership', 'covers', 'visits', 'docs', 'cv', '']);
-const IMAGE_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif']);
+const ALLOWED_FOLDERS = new Set(['leadership', 'covers', 'visits', 'docs', 'cv', 'graduation', 'logos', '']);
+const IMAGE_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif', '.svg']);
 const DOC_EXT = new Set(['.pdf', '.pptx', '.ppt', '.docx', '.doc', '.xlsx', '.zip']);
 const ALLOWED_EXT = new Set([...IMAGE_EXT, ...DOC_EXT]);
 
@@ -83,10 +85,17 @@ function adminApiPlugin(): Plugin {
             }
 
             writeFileSync(CONFIG_PATH, JSON.stringify(incoming, null, 2) + '\n', 'utf8');
+
+            // A photo removed in the admin is gone from the config now — drop
+            // the file too, so public/ only ever holds what the site shows.
+            const pruned: string[] = pruneUnused(incoming, PUBLIC_DIR);
+            if (pruned.length) console.log(`  [admin] removed ${pruned.length} unused upload(s):`, pruned.join(', '));
+
             return json(200, {
               ok: true,
               path: 'src/data/portfolio.config.json',
               mtime: statSync(CONFIG_PATH).mtimeMs,
+              pruned,
             });
           }
 
@@ -115,7 +124,7 @@ function adminApiPlugin(): Plugin {
           // ---- list uploaded images ----------------------------------------
           if (url === '/__admin/images' && req.method === 'GET') {
             const out: { url: string; kind: 'image' | 'doc' }[] = [];
-            for (const folder of ['leadership', 'covers', 'visits', 'docs', 'cv']) {
+            for (const folder of ['leadership', 'covers', 'visits', 'docs', 'cv', 'graduation', 'logos']) {
               const dir = resolve(PUBLIC_DIR, folder);
               if (!existsSync(dir)) continue;
               for (const f of readdirSync(dir)) {
@@ -161,4 +170,7 @@ export default defineConfig({
   // honour a PORT assigned by the tooling, otherwise Vite's default
   server: { port: Number(process.env.PORT) || 5173 },
   build: { outDir: 'dist', sourcemap: false },
+  // the HEIC decoder is one self-contained ESM file with the wasm inlined;
+  // pre-bundling it is slow and it only ever loads inside the admin's worker
+  optimizeDeps: { exclude: ['libheif-js'] },
 });

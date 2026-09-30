@@ -28,7 +28,7 @@ function step(n, total, label) {
 }
 
 try {
-  const TOTAL = 5;
+  const TOTAL = 6;
 
   step(1, TOTAL, 'Syncing CV data from ResumeApp');
   run('node scripts/sync-resume.mjs');
@@ -43,10 +43,13 @@ try {
     process.exit(1);
   }
 
-  step(3, TOTAL, 'Building');
+  step(3, TOTAL, 'Removing unused uploads');
+  run('node scripts/prune-uploads.mjs');
+
+  step(4, TOTAL, 'Building');
   run('npm run build');
 
-  step(4, TOTAL, 'Committing');
+  step(5, TOTAL, 'Committing');
   const dirty = quiet('git status --porcelain');
   if (!dirty) {
     console.log(c.dim('  nothing changed — already published'));
@@ -58,7 +61,7 @@ try {
   run('git add -A');
   run(`git commit -q -m "Update portfolio — ${stamp}"`);
 
-  step(5, TOTAL, 'Pushing');
+  step(6, TOTAL, 'Pushing');
   run('git push -q origin main');
 
   const url = 'https://mohammed-amine-talhi.github.io';

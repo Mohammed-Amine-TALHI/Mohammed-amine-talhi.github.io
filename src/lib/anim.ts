@@ -10,6 +10,12 @@ import type { AnimationPreset, AnimationSettings } from './types';
 --------------------------------------------------------------------------- */
 
 /** Presets shown in the admin. `speed` multiplies every duration. */
+/** Keys that are plain on/off switches — the ones `on()` accepts. */
+export type Channel = keyof Omit<AnimationSettings, 'preset' | 'speed' | 'nameEffect' | 'etherIntensity' | 'sketchOpacity' | 'sketchSet'>;
+
+/** The sketch drawings are all on until the admin switches one off. */
+const ALL_SKETCHES = {} as AnimationSettings['sketchSet'];
+
 export const PRESETS: Record<AnimationPreset, Omit<AnimationSettings, 'preset' | 'nameEffect'>> = {
   subtle: {
     speed: 1.25,
@@ -21,6 +27,10 @@ export const PRESETS: Record<AnimationPreset, Omit<AnimationSettings, 'preset' |
     timelinePulse: false,
     hoverLift: true,
     scrollReveal: true,
+    sketches: true,
+    sketchDrift: true,
+    sketchOpacity: 0.55,
+    sketchSet: ALL_SKETCHES,
   },
   balanced: {
     speed: 1,
@@ -32,6 +42,10 @@ export const PRESETS: Record<AnimationPreset, Omit<AnimationSettings, 'preset' |
     timelinePulse: true,
     hoverLift: true,
     scrollReveal: true,
+    sketches: true,
+    sketchDrift: true,
+    sketchOpacity: 0.7,
+    sketchSet: ALL_SKETCHES,
   },
   showcase: {
     speed: 0.75,
@@ -43,6 +57,10 @@ export const PRESETS: Record<AnimationPreset, Omit<AnimationSettings, 'preset' |
     timelinePulse: true,
     hoverLift: true,
     scrollReveal: true,
+    sketches: true,
+    sketchDrift: true,
+    sketchOpacity: 0.9,
+    sketchSet: ALL_SKETCHES,
   },
   off: {
     speed: 1,
@@ -54,6 +72,10 @@ export const PRESETS: Record<AnimationPreset, Omit<AnimationSettings, 'preset' |
     timelinePulse: false,
     hoverLift: false,
     scrollReveal: false,
+    sketches: true,
+    sketchDrift: false,
+    sketchOpacity: 0.55,
+    sketchSet: ALL_SKETCHES,
   },
 };
 
@@ -110,10 +132,10 @@ export const etherBudget = {
  * a phone. Scroll reveals and hover states are unaffected — only the things
  * that animate forever.
  */
-export function loopOn(key: Parameters<typeof on>[0]): boolean {
+export function loopOn(key: Channel): boolean {
   if (!on(key)) return false;
   if (!isLowPower) return true;
-  return key !== 'orbitDots' && key !== 'timelinePulse';
+  return key !== 'orbitDots' && key !== 'timelinePulse' && key !== 'sketchDrift';
 }
 
 /** Scale a duration by the configured speed. Returns ~0 when motion is off. */
@@ -123,8 +145,8 @@ export function dur(seconds: number): number {
 }
 
 /** Is a given animation channel enabled? */
-export function on(key: keyof Omit<AnimationSettings, 'preset' | 'speed' | 'nameEffect' | 'etherIntensity'>): boolean {
-  if (reduced) return false;
+export function on(key: Channel): boolean {
+  if (reduced) return key === 'sketches'; // still drawings are fine under reduce-motion
   return anim[key] !== false;
 }
 

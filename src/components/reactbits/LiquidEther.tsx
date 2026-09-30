@@ -178,9 +178,19 @@ export default function LiquidEther({
       intensity: gl.getUniformLocation(prog, 'uIntensity'),
     };
 
-    gl.uniform3f(u.ink, 0.031, 0.031, 0.043); // --color-ink-950
-    gl.uniform3f(u.warm, 0.98, 0.65, 0.11); // amber-400/500
-    gl.uniform3f(u.deep, 0.72, 0.24, 0.03); // orange-700
+    // colours come from the active palette (see index.css / lib/theme.tsx)
+    const css = getComputedStyle(document.documentElement);
+    const rgb = (v: string, fb: [number, number, number]): [number, number, number] => {
+      const m = v.trim().match(/^#([0-9a-f]{6})$/i);
+      if (!m) return fb;
+      const n = parseInt(m[1], 16);
+      return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
+    };
+    const warm = rgb(css.getPropertyValue('--accent'), [0.91, 0.25, 0.16]);
+    const deep = rgb(css.getPropertyValue('--brand'), [0.11, 0.17, 0.35]);
+    gl.uniform3f(u.ink, deep[0] * 0.3, deep[1] * 0.3, deep[2] * 0.3);
+    gl.uniform3f(u.warm, warm[0], warm[1], warm[2]);
+    gl.uniform3f(u.deep, deep[0], deep[1], deep[2]);
     gl.uniform1f(u.intensity, intensity);
 
     // cap the render scale — this is a background, not the subject

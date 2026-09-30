@@ -7,6 +7,9 @@ import SkillsSection from './components/SkillsSection';
 import Leadership from './components/Leadership';
 import Contact from './components/Contact';
 import Background from './components/Background';
+import Graduation from './components/Graduation';
+import ThemeToggle from './components/ThemeToggle';
+import { ThemeProvider } from './lib/theme';
 import { DocViewerProvider } from './components/DocViewer';
 
 /**
@@ -30,6 +33,8 @@ export default function App() {
   const hash = useHashRoute();
 
   if (AdminApp && hash.startsWith('#/admin')) {
+    // the admin is always dark — it is a tool, not part of the site's look
+    document.documentElement.dataset.theme = 'dark';
     return (
       <Suspense fallback={<div className="grid min-h-screen place-items-center text-zinc-500">Loading admin…</div>}>
         <AdminApp />
@@ -38,6 +43,7 @@ export default function App() {
   }
 
   return (
+    <ThemeProvider>
     <DocViewerProvider>
     <div className="relative min-h-screen overflow-x-hidden">
       <Background />
@@ -47,10 +53,13 @@ export default function App() {
         <About />
         <Projects />
         <SkillsSection />
+        <Graduation />
         <Leadership />
         <Contact />
       </main>
+      <ThemeToggle />
     </div>
     </DocViewerProvider>
+    </ThemeProvider>
   );
 }

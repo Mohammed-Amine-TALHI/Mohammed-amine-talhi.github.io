@@ -61,14 +61,16 @@ export function dataUrlBytes(dataUrl: string): number {
  * untouched. Animated GIFs are never touched — a canvas would flatten them to
  * a single frame.
  */
-export async function downscaleImage(file: File): Promise<Downscaled> {
-  const originalBytes = file.size;
+export async function downscaleImage(input: File): Promise<Downscaled> {
+  const { file, converted } = await fromHeic(input);
+  const originalBytes = input.size;
   const passthrough = async (): Promise<Downscaled> => {
     const dataUrl = await readAsDataUrl(file);
     return { dataUrl, filename: file.name, originalBytes, bytes: dataUrlBytes(dataUrl) };
   };
 
-  if (!RESIZABLE.test(file.type)) return passthrough();
+  // a converted HEIC is already a right-sized JPEG — no second pass
+  if (converted || !RESIZABLE.test(file.type)) return passthrough();
 
   const sourceUrl = await readAsDataUrl(file);
   let img: HTMLImageElement;
@@ -105,6 +107,72 @@ export async function downscaleImage(file: File): Promise<Downscaled> {
   // the stored file is now a JPEG whatever it started as
   const filename = file.name.replace(/\.[^.]+$/, '') + '.jpg';
   return { dataUrl, filename, originalBytes, bytes };
+}
+
+/** iPhone photos: .heic / .heif, which Chrome and Firefox cannot decode. */
+export const isHeic = (file: File) =>
+  /^image\/hei[cf]$/i.test(file.type) || /\.hei[cf]$/i.test(file.name);
+
+/* -------------------------------------------------------------------------- */
+/*  HEIC worker pool                                                          */
+/*                                                                            */
+/*  One worker per spare core (capped at 4). Jobs are dealt round-robin and   */
+/*  each worker runs its own queue, so a batch of eight iPhone photos decodes */
+/*  four at a time instead of one after the other. The wasm decoder loads     */
+/*  lazily, once per worker, the first time a HEIC is dropped.                */
+/* -------------------------------------------------------------------------- */
+
+type Job = { resolve: (r: { buffer: ArrayBuffer; width: number; height: number }) => void; reject: (e: Error) => void };
+
+let pool: Worker[] | null = null;
+let next = 0;
+let seq = 0;
+const jobs = new Map<number, Job>();
+
+function workers(): Worker[] {
+  if (pool) return pool;
+  const n = Math.min(4, Math.max(1, (navigator.hardwareConcurrency || 2) - 1));
+  pool = Array.from({ length: n }, () => {
+    const w = new Worker(new URL('./heic.worker.ts', import.meta.url), { type: 'module' });
+    w.onmessage = (e: MessageEvent) => {
+      const { id, ok, buffer, width, height, error } = e.data;
+      const job = jobs.get(id);
+      if (!job) return;
+      jobs.delete(id);
+      ok ? job.resolve({ buffer, width, height }) : job.reject(new Error(error));
+    };
+    return w;
+  });
+  return pool;
+}
+
+/** Spin the workers up ahead of time so the first drop doesn't pay for the wasm load. */
+export function warmHeicDecoder() {
+  if (typeof Worker !== 'undefined' && typeof OffscreenCanvas !== 'undefined') workers();
+}
+
+/**
+ * Convert a HEIC photo to a JPEG File, already downscaled to MAX_EDGE, so the
+ * rest of the pipeline can store it as-is. Anything that isn't HEIC passes
+ * straight through with `converted: false`.
+ */
+async function fromHeic(file: File): Promise<{ file: File; converted: boolean }> {
+  if (!isHeic(file)) return { file, converted: false };
+
+  const id = ++seq;
+  const buffer = await file.arrayBuffer();
+  const result = await new Promise<{ buffer: ArrayBuffer; width: number; height: number }>((resolve, reject) => {
+    jobs.set(id, { resolve, reject });
+    const ws = workers();
+    const w = ws[next++ % ws.length];
+    w.postMessage({ id, buffer, maxEdge: MAX_EDGE, quality: QUALITY }, [buffer]);
+  });
+
+  const name = file.name.replace(/\.hei[cf]$/i, '') + '.jpg';
+  return {
+    file: new File([result.buffer], name, { type: 'image/jpeg', lastModified: file.lastModified }),
+    converted: true,
+  };
 }
 
 export const formatBytes = (n: number) =>

@@ -28,6 +28,16 @@ export default function ProfilePanel({
             />
           </Field>
 
+          <Field label="School logo" hint="EMINES – UM6P, shown in the hero and the graduation card on a white plate">
+            <ImageDrop
+              folder="logos"
+              single
+              fit="contain"
+              images={cfg.profile.schoolLogo ? [cfg.profile.schoolLogo] : []}
+              onChange={(imgs) => set((d) => void (d.profile.schoolLogo = imgs[0] ?? ''))}
+            />
+          </Field>
+
           <LocField
             label="Headline (shown under your name in the hero)"
             value={cfg.profile.headline}

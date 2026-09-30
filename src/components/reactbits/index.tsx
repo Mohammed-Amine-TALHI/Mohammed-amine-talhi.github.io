@@ -187,7 +187,7 @@ export function ShinyText({
       className={'inline-block bg-clip-text text-transparent ' + className}
       style={{
         backgroundImage:
-          'linear-gradient(100deg, #e4e4e7 0%, #e4e4e7 32%, var(--color-accent-300) 44%, var(--color-accent-500) 52%, var(--color-accent-600) 60%, #e4e4e7 74%, #e4e4e7 100%)',
+          'linear-gradient(100deg, var(--shine-base) 0%, var(--shine-base) 32%, var(--color-accent-300) 44%, var(--color-accent-500) 52%, var(--color-accent-600) 60%, var(--shine-base) 74%, var(--shine-base) 100%)',
         backgroundSize: '260% 100%',
       }}
       animate={still ? { backgroundPosition: '50% 0%' } : { backgroundPosition: ['160% 0%', '-60% 0%'] }}
@@ -311,7 +311,7 @@ export function AnimatedContent({
 export function SpotlightCard({
   children,
   className = '',
-  spotlightColor = 'rgba(245, 158, 11, 0.14)',
+  spotlightColor = 'rgba(232, 65, 42, 0.14)',
 }: {
   children: ReactNode;
   className?: string;

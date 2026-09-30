@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-08-21T13:28:53.339Z",
+  "syncedAt": "2026-09-30T06:23:20.921Z",
   "personal": {
     "name": "Mohammed Amine TALHI",
     "phone": {
@@ -14,16 +14,32 @@
         "id": "sum-general",
         "label": "General",
         "text": {
-          "en": "Supply Chain Engineer (EMINES – UM6P), graduating September 2026 and available for a permanent role from October 2026. I combine operational excellence with digitalization: planning, scheduling and industrial flow optimization, from shop-floor data to decision. Seeking a supply chain, planning or operational excellence engineering role with real impact on the ground.",
-          "fr": "Ingénieur Supply Chain (EMINES – UM6P), diplômé en septembre 2026 et disponible en CDI dès octobre 2026. J'allie excellence opérationnelle et digitalisation : planification, ordonnancement et optimisation des flux industriels, de la donnée terrain à la décision. Je recherche un poste d'ingénieur supply chain, planification ou excellence opérationnelle à fort impact terrain."
+          "en": "Supply Chain Engineer, graduate of EMINES – UM6P (Industrial Management, Supply Chain option, September 2026), available immediately. I combine operational excellence and digitalization: production planning, scheduling and industrial flow optimization, from shop-floor data to decision-support tools. Seeking a supply chain, planning or operational excellence engineering role with measurable impact on the ground.",
+          "fr": "Ingénieur Supply Chain diplômé de l'EMINES – UM6P (Management industriel, option Supply Chain, septembre 2026), disponible immédiatement. J'allie excellence opérationnelle et digitalisation : planification de la production, ordonnancement et optimisation des flux industriels, de la donnée terrain aux outils d'aide à la décision. Je recherche un poste d'ingénieur supply chain, planification ou excellence opérationnelle à impact mesurable sur le terrain."
         }
       },
       {
         "id": "sum-lean",
         "label": "Digitalisation & Excellence opérationnelle",
         "text": {
-          "en": "Supply Chain Engineer with a data and digitalization focus, available for a permanent role from October 2026. I build optimization models and decision-support tools that turn operational data into planning and scheduling decisions. Seeking a role driving supply chain digitalization on an industrial site.",
-          "fr": "Ingénieur Supply Chain orienté data et digitalisation, disponible en CDI dès octobre 2026. Je conçois des modèles d'optimisation et des outils décisionnels qui transforment les données d'exploitation en décisions de planification et d'ordonnancement. Je recherche un poste où piloter la digitalisation de la supply chain d'un site industriel."
+          "en": "Supply Chain Engineer (EMINES – UM6P, 2026) with a data and digitalization focus, available immediately. I build optimization models (MILP, Python) and web decision-support tools that turn operating data into planning and scheduling decisions, validated on a real OCP industrial site. Seeking a role driving supply chain digitalization and operational excellence on an industrial site.",
+          "fr": "Ingénieur Supply Chain (EMINES – UM6P, 2026) orienté data et digitalisation, disponible immédiatement. Je conçois des modèles d'optimisation (MILP, Python) et des outils web d'aide à la décision qui transforment les données d'exploitation en décisions de planification et d'ordonnancement, validés sur un site industriel OCP. Je recherche un poste où piloter la digitalisation de la supply chain et l'excellence opérationnelle d'un site industriel."
+        }
+      },
+      {
+        "id": "sum-sap",
+        "label": "Consultant SAP PP / SD",
+        "text": {
+          "en": "Industrial Engineer (EMINES – UM6P, 2026) targeting an SAP PP / SD functional consultant role, available immediately. Trained on SAP S/4HANA (PP, MM, SD basics) with hands-on experience in production planning, MRP, scheduling and order-to-cash logistics on an industrial site. I analyse business processes, run fit-gap analyses, write functional specifications, configure and test (UAT) and train key users. Seeking to join an ERP implementation or SAP S/4HANA migration project as a junior functional consultant.",
+          "fr": "Ingénieur en management industriel (EMINES – UM6P, 2026) visant un poste de consultant fonctionnel SAP PP / SD, disponible immédiatement. Formé à SAP S/4HANA (PP, MM, bases SD) avec une expérience concrète de la planification de production, du MRP, de l'ordonnancement et de la logistique order-to-cash sur site industriel. J'analyse les processus métier, mène des ateliers fit-gap, rédige des spécifications fonctionnelles, paramètre, teste (recette / UAT) et forme les key users. Je souhaite rejoindre un projet d'implémentation ERP ou de migration SAP S/4HANA en tant que consultant fonctionnel junior."
+        }
+      },
+      {
+        "id": "sum-digital",
+        "label": "Consultant Digitalisation",
+        "text": {
+          "en": "Industrial & Supply Chain Engineer (EMINES – UM6P, 2026) targeting a digital transformation / digitalization consultant role, available immediately. I turn operational needs into digital solutions: process mapping (VSM, SIPOC), business analysis, data modelling, and delivery of web decision-support and data-referential applications (Python, React, Laravel, SQL, Power BI) deployed on an OCP industrial site. Comfortable bridging business users, IT and management to drive Industry 4.0 and ERP projects from diagnosis to adoption.",
+          "fr": "Ingénieur industriel & Supply Chain (EMINES – UM6P, 2026) visant un poste de consultant en transformation digitale / digitalisation, disponible immédiatement. Je traduis les besoins opérationnels en solutions digitales : cartographie des processus (VSM, SIPOC), analyse métier, modélisation des données et livraison d'applications web d'aide à la décision et de référentiels de données (Python, React, Laravel, SQL, Power BI) déployées sur un site industriel OCP. À l'aise pour faire le lien entre métiers, DSI et management sur des projets Industrie 4.0 et ERP, du diagnostic à l'adoption."
         }
       }
     ],
@@ -40,8 +56,8 @@
     {
       "id": "exp-pfe",
       "role": {
-        "fr": "Ingénieur Supply Chain - (PFE)",
-        "en": "Supply Chain Engineer - Final-Year Project"
+        "fr": "Ingénieur Supply Chain — Projet de fin d'études",
+        "en": "Supply Chain Engineer — Final-Year Project"
       },
       "org": {
         "fr": "OCP Group",
@@ -57,10 +73,34 @@
       },
       "bullets": [
         {
+          "id": "exp-pfe-b0",
+          "text": {
+            "fr": "Sujet : optimisation de l'ordonnancement des stocks (reprise des parcs) à la laverie de phosphate de Ben Guerir et digitalisation des données techniques des convoyeurs.",
+            "en": "Subject: optimization of stockpile reclaiming schedules at the Ben Guerir phosphate washing plant and digitalization of conveyor technical data."
+          },
+          "tags": [
+            "supply-chain",
+            "optimization",
+            "digitalization"
+          ]
+        },
+        {
           "id": "exp-pfe-b1",
           "text": {
-            "en": "Optimized multi-echelon sequencing across the mine → raw stockyard → washing plant → washed stockyard → train-loading chain (Ben Guerir phosphate washing plant): MILP model integrating a ~280-hour lead-time cascade, stockyard reclaiming capacities, and customer quality constraints.",
-            "fr": "Optimisation du séquencement multi-échelon de la chaîne mine → parc brut → laverie → parc lavé → chargement train (laverie de phosphate de Ben Guerir) : modélisation MILP intégrant une cascade de lead time de ~280 h, les capacités de reprise des parcs et les contraintes qualité clients."
+            "fr": "Modèle MILP de la chaîne mine → parc brut → laverie → parc lavé → train (Python / PuLP, solveur HiGHS, validé sous MATLAB) : réglages dépendants de la séquence, interdiction de sauter un tas, couloirs qualité (BPL, SiO2, MgO, Cd), dates dues des trains.",
+            "en": "MILP model of the mine → raw stockyard → washing plant → washed stockyard → train chain (Python / PuLP, HiGHS solver, validated in MATLAB): sequence-dependent setups, no-pile-skipping rule, quality corridors (BPL, SiO2, MgO, Cd), train due dates."
+          },
+          "tags": [
+            "optimization",
+            "supply-chain",
+            "data"
+          ]
+        },
+        {
+          "id": "exp-pfe-b2",
+          "text": {
+            "fr": "Diagnostic Lean sur données réelles d'exploitation (VSM, Ishikawa 6M — 22 causes, 5 Pourquoi, SIPOC) : PCE de 0,15 % (26 min de transformation pour 11,7 jours de lead time), démontrant que plus de 99 % du délai est du stockage et que l'ordonnancement des reprises — et non la capacité process — est le levier prioritaire.",
+            "en": "Lean diagnostic on real operating data (VSM, 6M Ishikawa — 22 root causes, 5 Whys, SIPOC): 0.15% Process Cycle Efficiency (26 min of processing vs an 11.7-day lead time), proving that over 99% of the lead time is storage and that reclaiming sequencing — not process capacity — is the primary lever."
           },
           "tags": [
             "lean",
@@ -68,14 +108,39 @@
           ]
         },
         {
-          "id": "exp-pfe-b2",
+          "id": "exp-pfe-b3",
           "text": {
-            "en": "Lean diagnostic on real operational data (VSM, 6M Ishikawa — 22 root causes, 5 Whys, SIPOC): revealed a 0.15% Process Cycle Efficiency (26 min of processing time against an 11.7-day lead time), proving that over 99% of the lead time is waiting and that stockyard sequencing — not the process units — is the primary improvement lever.",
-            "fr": "Diagnostic Lean sur données réelles d'exploitation (VSM, Ishikawa 6M — 22 causes, 5 Pourquoi, SIPOC) : mise en évidence d'un PCE de 0,15 % (26 min de temps de transformation pour 11,7 jours de lead time), démontrant que plus de 99 % du délai est de l'attente et que le séquencement des parcs — et non les unités process — constitue le levier prioritaire."
+            "fr": "Sur un programme réel de 134 trains : service porté de 83 à 104 trains (+25 % de tonnage) avec un pas de 4 h ; simulations prouvant que tripler la capacité laverie n'apporte rien, alors que réallouer le parc lavé sur trois chartes augmente le produit lavé de 54 %.",
+            "en": "On a real 134-train program: service raised from 83 to 104 trains (+25% tonnage) with 4-hour periods; simulations proved that tripling washing capacity brings no gain, whereas re-allocating the washed stockyard across three grades lifts washed output by 54%."
           },
           "tags": [
-            "lean",
-            "optimization"
+            "optimization",
+            "supply-chain",
+            "data"
+          ]
+        },
+        {
+          "id": "exp-pfe-b4",
+          "text": {
+            "fr": "Application de séquencement : saisie de l'état des parcs tas par tas, calcul du plan par blocs, vérificateur indépendant du solveur, export Excel (ordonnancement, trains, stocks projetés, trains manqués et causes).",
+            "en": "Scheduling application: pile-by-pile stockyard state entry, block-wise plan computation, solver-independent plan checker, Excel export (schedule, trains, projected stocks, missed trains and causes)."
+          },
+          "tags": [
+            "digitalization",
+            "software",
+            "supply-chain"
+          ]
+        },
+        {
+          "id": "exp-pfe-b5",
+          "text": {
+            "fr": "Digitalisation maintenance : référentiel web des tambours de convoyeurs (React / Laravel / MySQL) — schéma interactif, recherche globale, fiches techniques, import Excel, gestion des rôles — 22 tambours et 44 composants, après 377 arrêts convoyeurs en 6 mois.",
+            "en": "Maintenance digitalization: web referential of conveyor drums (React / Laravel / MySQL) — interactive plant diagram, global search, technical sheets, Excel import, role-based access — 22 drums and 44 components, following 377 conveyor stoppages in 6 months."
+          },
+          "tags": [
+            "digitalization",
+            "software",
+            "maintenance"
           ]
         }
       ]
@@ -1040,16 +1105,16 @@
         "en": "EMINES – Mohammed VI Polytechnic University"
       },
       "degree": {
-        "fr": "Diplôme d'ingénieur en management industriel / Option : Supply Chain Management",
-        "en": "Engineering Degree in Industrial Management / Minor: Supply Chain Management"
+        "fr": "Diplôme d'ingénieur en management industriel — Option Supply Chain Management (obtenu en 2026)",
+        "en": "Engineering Degree in Industrial Management — Supply Chain Management option (awarded 2026)"
       },
       "location": {
         "fr": "Ben Guerir, Maroc",
         "en": "Ben Guerir, Morocco"
       },
       "period": {
-        "fr": "Sept. 2021 – Sept. 2026",
-        "en": "Sept. 2021 – Sept. 2026"
+        "fr": "2021 – 2026",
+        "en": "2021 – 2026"
       },
       "bullets": [
         {
@@ -1233,8 +1298,19 @@
         "en": "Software & Tools"
       },
       "value": {
-        "en": "Python, SAP S/4HANA (PP,DS,MM), Power BI, Advanced Excel (Power Query, Pivot Tables), MS Project, Power Automate, Simul8, @Risk, MySQL, MATLAB, SolidWorks, VBA, Java, ReactJS, Laravel, Illustrator, Arduino.",
-        "fr": "Python, SAP S/4HANA (PP,DS,MM), Power BI, Excel avancé (Power Query, TCD), MS Project, Power Automate, Simul8, @Risk, MySQL, MATLAB, SolidWorks, VBA, Java, ReactJS, Laravel, Illustrator, Arduino."
+        "en": "SAP S/4HANA (PP, MM, SD, DS), Python (PuLP, pandas), Power BI, Advanced Excel (Power Query, Pivot Tables, VBA), SQL / MySQL, MATLAB, ReactJS, Laravel, MS Project, Power Automate, Simul8, @Risk, SolidWorks, Java, Arduino.",
+        "fr": "SAP S/4HANA (PP, MM, SD, DS), Python (PuLP, pandas), Power BI, Excel avancé (Power Query, TCD, VBA), SQL / MySQL, MATLAB, ReactJS, Laravel, MS Project, Power Automate, Simul8, @Risk, SolidWorks, Java, Arduino."
+      }
+    },
+    {
+      "id": "sk-methods",
+      "label": {
+        "fr": "Méthodes",
+        "en": "Methods"
+      },
+      "value": {
+        "en": "Production planning & scheduling, MRP / S&OP, Lean Six Sigma (VSM, SIPOC, Ishikawa, 5 Whys, Kaizen), operations research (MILP), business process mapping (BPMN), fit-gap analysis, functional specifications, UAT, key-user training, project management.",
+        "fr": "Planification & ordonnancement de production, MRP / S&OP, Lean Six Sigma (VSM, SIPOC, Ishikawa, 5 Pourquoi, Kaizen), recherche opérationnelle (MILP), cartographie des processus (BPMN), analyse fit-gap, spécifications fonctionnelles, recette (UAT), formation key users, gestion de projet."
       }
     },
     {

@@ -9,6 +9,8 @@ import { CountUp, Magnet, ClickSpark } from './reactbits';
 import CountriesStat from './CountriesStat';
 import { downloadName } from '../lib/asset';
 import { useDocViewer } from './DocViewer';
+import SafeImage from './SafeImage';
+import { pick, sectionText } from '../lib/sections';
 
 const container: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } } };
 const item: Variants = {
@@ -32,23 +34,27 @@ export default function Hero() {
         animate="show"
         className="mx-auto flex w-full max-w-6xl flex-col items-center text-center"
       >
-        {/* availability pill with a live pulsing dot */}
-        <motion.div
-          variants={item}
-          className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-accent-500/25 bg-accent-500/[0.07] py-1.5 pl-2 pr-4"
-        >
-          <span className="relative flex h-2 w-2">
-            {on('backgroundBlooms') && (
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-400 opacity-75" />
-            )}
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-400" />
-          </span>
-          <span className="text-xs font-medium tracking-wide text-accent-300">{ui('hero.available')}</span>
+        {/* school lockup: the EMINES – UM6P logo on a paper plate, then the title */}
+        <motion.div variants={item} className="mb-7 flex flex-col items-center gap-4">
+          {config.profile.schoolLogo && (
+            <a
+              href="https://www.emines-ingenieur.org"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="EMINES – UM6P"
+              className="logo-plate group transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              <SafeImage
+                src={config.profile.schoolLogo}
+                alt="EMINES – School of Industrial Management, UM6P"
+                className="h-14 w-auto max-w-[min(82vw,24rem)] object-contain drop-shadow-[0_6px_16px_rgba(0,0,0,0.12)] sm:h-16"
+              />
+            </a>
+          )}
+          <p className="font-mono text-sm text-zinc-500">
+            {pick(lang, sectionText('hero').eyebrow, `${ui('hero.role')} · ${ui('hero.school')}`)}
+          </p>
         </motion.div>
-
-        <motion.p variants={item} className="mb-3 font-mono text-sm text-zinc-500">
-          {ui('hero.role')} · EMINES – UM6P
-        </motion.p>
 
         {/* full name, single line, centred */}
         <div className="w-full">
@@ -56,7 +62,7 @@ export default function Hero() {
         </div>
 
         <motion.p variants={item} className="mt-8 max-w-2xl text-lg leading-relaxed text-zinc-400 sm:text-xl">
-          {t(config.profile.headline)}
+          {pick(lang, sectionText('hero').blurb, t(config.profile.headline))}
         </motion.p>
 
         <motion.div variants={item} className="mt-10 flex flex-wrap items-center justify-center gap-3">
@@ -65,16 +71,16 @@ export default function Hero() {
             <ClickSpark>
               <a
                 href="#projects"
-                className="group relative block overflow-hidden rounded-xl bg-gradient-to-r from-accent-400 to-accent-600 px-6 py-3.5 text-sm font-semibold text-ink-950"
+                className="btn-primary group block rounded-xl px-7 py-3.5 text-sm font-semibold"
               >
                 <span className="relative z-10">{ui('hero.cta.work')}</span>
-                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[color:var(--on-accent)]/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
               </a>
             </ClickSpark>
           </Magnet>
           <a
             href="#contact"
-            className="rounded-xl border border-line bg-white/[0.03] px-6 py-3.5 text-sm font-semibold text-zinc-300 transition-colors hover:border-accent-500/40 hover:text-accent-300"
+            className="btn-secondary rounded-xl px-6 py-3.5 text-sm font-semibold text-zinc-200 hover:text-accent-400"
           >
             {ui('hero.cta.contact')}
           </a>
@@ -90,7 +96,7 @@ export default function Hero() {
                   downloadAs: downloadName('CV', contact.displayName, lang.toUpperCase(), cvFile.url),
                 })
               }
-              className="group flex items-center gap-2 rounded-xl border border-accent-500/30 bg-accent-500/[0.07] px-4 py-3.5 text-sm font-medium text-accent-300 transition-colors hover:bg-accent-500/[0.15]"
+              className="btn-secondary group flex items-center gap-2 rounded-xl px-5 py-3.5 text-sm font-semibold text-accent-400 hover:text-accent-500"
             >
               <HiOutlineEye size={15} />
               {ui('cv.view')}
@@ -111,7 +117,7 @@ export default function Hero() {
                   target={href.startsWith('mailto') ? undefined : '_blank'}
                   rel="noreferrer"
                   aria-label={label}
-                  className="grid h-11 w-11 place-items-center rounded-xl border border-line bg-white/[0.03] text-zinc-400 transition-all hover:-translate-y-0.5 hover:border-accent-500/40 hover:text-accent-400"
+                  className="btn-secondary grid h-12 w-12 place-items-center rounded-xl text-zinc-300 hover:text-accent-500"
                 >
                   <Icon size={16} />
                 </a>
@@ -122,11 +128,11 @@ export default function Hero() {
         {/* three headline numbers, pulled from the real CV */}
         <motion.div
           variants={item}
-          className="mt-16 grid w-full max-w-2xl grid-cols-3 gap-px rounded-2xl border border-line bg-line [&>*:first-child]:rounded-l-2xl [&>*:last-child]:rounded-r-2xl"
+          className="card-pop mt-16 grid w-full max-w-2xl grid-cols-3 gap-px overflow-hidden rounded-2xl border border-line bg-line [&>*:first-child]:rounded-l-2xl [&>*:last-child]:rounded-r-2xl"
         >
           {/* projects */}
           <div className="bg-ink-900/80 px-4 py-5 backdrop-blur-sm">
-            <CountUp to={13} duration={1.6} className="font-display text-2xl font-bold text-zinc-100 sm:text-3xl" />
+            <CountUp to={13} duration={1.6} className="text-gradient font-display text-3xl font-extrabold sm:text-4xl" />
             <div className="mt-1 text-xs text-zinc-500">{lang === 'fr' ? 'Projets' : 'Projects'}</div>
           </div>
 
@@ -135,7 +141,7 @@ export default function Hero() {
 
           {/* TOEIC */}
           <div className="bg-ink-900/80 px-4 py-5 backdrop-blur-sm">
-            <CountUp to={900} duration={1.6} className="font-display text-2xl font-bold text-zinc-100 sm:text-3xl" />
+            <CountUp to={900} duration={1.6} className="text-gradient font-display text-3xl font-extrabold sm:text-4xl" />
             <div className="mt-1 text-xs text-zinc-500">{lang === 'fr' ? 'Score TOEIC' : 'TOEIC score'}</div>
           </div>
         </motion.div>

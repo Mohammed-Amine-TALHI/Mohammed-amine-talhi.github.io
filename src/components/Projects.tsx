@@ -333,7 +333,7 @@ export default function Projects() {
   return (
     <section id="projects" className="relative px-5 py-24 sm:px-8 sm:py-32">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading index="02" eyebrow={ui('projects.eyebrow')} title={ui('projects.title')}>
+        <SectionHeading index="02" section="projects" eyebrow={ui('projects.eyebrow')} title={ui('projects.title')}>
           <div className="mt-8 flex flex-wrap items-center gap-2">
             {['__all', ...tags].map((tag) => {
               const active = filter === tag;

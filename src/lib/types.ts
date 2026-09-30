@@ -173,6 +173,63 @@ export interface AnimationSettings {
   timelinePulse: boolean;
   hoverLift: boolean;
   scrollReveal: boolean;
+  /** hand-drawn supply-chain / ERP schemas floating behind the page */
+  sketches: boolean;
+  /** slow drift of the sketches (off = they sit still) */
+  sketchDrift: boolean;
+  /** how visible the sketches are, 0.2 (barely there) .. 1.5 (bold) */
+  sketchOpacity: number;
+  /** which schemas are drawn — missing keys default to on */
+  sketchSet: Partial<Record<SketchId, boolean>>;
+}
+
+/** The pencil sketches available for the background. */
+export type SketchId = 'vsm' | 'ishikawa' | 'erp' | 'process' | 'dmaic' | 'gantt' | 'kanban' | 'network';
+
+/** Headings the admin can re-word, in page order. */
+export type SectionKey = 'hero' | 'about' | 'visits' | 'projects' | 'skills' | 'graduation' | 'leadership' | 'contact';
+
+export type TitleSize = 'sm' | 'md' | 'lg' | 'xl';
+
+/** Override for one section's texts; empty fields fall back to the built-in wording. */
+export interface SectionText {
+  eyebrow?: Loc;
+  title?: Loc;
+  /** intro line / paragraph, where the section has one */
+  blurb?: Loc;
+  size?: TitleSize;
+  /** shrink the title to fit rather than wrapping */
+  oneLine?: boolean;
+}
+
+/** Named colour palettes; `custom` uses the two hexes below. */
+export type PaletteId = 'brand' | 'classic' | 'custom';
+
+/** Light (default) or dark, plus whether visitors get the switch at all. */
+export interface ThemeSettings {
+  default: 'light' | 'dark';
+  /** show the sun/moon toggle at the bottom-right of the site */
+  toggle: boolean;
+  /** which colours: brand = UM6P orange + EMINES navy, classic = the original amber on black */
+  palette?: PaletteId;
+  /** the two hues used when palette is `custom` */
+  accent?: string;
+  brand?: string;
+  /** dark-background family for a custom palette */
+  ink?: 'navy' | 'neutral';
+}
+
+/** The graduation block: photos, a caption and the LinkedIn post link. */
+export interface GraduationConfig {
+  enabled: boolean;
+  title: Loc;
+  caption: Loc;
+  /** e.g. "September 2026" */
+  date: Loc;
+  images: string[];
+  /** the LinkedIn post about the graduation — empty until it is published */
+  postUrl: string;
+  postLabel: Loc;
 }
 
 /** The four colour-coded families a skill can belong to. */
@@ -203,6 +260,8 @@ export interface PortfolioConfig {
     photo: string;
     /** manual framing for the portrait */
     photoCrop?: { x: number; y: number; zoom: number };
+    /** the school logo shown in the hero, under /logos/ */
+    schoolLogo?: string;
     /** legacy single-file CV link; the bilingual `cv` block supersedes it */
     resumeUrl: string;
     githubUrl: string;
@@ -213,6 +272,10 @@ export interface PortfolioConfig {
   cv: { en: CvFile | null; fr: CvFile | null };
   visits: VisitsConfig;
   animation: AnimationSettings;
+  theme: ThemeSettings;
+  graduation: GraduationConfig;
+  /** per-section heading overrides, edited in the admin's Sections tab */
+  sections?: Partial<Record<SectionKey, SectionText>>;
   visibility: {
     projects: Record<string, boolean>;
     experiences: Record<string, boolean>;

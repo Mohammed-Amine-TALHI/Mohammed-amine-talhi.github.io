@@ -10,6 +10,7 @@ const LINKS = [
   { href: '#education', key: 'nav.education' },
   { href: '#projects', key: 'nav.projects' },
   { href: '#skills', key: 'nav.skills' },
+  { href: '#graduation', key: 'nav.graduation' },
   { href: '#leadership', key: 'nav.leadership' },
   { href: '#contact', key: 'nav.contact' },
 ] as const;
@@ -50,20 +51,21 @@ export default function Nav() {
     <>
       <motion.div
         style={{ scaleX: progress }}
-        className="fixed inset-x-0 top-0 z-50 h-[2px] origin-left bg-gradient-to-r from-accent-300 via-accent-500 to-accent-700"
+        className="fixed inset-x-0 top-0 z-50 h-[2px] origin-left bg-accent-500"
       />
 
       <header
         className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${
-          scrolled ? 'border-b border-line/70 bg-ink-950/80 backdrop-blur-xl' : 'border-b border-transparent'
+          scrolled ? 'border-b border-line bg-ink-950/85 shadow-[0_1px_0_0_var(--color-line)] backdrop-blur-xl' : 'border-b border-transparent'
         }`}
       >
-        <nav className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-5 sm:px-8">
-          <a href="#top" className="group flex items-center gap-2.5" aria-label="Home">
-            <span className="relative inline-grid place-items-center rounded-xl bg-gradient-to-br from-accent-400 to-accent-700 px-3 py-2 font-display text-sm font-bold text-ink-950">
+        <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
+          {/* plain wordmark — navy on the white theme, orange on the dark one */}
+          <a href="#top" className="group flex items-baseline gap-2" aria-label="Home">
+            <span className="brand-name font-display text-[15px] font-bold tracking-[-0.02em]">
               TALHI Mohammed Amine
-            <span className="absolute inset-0 rounded-xl bg-accent-500/40 blur-md transition-opacity duration-300 group-hover:opacity-100 md:opacity-0" />
             </span>
+            <span className="h-1.5 w-1.5 translate-y-[-1px] rounded-full bg-accent-500 transition-transform duration-300 group-hover:scale-125" />
           </a>
 
           <div className="hidden items-center gap-0.5 lg:flex">
@@ -71,18 +73,18 @@ export default function Nav() {
               <a
                 key={l.href}
                 href={l.href}
-                className={`relative rounded-lg px-2.5 py-2 text-[13px] transition-colors ${
-                  active === l.href ? 'text-zinc-100' : 'text-zinc-400 hover:text-zinc-200'
+                className={`relative px-3 py-2 text-[13px] font-medium transition-colors ${
+                  active === l.href ? 'text-zinc-100' : 'text-zinc-500 hover:text-zinc-200'
                 }`}
               >
+                <span className="relative">{ui(l.key)}</span>
                 {active === l.href && (
                   <motion.span
-                    layoutId="nav-pill"
-                    className="absolute inset-0 rounded-lg bg-white/[0.06] ring-1 ring-white/[0.07]"
+                    layoutId="nav-underline"
+                    className="absolute inset-x-3 -bottom-0.5 h-[2px] rounded-full bg-accent-500"
                     transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                   />
                 )}
-                <span className="relative">{ui(l.key)}</span>
               </a>
             ))}
           </div>
@@ -91,23 +93,23 @@ export default function Nav() {
             {/* FR / EN switch — the pill slides between the two labels */}
             <button
               onClick={toggle}
-              className="relative flex h-9 items-center rounded-lg border border-line bg-ink-850/80 p-0.5 text-xs font-medium"
+              className="relative flex h-8 items-center rounded-full border border-line bg-ink-900/70 p-0.5 text-[11px] font-semibold"
               aria-label="Toggle language"
             >
               {(['en', 'fr'] as const).map((l) => (
-                <span key={l} className="relative z-10 w-9 text-center uppercase tracking-wide">
-                  <span className={lang === l ? 'text-ink-950' : 'text-zinc-500'}>{l}</span>
+                <span key={l} className="relative z-10 w-8 text-center uppercase tracking-wide">
+                  <span className={lang === l ? 'text-[color:var(--on-accent)]' : 'text-zinc-500'}>{l}</span>
                 </span>
               ))}
               <motion.span
-                className="absolute top-0.5 h-[30px] w-9 rounded-[7px] bg-gradient-to-br from-accent-300 to-accent-600"
-                animate={{ x: lang === 'en' ? 2 : 38 }}
+                className="absolute top-0.5 h-[26px] w-8 rounded-full bg-accent-500"
+                animate={{ x: lang === 'en' ? 2 : 34 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 30 }}
               />
             </button>
 
             <button
-              className="grid h-9 w-9 place-items-center rounded-lg border border-line bg-ink-850/80 text-zinc-300 lg:hidden"
+              className="grid h-8 w-8 place-items-center rounded-full border border-line bg-ink-900/70 text-zinc-300 lg:hidden"
               onClick={() => setOpen((o) => !o)}
               aria-label="Menu"
             >

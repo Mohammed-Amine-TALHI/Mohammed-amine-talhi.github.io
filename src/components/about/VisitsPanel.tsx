@@ -6,6 +6,7 @@ import { useLang } from '../../lib/i18n';
 import { config, industrialVisits, splitVisit } from '../../lib/data';
 import { dur, on } from '../../lib/anim';
 import Lightbox from '../Lightbox';
+import { pick, sectionText } from '../../lib/sections';
 import SafeImage from '../SafeImage';
 
 /**
@@ -33,8 +34,10 @@ export default function VisitsPanel() {
     <div>
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h3 className="font-display text-xl font-semibold text-zinc-200">{ui('visits.title')}</h3>
-          <p className="mt-1 text-sm text-zinc-500">{ui('visits.blurb')}</p>
+          <h3 className="font-display text-xl font-semibold text-zinc-200">
+            {pick(lang, sectionText('visits').title, ui('visits.title'))}
+          </h3>
+          <p className="mt-1 text-sm text-zinc-500">{pick(lang, sectionText('visits').blurb, ui('visits.blurb'))}</p>
         </div>
 
         {visits.postUrl && (
@@ -71,9 +74,8 @@ export default function VisitsPanel() {
             >
               <SafeImage
                 src={src}
-                className="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/60 to-transparent" />
             </button>
           ))}
         </motion.div>

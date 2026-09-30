@@ -33,7 +33,7 @@ export default function About() {
   return (
     <section id="about" className="relative px-5 py-24 sm:px-8 sm:py-32">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading index="01" eyebrow={ui('about.eyebrow')} title={ui('about.title')} />
+        <SectionHeading index="01" section="about" eyebrow={ui('about.eyebrow')} title={ui('about.title')} />
 
         <div className="space-y-24 sm:space-y-28">
           <ProfileCard />
