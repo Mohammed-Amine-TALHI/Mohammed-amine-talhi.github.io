@@ -98,6 +98,12 @@ function clampLuminance(hex: string, target: number, direction: 'darker' | 'ligh
   return toHex(c);
 }
 
+/** Greys, white and black have no hue to keep — treat them as "monochrome". */
+function achromatic(hex: string): boolean {
+  const rgb = hexToRgb(hex);
+  return !!rgb && Math.max(...rgb) - Math.min(...rgb) < 24;
+}
+
 /** Black or white, whichever reads better on the given fill. */
 function onColor(hex: string): string {
   const rgb = hexToRgb(hex);
@@ -109,12 +115,22 @@ export function applyPalette(p: Palette) {
   const el = document.documentElement;
   el.style.setProperty('--accent', p.accent);
   el.style.setProperty('--brand', p.brand);
-  // safe variants (see the note above)
-  el.style.setProperty('--accent-deep', clampLuminance(p.accent, 0.25, 'darker')); // text on paper
-  el.style.setProperty('--accent-lit', clampLuminance(p.accent, 0.35, 'lighter')); // text on navy
-  el.style.setProperty('--brand-deep', clampLuminance(p.brand, 0.08, 'darker')); // headings on paper
-  el.style.setProperty('--brand-lit', clampLuminance(p.brand, 0.35, 'lighter')); // brand text on navy
-  el.style.setProperty('--on-accent', onColor(p.accent));
+  // safe variants (see the note above). A monochrome choice — white, black,
+  // grey — means "no colour": text goes fully black on paper and fully white
+  // on the dark theme, rather than the muddy mid-grey a luminance clamp gives.
+  const mono = (hex: string, deep: string) => (achromatic(hex) ? deep : null);
+  el.style.setProperty('--accent-deep', mono(p.accent, '#111116') ?? clampLuminance(p.accent, 0.25, 'darker'));
+  el.style.setProperty('--accent-lit', mono(p.accent, '#f4f4f7') ?? clampLuminance(p.accent, 0.35, 'lighter'));
+  el.style.setProperty('--brand-deep', mono(p.brand, '#111116') ?? clampLuminance(p.brand, 0.08, 'darker'));
+  el.style.setProperty('--brand-lit', mono(p.brand, '#e4e4ec') ?? clampLuminance(p.brand, 0.35, 'lighter'));
+  // the fill colour itself, per theme: a white accent is a white button on
+  // navy but would vanish on paper, so on paper it becomes black (and vice
+  // versa for a black accent on the dark theme)
+  const lum = (h: string) => { const c = hexToRgb(h); return c ? luminance(c) : 0.5; };
+  el.style.setProperty('--accent-paper', achromatic(p.accent) && lum(p.accent) > 0.5 ? '#111116' : p.accent);
+  el.style.setProperty('--accent-night', achromatic(p.accent) && lum(p.accent) < 0.2 ? '#f4f4f7' : p.accent);
+  el.style.setProperty('--on-accent-paper', onColor(achromatic(p.accent) && lum(p.accent) > 0.5 ? '#111116' : p.accent));
+  el.style.setProperty('--on-accent-night', onColor(achromatic(p.accent) && lum(p.accent) < 0.2 ? '#f4f4f7' : p.accent));
   el.style.setProperty('--on-brand', onColor(p.brand));
   el.dataset.ink = p.ink;
 }

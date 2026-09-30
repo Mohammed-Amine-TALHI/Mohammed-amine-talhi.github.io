@@ -53,7 +53,10 @@
   --accent-lit: #ff7a60; /* light enough for text on navy */
   --brand-deep: #14203f; /* headings on paper */
   --brand-lit: #8fa3d9; /* brand-coloured text on navy */
-  --on-accent: #ffffff; /* ink on an accent-filled button */
+  --accent-paper: #e8412a; /* the fill on the light theme */
+  --accent-night: #e8412a; /* the fill on the dark theme */
+  --on-accent-paper: #ffffff; /* ink on an accent-filled button, light theme */
+  --on-accent-night: #ffffff; /* … dark theme */
   --on-brand: #ffffff; /* ink on a brand-filled tile */
 }
 
@@ -72,9 +75,10 @@
   /* text-weight steps come from the "lit" variant, guaranteed readable on navy */
   --color-accent-300: color-mix(in oklab, var(--accent-lit) 75%, white);
   --color-accent-400: var(--accent-lit);
-  --color-accent-500: color-mix(in oklab, var(--accent-lit) 50%, var(--accent));
-  --color-accent-600: var(--accent);
-  --color-accent-700: color-mix(in oklab, var(--accent) 82%, black);
+  --color-accent-500: color-mix(in oklab, var(--accent-lit) 50%, var(--accent-night));
+  --color-accent-600: var(--accent-night);
+  --color-accent-700: color-mix(in oklab, var(--accent-night) 82%, black);
+  --on-accent: var(--on-accent-night);
 
   --color-brand-300: color-mix(in oklab, var(--brand-lit) 75%, white);
   --color-brand-400: var(--brand-lit);
@@ -134,8 +138,9 @@
   /* text-weight accent steps from the "deep" variant, readable on paper */
   --color-accent-300: color-mix(in oklab, var(--accent-deep) 85%, black);
   --color-accent-400: var(--accent-deep);
-  --color-accent-500: var(--accent);
-  --color-accent-600: color-mix(in oklab, var(--accent-deep) 60%, var(--accent));
+  --color-accent-500: var(--accent-paper);
+  --color-accent-600: color-mix(in oklab, var(--accent-deep) 60%, var(--accent-paper));
+  --on-accent: var(--on-accent-paper);
   --color-accent-700: color-mix(in oklab, var(--accent-deep) 75%, black);
 
   --color-brand-300: color-mix(in oklab, var(--brand-deep) 70%, white);
@@ -176,7 +181,7 @@
   --color-line: #e4e4ec;
   --sketch-pencil: #18181f;
   --grid-line: rgba(10, 10, 20, 0.05);
-  --name-color: var(--color-accent-500);
+  --name-color: var(--color-zinc-100);
 }
 
 html {
@@ -201,7 +206,7 @@ body {
 
 /* Gradient text used for names / section numbers */
 .text-gradient {
-  background: linear-gradient(120deg, var(--color-accent-500), var(--color-accent-700));
+  background: linear-gradient(120deg, var(--color-accent-400), var(--color-accent-700));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
