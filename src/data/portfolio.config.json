@@ -20,7 +20,7 @@
   },
   "contact": {
     "displayName": "Mohammed Amine TALHI",
-    "email": "Talhi.MohammedAmine@outlook.com",
+    "email": "mohammed.talhi@emines.um6p.ma",
     "emailAlt": "Talhi.MohammedAmine@outlook.com",
     "phone": "+212 679 879 707",
     "phoneAlt": "+33 7 51 33 52 30",
@@ -236,6 +236,129 @@
         "/covers/2022_02_25_05_30_IMG_6177-muo0yv1h.jpg",
         "/covers/2022_02_25_05_30_IMG_6180-muo0yvrb.jpg",
         "/covers/Capture-d--cran-2023-07-09-114551-muo2c2ie.png"
+      ],
+      "stack": [
+        "SolidWorks",
+        "Arduino",
+        "Scilab",
+        "PID",
+        "Processing"
+      ],
+      "assets": [
+        {
+          "id": "asset-mobile-deck",
+          "kind": "presentation",
+          "label": {
+            "en": "Defence n°4 deck",
+            "fr": "Soutenance 4"
+          },
+          "url": "/docs/Plateforme-Mobile-Soutenance-4-1a0f8c1913f.pdf"
+        }
+      ]
+    },
+    "d11ea9a6-2215-4240-9e12-01b8c0e2f032": {
+      "cover": "/covers/delta-robot-solidworks-1a0f8c1911a.png",
+      "coverCrop": {
+        "x": 50,
+        "y": 45,
+        "zoom": 1
+      },
+      "gallery": [
+        "/covers/delta-robot-solidworks-1a0f8c1911a.png"
+      ],
+      "stack": [
+        "SolidWorks",
+        "Arduino",
+        "C",
+        "Processing",
+        "Python",
+        "Scilab",
+        "Genetic algorithm"
+      ],
+      "assets": [
+        {
+          "id": "asset-delta-report",
+          "kind": "report",
+          "label": {
+            "en": "Final report",
+            "fr": "Rapport final"
+          },
+          "url": "/docs/Robot-Delta-Rapport-final-1a0f8c19127.pdf"
+        },
+        {
+          "id": "asset-delta-deck",
+          "kind": "presentation",
+          "label": {
+            "en": "Final defence deck",
+            "fr": "Soutenance finale"
+          },
+          "url": "/docs/Robot-Delta-Soutenance-finale-1a0f8c1912a.pdf"
+        }
+      ]
+    },
+    "custom-mars-rover": {
+      "cover": "/covers/mars-rover-iso-1a0f8c1911e.webp",
+      "coverCrop": {
+        "x": 50,
+        "y": 50,
+        "zoom": 1
+      },
+      "gallery": [
+        "/covers/mars-rover-iso-1a0f8c1911e.webp",
+        "/covers/mars-rover-top-1a0f8c19121.png",
+        "/covers/mars-rover-mecanum-wheel-1a0f8c19123.png",
+        "/covers/mars-rover-wheel-module-1a0f8c19125.png",
+        "/covers/mars-rover-bearings-1a0f8c19126.png"
+      ],
+      "stack": [
+        "SolidWorks",
+        "Mecanum wheels",
+        "Arduino Mega",
+        "MATLAB / Simulink",
+        "PID",
+        "Python",
+        "Bluetooth"
+      ],
+      "assets": [
+        {
+          "id": "asset-rover-deck",
+          "kind": "presentation",
+          "label": {
+            "en": "Final presentation",
+            "fr": "Présentation finale"
+          },
+          "url": "/docs/Mars-Rover-Presentation-finale-1a0f8c1912f.pdf"
+        }
+      ]
+    },
+    "cb535df5-8f3e-4388-a261-15d92eca49f6": {
+      "stack": [
+        "SolidWorks",
+        "Arduino Mega",
+        "Dynamixel AX/MX",
+        "PID",
+        "Python / Tkinter",
+        "scikit-learn (KNN)"
+      ],
+      "assets": [
+        {
+          "id": "asset-scara-deck",
+          "kind": "presentation",
+          "label": {
+            "en": "Defence deck — position control & AI",
+            "fr": "Soutenance — asservissement & commande par IA"
+          },
+          "url": "/docs/Robot-SCARA-Soutenance-asservissement-1a0f8c80e11.pdf"
+        }
+      ],
+      "cover": "/covers/scara-robot-solidworks-1a0f8cca7eb.png",
+      "coverCrop": {
+        "x": 55,
+        "y": 45,
+        "zoom": 1.15
+      },
+      "gallery": [
+        "/covers/scara-robot-solidworks-1a0f8cca7eb.png"
       ]
     }
   },
@@ -301,6 +424,51 @@
           }
         }
       ]
+    },
+    {
+      "id": "custom-mars-rover",
+      "title": {
+        "en": "Mars Rover — Omnidirectional Mecanum Platform",
+        "fr": "Mars Rover — Plateforme omnidirectionnelle à roues Mecanum"
+      },
+      "tag": {
+        "en": "Robotics",
+        "fr": "Robotique"
+      },
+      "period": {
+        "en": "Feb. 2023 – Jun. 2023",
+        "fr": "Fév. 2023 – Juin 2023"
+      },
+      "bullets": [
+        {
+          "id": "b-rover-1",
+          "text": {
+            "en": "Designed the full SolidWorks model of a four-wheel Mecanum rover: chassis plate, four articulated wheel modules on bearings, custom wheel hubs and a printed electronics bay for two Arduino Mega boards.",
+            "fr": "Conception complète sous SolidWorks d'un rover à quatre roues Mecanum : plateau châssis, quatre modules de roue articulés sur roulements, moyeux sur mesure et baie électronique imprimée pour deux cartes Arduino Mega."
+          }
+        },
+        {
+          "id": "b-rover-2",
+          "text": {
+            "en": "Derived the direct and inverse kinematics of the Mecanum base (wheel speeds ↔ Vx, Vy, ω) and the motor sizing from solid mechanics: 15 % slope and 5 cm obstacle requirements → max torque 0.87 N·m vs 1.47 N·m available on the Pololu gearmotors.",
+            "fr": "Établissement de la cinématique directe et inverse de la base Mecanum (vitesses roues ↔ Vx, Vy, ω) et dimensionnement des moteurs par mécanique du solide : pente de 15 % et obstacle de 5 cm → couple max 0,87 N·m contre 1,47 N·m disponibles sur les motoréducteurs Pololu."
+          }
+        },
+        {
+          "id": "b-rover-3",
+          "text": {
+            "en": "Identified the motor model on MATLAB (95 % fit) and tuned PI speed control (Kp = 0.053, Ki = 1.33) and P position control (Kp = 1.01) in Simulink, then ran them in real time on the Arduino with encoder feedback.",
+            "fr": "Identification du modèle moteur sous MATLAB (fit 95 %) puis réglage d'un asservissement PI en vitesse (Kp = 0,053, Ki = 1,33) et P en position (Kp = 1,01) sous Simulink, exécutés en temps réel sur l'Arduino avec retour codeur."
+          }
+        },
+        {
+          "id": "b-rover-4",
+          "text": {
+            "en": "Built the electrical architecture (two Arduino Mega, four motor drivers, Bluetooth link, ultrasonic, temperature, humidity and gas sensors on a LiPo pack) and a remote-control GUI sending Vx / Vy / Ω set-points and streaming sensor data.",
+            "fr": "Réalisation de l'architecture électrique (deux Arduino Mega, quatre drivers moteur, liaison Bluetooth, capteurs ultrason, température, humidité et gaz sur batterie LiPo) et d'une interface de commande à distance envoyant les consignes Vx / Vy / Ω et affichant les capteurs."
+          }
+        }
+      ]
     }
   ],
   "leadership": [
@@ -342,8 +510,8 @@
     {
       "id": "lead-treasurer",
       "title": {
-        "en": "EMINES Student Council",
-        "fr": "Bureau des Élèves EMINES"
+        "en": "EMINES Student Council (BDE)",
+        "fr": "Bureau des Élèves EMINES (BDE)"
       },
       "role": {
         "en": "Treasurer",
@@ -354,16 +522,329 @@
         "fr": "Mars 2024 – Avril 2025"
       },
       "description": {
-        "en": "Centralized the treasury and supervised financial flows from the student association to every club, keeping activities funded through partnerships and sponsors.",
-        "fr": "Centralisation de la trésorerie et supervision des flux financiers de l'association vers l'ensemble des clubs, en assurant le financement des activités via partenariats et sponsors."
+        "en": "As Treasurer of the Student Council (BDE) at EMINES, I brought rigour and a strategic mindset to student life. The mission: robust, transparent financial management in support of ambitious projects that energise the campus.\nBeyond budgets and fund allocation, the role was a chance to make a tangible contribution to the dynamism of the student community. Working closely with the team, I made sure every investment was aligned with our values and maximised its impact for students.\nIt was also an operations job: with the team we organised two integration trips and a full calendar of events — the JIP day for 40 first-years at Terre d'Amanar near Marrakech, and the 3-day WEI in Taghazout and Paradise Valley (Agadir), where we carried full responsibility for 95 people: accommodation, meals, surf, hiking and sandboarding.\nThis complemented my parallel commitment at the ETECH EMINES club, where I secured the funding for our participation in the National Robotics Competition. Two facets of the same passion: combining financial sustainability with innovation and collective action.",
+        "fr": "Trésorier du Bureau des Élèves (BDE) de l'EMINES, j'ai mis ma rigueur et mon esprit stratégique au service de la vie étudiante. La mission : une gestion financière solide et transparente, au service de projets ambitieux qui dynamisent le campus.\nAu-delà des budgets et de l'allocation des fonds, ce rôle a été l'occasion de contribuer concrètement au dynamisme de la communauté étudiante. En étroite collaboration avec l'équipe, j'ai veillé à ce que chaque investissement soit aligné avec nos valeurs et maximise son impact pour les étudiants.\nC'était aussi un poste d'opérations : avec l'équipe, nous avons organisé deux voyages d'intégration et un calendrier complet d'événements — la JIP, une journée pour 40 nouveaux à Terre d'Amanar près de Marrakech, et le WEI de 3 jours à Taghazout et Paradise Valley (Agadir), où nous avons porté l'entière responsabilité de 95 personnes : hébergement, repas, surf, randonnée et sandboarding.\nCet engagement complétait mon rôle parallèle au club ETECH EMINES, où j'ai sécurisé le financement de notre participation à la Compétition Nationale de Robotique. Deux facettes d'une même passion : allier pérennité financière, innovation et action collective."
       },
       "images": [],
       "tags": [
         "Finance",
         "Governance",
+        "Events",
         "Student life"
       ],
-      "accent": "emerald"
+      "accent": "emerald",
+      "kpis": [
+        {
+          "value": "95",
+          "label": {
+            "en": "people under our care for 3 days (WEI)",
+            "fr": "personnes prises en charge 3 jours (WEI)"
+          }
+        },
+        {
+          "value": "2",
+          "label": {
+            "en": "integration trips organised",
+            "fr": "voyages d'intégration organisés"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "en": "first-years at the JIP day",
+            "fr": "nouveaux à la journée JIP"
+          }
+        },
+        {
+          "value": "12",
+          "label": {
+            "en": "months of transparent treasury for every club",
+            "fr": "mois de trésorerie transparente pour tous les clubs"
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "ev-wei",
+          "title": {
+            "en": "WEI — Integration weekend",
+            "fr": "WEI — Week-end d'intégration"
+          },
+          "place": {
+            "en": "Taghazout & Paradise Valley, Agadir",
+            "fr": "Taghazout & Paradise Valley, Agadir"
+          },
+          "date": {
+            "en": "3 days",
+            "fr": "3 jours"
+          },
+          "people": "95",
+          "description": {
+            "en": "Three days for the third-years with the whole responsibility on us: accommodation, every meal, transport, and the programme — surf lessons on the Taghazout coast, a hike to Paradise Valley and sandboarding in the dunes. Budgeted, negotiated and run end to end by the team.",
+            "fr": "Trois jours pour les troisièmes années avec toute la responsabilité sur nous : hébergement, chaque repas, transport et programme — cours de surf sur la côte de Taghazout, randonnée à Paradise Valley et sandboarding dans les dunes. Budgété, négocié et piloté de bout en bout par l'équipe."
+          },
+          "highlights": [
+            "Surf",
+            "Randonnée",
+            "Sandboarding",
+            "Hébergement",
+            "Repas"
+          ],
+          "images": []
+        },
+        {
+          "id": "ev-jip",
+          "title": {
+            "en": "JIP — Integration day",
+            "fr": "JIP — Journée d'intégration"
+          },
+          "place": {
+            "en": "Terre d'Amanar, Marrakech",
+            "fr": "Terre d'Amanar, Marrakech"
+          },
+          "date": {
+            "en": "1 day",
+            "fr": "1 jour"
+          },
+          "people": "40",
+          "description": {
+            "en": "A full day of outdoor activities and team games at Terre d'Amanar, in the foothills of the Atlas, to welcome 40 new students — logistics, meals and activities handled by the council.",
+            "fr": "Une journée complète d'activités de plein air et de jeux d'équipe à Terre d'Amanar, au pied de l'Atlas, pour accueillir 40 nouveaux étudiants — logistique, repas et activités gérés par le bureau."
+          },
+          "highlights": [
+            "Plein air",
+            "Team building",
+            "Atlas"
+          ],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "lead-etech",
+      "title": {
+        "en": "ETECH — EMINES Technology Club",
+        "fr": "ETECH — Club Technologique EMINES"
+      },
+      "role": {
+        "en": "Head of Sponsorship · Treasurer",
+        "fr": "Responsable Sponsoring · Trésorier"
+      },
+      "period": {
+        "en": "2023 – 2025",
+        "fr": "2023 – 2025"
+      },
+      "description": {
+        "en": "Over two consecutive years I helped organise several large-scale robotics competitions — the IRC (Intelligent Robots Cup) and the URC (University Robotic Competition) — before taking on the Head of the Sponsorship Division for the NRC (National Robotic Competition).\nIn that role I led the entire partnership strategy, which secured over 150,000 MAD in funding. I built lasting relationships with sponsors and made sure they were integrated into the event in a way that worked for them and for us.\nIn my second year I was also Treasurer of the club, in parallel with my role at the Student Council. The experience sharpened my skills in event project management, negotiation and team coordination.",
+        "fr": "Pendant deux années consécutives, j'ai contribué à l'organisation de plusieurs compétitions de robotique d'envergure — l'IRC (Intelligent Robots Cup) et l'URC (University Robotic Competition) — avant de prendre la tête du pôle Sponsoring de la NRC (National Robotic Competition).\nÀ ce poste, j'ai piloté toute la stratégie de partenariats, qui a permis de sécuriser plus de 150 000 MAD de financement. J'ai construit des relations durables avec les sponsors et veillé à leur intégration optimale dans l'événement.\nEn deuxième année, j'ai également été trésorier du club, en parallèle de mon rôle au Bureau des Élèves. Cette expérience a renforcé mes compétences en gestion de projet événementiel, négociation et coordination d'équipe."
+      },
+      "images": [],
+      "tags": [
+        "Robotics",
+        "Sponsoring",
+        "Negotiation",
+        "Events"
+      ],
+      "assets": [
+        {
+          "id": "asset-etech-li",
+          "kind": "link",
+          "label": {
+            "en": "ETECH on LinkedIn",
+            "fr": "ETECH sur LinkedIn"
+          },
+          "url": "https://www.linkedin.com/company/emines-technology-club/posts/?feedView=all"
+        }
+      ],
+      "kpis": [
+        {
+          "value": "150 000+",
+          "label": {
+            "en": "MAD of sponsoring secured for the NRC",
+            "fr": "MAD de sponsoring sécurisés pour la NRC"
+          }
+        },
+        {
+          "value": "3",
+          "label": {
+            "en": "competitions organised — IRC, URC, NRC",
+            "fr": "compétitions organisées — IRC, URC, NRC"
+          }
+        },
+        {
+          "value": "2",
+          "label": {
+            "en": "years on the organising committee",
+            "fr": "ans au comité d'organisation"
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "ev-nrc",
+          "title": {
+            "en": "NRC — National Robotic Competition",
+            "fr": "NRC — Compétition Nationale de Robotique"
+          },
+          "place": {
+            "en": "EMINES, Ben Guerir",
+            "fr": "EMINES, Ben Guerir"
+          },
+          "date": {
+            "en": "",
+            "fr": ""
+          },
+          "people": "",
+          "description": {
+            "en": "Led the sponsorship division: partnership strategy, sponsor relations and their integration into the event — 150,000+ MAD raised.",
+            "fr": "Direction du pôle sponsoring : stratégie de partenariats, relations sponsors et intégration dans l'événement — plus de 150 000 MAD levés."
+          },
+          "highlights": [
+            "Head of Sponsorship",
+            "150 000+ MAD"
+          ],
+          "images": []
+        },
+        {
+          "id": "ev-urc",
+          "title": {
+            "en": "URC — University Robotic Competition",
+            "fr": "URC — University Robotic Competition"
+          },
+          "place": {
+            "en": "",
+            "fr": ""
+          },
+          "date": {
+            "en": "",
+            "fr": ""
+          },
+          "people": "",
+          "description": {
+            "en": "Organising committee.",
+            "fr": "Comité d'organisation."
+          },
+          "highlights": [
+            "Organising committee"
+          ],
+          "images": []
+        },
+        {
+          "id": "ev-irc",
+          "title": {
+            "en": "IRC — Intelligent Robots Cup",
+            "fr": "IRC — Intelligent Robots Cup"
+          },
+          "place": {
+            "en": "",
+            "fr": ""
+          },
+          "date": {
+            "en": "",
+            "fr": ""
+          },
+          "people": "",
+          "description": {
+            "en": "Organising committee.",
+            "fr": "Comité d'organisation."
+          },
+          "highlights": [
+            "Organising committee"
+          ],
+          "images": []
+        }
+      ],
+      "accent": "sky"
+    },
+    {
+      "id": "lead-esg",
+      "title": {
+        "en": "ESG — Engineers Sport Games",
+        "fr": "ESG — Engineers Sport Games"
+      },
+      "role": {
+        "en": "Head of Catering & Food Service · 5th edition",
+        "fr": "Responsable Restauration & Catering · 5ᵉ édition"
+      },
+      "period": {
+        "en": "2024",
+        "fr": "2024"
+      },
+      "description": {
+        "en": "The Engineers Sport Games is the national inter-school sports competition hosted at EMINES – UM6P: for its 5th edition, 12 engineering-school delegations came to Ben Guerir to compete over several days.\nI was responsible for catering and food service for the whole event — planning every meal for 12 delegations of around 40 people each, roughly 480 athletes and staff, from supplier negotiation and quantities to the on-site service schedule around the matches.\nA logistics problem as much as a hospitality one: forecasting demand per day and per service, securing the suppliers, keeping the budget and making sure nobody plays on an empty stomach.",
+        "fr": "Les Engineers Sport Games sont la compétition sportive nationale inter-écoles accueillie à l'EMINES – UM6P : pour sa 5ᵉ édition, 12 délégations d'écoles d'ingénieurs sont venues à Ben Guerir s'affronter pendant plusieurs jours.\nJ'étais responsable de la restauration et du catering de tout l'événement — planification de chaque repas pour 12 délégations d'environ 40 personnes, soit près de 480 athlètes et encadrants, de la négociation fournisseurs et des quantités jusqu'au planning de service sur site autour des matchs.\nUn problème de logistique autant que d'hospitalité : prévoir la demande par jour et par service, sécuriser les fournisseurs, tenir le budget et s'assurer que personne ne joue le ventre vide."
+      },
+      "images": [],
+      "tags": [
+        "Events",
+        "Logistics",
+        "Catering",
+        "Sport"
+      ],
+      "assets": [
+        {
+          "id": "asset-esg-ig",
+          "kind": "link",
+          "label": {
+            "en": "ESG on Instagram",
+            "fr": "ESG sur Instagram"
+          },
+          "url": "https://www.instagram.com/engineerssportgames/"
+        }
+      ],
+      "kpis": [
+        {
+          "value": "480",
+          "label": {
+            "en": "people served — 12 delegations × ~40",
+            "fr": "personnes servies — 12 délégations × ~40"
+          }
+        },
+        {
+          "value": "12",
+          "label": {
+            "en": "engineering-school delegations",
+            "fr": "délégations d'écoles d'ingénieurs"
+          }
+        },
+        {
+          "value": "5th",
+          "label": {
+            "en": "edition of the Engineers Sport Games",
+            "fr": "édition des Engineers Sport Games"
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "ev-esg5",
+          "title": {
+            "en": "ESG 5th edition — catering operation",
+            "fr": "ESG 5ᵉ édition — opération restauration"
+          },
+          "place": {
+            "en": "EMINES – UM6P, Ben Guerir",
+            "fr": "EMINES – UM6P, Ben Guerir"
+          },
+          "date": {
+            "en": "2024",
+            "fr": "2024"
+          },
+          "people": "480",
+          "description": {
+            "en": "Every meal of the competition for 12 delegations: demand forecast per service, supplier negotiation, quantities, budget and the on-site service schedule built around the match timetable.",
+            "fr": "Tous les repas de la compétition pour 12 délégations : prévision de la demande par service, négociation fournisseurs, quantités, budget et planning de service sur site calé sur le calendrier des matchs."
+          },
+          "highlights": [
+            "12 délégations",
+            "~480 repas / service",
+            "Fournisseurs",
+            "Budget"
+          ],
+          "images": []
+        }
+      ],
+      "accent": "violet"
     },
     {
       "id": "lead-rir4mav",

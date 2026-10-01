@@ -1,8 +1,19 @@
-import { HiOutlinePlus, HiChevronUp, HiChevronDown } from 'react-icons/hi';
-import { Card, Button, LocField, TagsInput, ImageDrop, Field, Select } from '../ui';
+import { HiOutlinePlus, HiChevronUp, HiChevronDown, HiOutlineTrash } from 'react-icons/hi';
+import { Card, Button, LocField, TagsInput, ImageDrop, Field, Select, Input } from '../ui';
 import AssetEditor from '../AssetEditor';
 import { resolveCrop } from '../../lib/crop';
-import type { LeadershipEntry, PortfolioConfig } from '../../lib/types';
+import type { LeadershipEntry, LeadershipEvent, PortfolioConfig } from '../../lib/types';
+
+const blankEvent = (): LeadershipEvent => ({
+  id: 'ev-' + Math.random().toString(36).slice(2, 9),
+  title: { en: '', fr: '' },
+  place: { en: '', fr: '' },
+  date: { en: '', fr: '' },
+  people: '',
+  description: { en: '', fr: '' },
+  highlights: [],
+  images: [],
+});
 
 const ACCENTS = ['amber', 'sky', 'emerald', 'violet', 'rose'] as const;
 
@@ -191,6 +202,83 @@ export default function LeadershipPanel({
               onChange={(next) => set((d) => void (d.leadership[i].assets = next))}
               hint="report, poster, deck or link — shown inside the journal view"
             />
+
+            {/* ------------------------------ key figures ------------------------------ */}
+            <Field label="Key figures" hint="small number tiles under the story — value + what it means">
+              <div className="space-y-2">
+                {(e.kpis ?? []).map((k, ki) => (
+                  <div key={ki} className="grid gap-2 sm:grid-cols-[9rem_1fr_auto]">
+                    <Input
+                      value={k.value}
+                      placeholder="150 000 MAD"
+                      onChange={(ev) => set((d) => void (d.leadership[i].kpis![ki].value = ev.target.value))}
+                    />
+                    <LocField
+                      label=""
+                      value={k.label}
+                      onChange={(v) => set((d) => void (d.leadership[i].kpis![ki].label = v))}
+                      placeholder="sponsoring secured"
+                    />
+                    <button
+                      onClick={() => set((d) => void d.leadership[i].kpis!.splice(ki, 1))}
+                      className="grid h-9 w-9 place-items-center self-end rounded-lg border border-line text-zinc-500 hover:text-red-400"
+                      title="Remove"
+                    >
+                      <HiOutlineTrash size={14} />
+                    </button>
+                  </div>
+                ))}
+                <Button onClick={() => set((d) => void (d.leadership[i].kpis = [...(d.leadership[i].kpis ?? []), { value: '', label: { en: '', fr: '' } }]))}>
+                  <span className="flex items-center gap-1.5">
+                    <HiOutlinePlus size={13} /> Add a figure
+                  </span>
+                </Button>
+              </div>
+            </Field>
+
+            {/* ------------------------------ events ------------------------------ */}
+            <Field label="Big events" hint="one expandable box in the journal; each event gets its own card with photos">
+              <div className="space-y-3">
+                {(e.events ?? []).map((ev, evi) => (
+                  <div key={ev.id} className="space-y-3 rounded-xl border border-line bg-ink-950/50 p-3">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[10px] text-zinc-600">event {evi + 1} · {ev.id}</span>
+                      <Button variant="danger" onClick={() => set((d) => void d.leadership[i].events!.splice(evi, 1))}>
+                        Remove event
+                      </Button>
+                    </div>
+                    <LocField label="Title" value={ev.title} onChange={(v) => set((d) => void (d.leadership[i].events![evi].title = v))} placeholder="WEI — Taghazout" />
+                    <div className="grid gap-3 sm:grid-cols-[1fr_1fr_8rem]">
+                      <LocField label="Place" value={ev.place} onChange={(v) => set((d) => void (d.leadership[i].events![evi].place = v))} placeholder="Taghazout · Agadir" />
+                      <LocField label="Date" value={ev.date} onChange={(v) => set((d) => void (d.leadership[i].events![evi].date = v))} placeholder="Sept. 2024 · 3 days" />
+                      <Field label="People">
+                        <Input value={ev.people ?? ''} placeholder="95" onChange={(x) => set((d) => void (d.leadership[i].events![evi].people = x.target.value))} />
+                      </Field>
+                    </div>
+                    <LocField label="What we did" multiline value={ev.description} onChange={(v) => set((d) => void (d.leadership[i].events![evi].description = v))} />
+                    <Field label="Highlights" hint="short chips">
+                      <TagsInput value={ev.highlights ?? []} onChange={(v) => set((d) => void (d.leadership[i].events![evi].highlights = v))} placeholder="Surf, Hiking, Sandboarding" />
+                    </Field>
+                    <Field label="Photos" hint="the first is the event cover; click one to reframe">
+                      <ImageDrop
+                        images={ev.images ?? []}
+                        onChange={(v) => set((d) => void (d.leadership[i].events![evi].images = v))}
+                        itemCrops={{
+                          get: (url) => resolveCrop({ imageCrop: cfg.crops?.[url] }),
+                          set: (url, c) => set((d) => void ((d.crops ??= {})[url] = c)),
+                          aspect: 4 / 3,
+                        }}
+                      />
+                    </Field>
+                  </div>
+                ))}
+                <Button onClick={() => set((d) => void (d.leadership[i].events = [...(d.leadership[i].events ?? []), blankEvent()]))}>
+                  <span className="flex items-center gap-1.5">
+                    <HiOutlinePlus size={13} /> Add an event
+                  </span>
+                </Button>
+              </div>
+            </Field>
           </Card>
         ))}
 

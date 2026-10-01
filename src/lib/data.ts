@@ -17,18 +17,21 @@ export const contact = config.contact;
 
 /** Projects the admin panel has switched ON, in the configured order, plus custom ones. */
 export function visibleProjects(): Project[] {
-  const byId = new Map(resume.projects.map((p) => [p.id, p]));
+  // custom projects take part in the ordering like any other, so a portfolio-only
+  // project can sit next to its CV siblings instead of always trailing the list
+  const custom = (config.customProjects ?? []).map((p) => ({ ...p, custom: true }));
+  const all = [...resume.projects, ...custom];
+  const byId = new Map(all.map((p) => [p.id, p]));
   const ordered = (config.order?.projects ?? [])
     .map((id) => byId.get(id))
     .filter((p): p is Project => Boolean(p));
 
-  // any synced project missing from the order list still shows up, at the end
-  for (const p of resume.projects) {
+  // anything missing from the order list still shows up, at the end
+  for (const p of all) {
     if (!ordered.some((o) => o.id === p.id)) ordered.push(p);
   }
 
-  const custom = (config.customProjects ?? []).map((p) => ({ ...p, custom: true }));
-  return [...ordered, ...custom].filter((p) => config.visibility?.projects?.[p.id] !== false);
+  return ordered.filter((p) => config.visibility?.projects?.[p.id] !== false);
 }
 
 /** Experiences the admin panel has switched ON. */

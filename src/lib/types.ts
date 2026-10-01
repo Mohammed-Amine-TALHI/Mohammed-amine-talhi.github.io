@@ -110,6 +110,26 @@ export interface ProjectMeta {
   assets?: ProjectAsset[];
 }
 
+/** A headline number for a leadership role, e.g. "150 000 MAD" / "sponsoring secured". */
+export interface LeadershipKpi {
+  value: string;
+  label: Loc;
+}
+
+/** One organised event inside a leadership role — a trip, a competition, a party. */
+export interface LeadershipEvent {
+  id: string;
+  title: Loc;
+  place: Loc;
+  date: Loc;
+  /** headcount, kept as a string so "95" and "~100" both work */
+  people?: string;
+  description: Loc;
+  /** short chips: "Surf", "Hiking", "3 days" */
+  highlights: string[];
+  images: string[];
+}
+
 export interface LeadershipEntry {
   id: string;
   title: Loc;
@@ -120,6 +140,10 @@ export interface LeadershipEntry {
   tags: string[];
   /** reports, posters, decks and links — same shape as a project's */
   assets?: ProjectAsset[];
+  /** headline numbers shown under the story */
+  kpis?: LeadershipKpi[];
+  /** the big events, shown as one expandable box in the journal */
+  events?: LeadershipEvent[];
   /** how the cover photo is framed on the card */
   imageFit?: 'cover' | 'contain';
   /** manual framing: focal point in percent plus a zoom factor */

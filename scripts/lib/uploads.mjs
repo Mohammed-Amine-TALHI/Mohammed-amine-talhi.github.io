@@ -38,6 +38,7 @@ export function referencedUrls(cfg) {
     const name = (e.title?.en || e.title?.fr || e.id || '').slice(0, 28);
     (e.images ?? []).forEach((u) => note(u, `leadership · ${name}`));
     (e.assets ?? []).forEach((a) => note(a?.url, `leadership doc · ${name}`));
+    for (const ev of e.events ?? []) (ev?.images ?? []).forEach((u) => note(u, `event · ${name}`));
   }
   for (const [id, m] of Object.entries(cfg.projectMeta ?? {})) {
     note(m?.cover, `project cover · ${id}`);

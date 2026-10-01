@@ -53,6 +53,7 @@ for (const l of ['en', 'fr']) if (cfg.cv?.[l] && !alive(cfg.cv[l].url)) cfg.cv[l
 for (const e of cfg.leadership ?? []) {
   e.images = (e.images ?? []).filter(keep);
   e.assets = (e.assets ?? []).filter((a) => keep(a.url));
+  for (const ev of e.events ?? []) ev.images = (ev.images ?? []).filter(keep);
 }
 for (const m of Object.values(cfg.projectMeta ?? {})) {
   if (!alive(m.cover)) m.cover = '';

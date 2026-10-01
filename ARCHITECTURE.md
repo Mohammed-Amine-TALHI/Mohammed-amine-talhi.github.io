@@ -131,8 +131,11 @@ made `npm run publish` produce a commit even when nothing had changed.
 | `public/graduation/` | Graduation photos |
 | `public/logos/` | The EMINES – UM6P logo (`profile.schoolLogo`) |
 
-Accepted: `.jpg .jpeg .png .webp .gif .avif` and `.pdf .pptx .ppt .docx .doc .xlsx .zip`.
-60 MB per file.
+Accepted: `.jpg .jpeg .png .webp .gif .avif .svg .heic` and `.pdf .pptx .ppt .docx .doc .xlsx .zip`.
+60 MB per file. HEIC photos are converted to JPEG in the browser; `.pptx / .ppt /
+.docx / .doc` are converted to PDF on the server (`scripts/office-to-pdf.ps1`,
+needs PowerPoint / Word on this machine) so the viewer can show them inline — if
+the conversion fails the original file is kept.
 
 Uploads get a timestamp suffix (`IMG_3308-JPG-mt2tti2r.jpg`) so two files with
 the same name never collide. That's why CV downloads are renamed on the way out

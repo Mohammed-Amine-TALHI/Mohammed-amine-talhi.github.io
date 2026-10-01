@@ -15,6 +15,7 @@ import { usePreloadImages } from '../lib/preload';
 import { cropStyle, resolveCrop, cropFor } from '../lib/crop';
 import type { AssetKind, LeadershipEntry } from '../lib/types';
 import { asset } from '../lib/asset';
+import { EventsBlock, KpiRow } from './leadership/EventsBlock';
 
 /** Per-entry accent tints, picked in the admin panel. */
 const ACCENT: Record<string, { ring: string; text: string; glow: string; dot: string }> = {
@@ -179,10 +180,12 @@ function GalleryTile({ src, onOpen }: { src: string; onOpen: () => void }) {
 function Journal({
   entry: e,
   onShot,
+  onEventShot,
   onClose,
 }: {
   entry: LeadershipEntry;
   onShot: (i: number) => void;
+  onEventShot: (eventId: string, i: number) => void;
   onClose: () => void;
 }) {
   const { t, lang } = useLang();
@@ -234,6 +237,8 @@ function Journal({
           ))}
         </div>
 
+        {e.kpis && e.kpis.length > 0 && <KpiRow kpis={e.kpis} accent={a.text} />}
+
         {e.tags?.length > 0 && (
           <div className="mx-auto mt-7 flex max-w-[62ch] flex-wrap gap-1.5">
             {e.tags.map((tag) => (
@@ -279,6 +284,9 @@ function Journal({
           </div>
         )}
 
+        {/* the big events — one box that unfolds into one card per event */}
+        {e.events && e.events.length > 0 && <EventsBlock events={e.events} tone={a} onShot={onEventShot} />}
+
         {/* photos, underneath the story */}
         {e.images?.length > 0 && (
           <div className="mt-8 border-t border-line pt-7">
@@ -307,9 +315,23 @@ export default function Leadership() {
   const [shot, setShot] = useState<number | null>(null);
   const entry = entries.find((e) => e.id === openId) ?? null;
 
+  // One lightbox for the whole journal: the entry's own photos first, then
+  // each event's, so arrow keys walk through everything in reading order.
+  const lightboxImages = entry
+    ? [...(entry.images ?? []), ...(entry.events ?? []).flatMap((ev) => ev.images ?? [])]
+    : [];
+  const eventOffset = (eventId: string) => {
+    let n = entry?.images?.length ?? 0;
+    for (const ev of entry?.events ?? []) {
+      if (ev.id === eventId) return n;
+      n += ev.images?.length ?? 0;
+    }
+    return n;
+  };
+
   // the journal's gallery is mounted on click, so warm every photo up front —
   // otherwise the grid opens empty and fills in
-  usePreloadImages(entries.flatMap((e) => e.images ?? []));
+  usePreloadImages(entries.flatMap((e) => [...(e.images ?? []), ...(e.events ?? []).flatMap((ev) => ev.images ?? [])]));
 
   const isOpen = Boolean(entry);
 
@@ -372,14 +394,19 @@ export default function Leadership() {
               onClick={(ev) => ev.stopPropagation()}
               className="relative my-auto w-full max-w-3xl overflow-hidden rounded-2xl border border-line bg-ink-900 shadow-2xl"
             >
-              <Journal entry={entry} onShot={setShot} onClose={() => setOpenId(null)} />
+              <Journal
+                entry={entry}
+                onShot={setShot}
+                onEventShot={(id, i) => setShot(eventOffset(id) + i)}
+                onClose={() => setOpenId(null)}
+              />
             </motion.article>
           </motion.div>
         )}
       </AnimatePresence>
       </Portal>
 
-      <Lightbox images={entry?.images ?? []} index={shot} onClose={() => setShot(null)} onIndex={setShot} />
+      <Lightbox images={lightboxImages} index={shot} onClose={() => setShot(null)} onIndex={setShot} />
     </section>
   );
 }

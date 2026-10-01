@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, unlinkSync, statSync } from 'node:fs';
 import { resolve, extname, basename } from 'node:path';
+import { spawnSync } from 'node:child_process';
 // @ts-expect-error plain ESM helper shared with the scripts/ folder
 import { pruneUnused } from './scripts/lib/uploads.mjs';
 
@@ -26,6 +27,28 @@ function readBody(req: any): Promise<string> {
 const ALLOWED_FOLDERS = new Set(['leadership', 'covers', 'visits', 'docs', 'cv', 'graduation', 'logos', '']);
 const IMAGE_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif', '.svg']);
 const DOC_EXT = new Set(['.pdf', '.pptx', '.ppt', '.docx', '.doc', '.xlsx', '.zip']);
+/** Office formats that are turned into a PDF on upload (needs PowerPoint / Word on this machine). */
+const OFFICE_EXT = new Set(['.pptx', '.ppt', '.docx', '.doc']);
+
+/**
+ * Convert an Office file to PDF next to it, via scripts/office-to-pdf.ps1.
+ * Returns the PDF path, or null when the conversion is not possible — the
+ * caller then keeps the original. Synchronous on purpose: uploads are rare,
+ * and a deck takes a few seconds either way.
+ */
+function officeToPdf(file: string): string | null {
+  const out = file.replace(/\.[^.]+$/, '.pdf');
+  const r = spawnSync(
+    'powershell',
+    ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', resolve(ROOT, 'scripts/office-to-pdf.ps1'), '-In', file, '-Out', out],
+    { encoding: 'utf8', timeout: 120_000, windowsHide: true },
+  );
+  if (r.status !== 0 || !existsSync(out)) {
+    console.warn('  [admin] PDF conversion failed, keeping the original:', (r.stderr || '').trim().split('\n')[0]);
+    return null;
+  }
+  return out;
+}
 const ALLOWED_EXT = new Set([...IMAGE_EXT, ...DOC_EXT]);
 
 /**
@@ -116,9 +139,22 @@ function adminApiPlugin(): Plugin {
             mkdirSync(dir, { recursive: true });
 
             const b64 = String(dataUrl).split(',')[1] ?? '';
-            writeFileSync(resolve(dir, name), Buffer.from(b64, 'base64'));
+            const target = resolve(dir, name);
+            writeFileSync(target, Buffer.from(b64, 'base64'));
 
-            return json(200, { ok: true, url: folder ? `/${folder}/${name}` : `/${name}` });
+            // decks and Word files are stored as PDF so the viewer can show
+            // them inline; the Office original is dropped once the PDF exists
+            let finalName = name;
+            if (OFFICE_EXT.has(ext)) {
+              const pdf = officeToPdf(target);
+              if (pdf) {
+                unlinkSync(target);
+                finalName = basename(pdf);
+                console.log(`  [admin] converted ${name} -> ${finalName}`);
+              }
+            }
+
+            return json(200, { ok: true, url: folder ? `/${folder}/${finalName}` : `/${finalName}`, converted: finalName !== name });
           }
 
           // ---- list uploaded images ----------------------------------------
