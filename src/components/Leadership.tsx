@@ -166,6 +166,8 @@ function GalleryTile({ src, onOpen }: { src: string; onOpen: () => void }) {
       <img
         src={asset(src)}
         alt=""
+        loading="lazy"
+        decoding="async"
         onError={() => setFailed(true)}
         style={cropStyle(cropFor(src))}
         className="h-full w-full transition-transform duration-500 group-hover/img:scale-105"
@@ -331,7 +333,7 @@ export default function Leadership() {
 
   // the journal's gallery is mounted on click, so warm every photo up front —
   // otherwise the grid opens empty and fills in
-  usePreloadImages(entries.flatMap((e) => [...(e.images ?? []), ...(e.events ?? []).flatMap((ev) => ev.images ?? [])]));
+  usePreloadImages(entries.flatMap((e) => [...(e.images ?? []), ...(e.events ?? []).flatMap((ev) => ev.images ?? [])]), 'leadership');
 
   const isOpen = Boolean(entry);
 

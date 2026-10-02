@@ -24,7 +24,7 @@ export default function Graduation() {
   const g = config.graduation;
   const [shot, setShot] = useState<number | null>(null);
   const images = g?.images ?? [];
-  usePreloadImages(images);
+  usePreloadImages(images, 'graduation');
 
   if (!g || g.enabled === false) return null;
 

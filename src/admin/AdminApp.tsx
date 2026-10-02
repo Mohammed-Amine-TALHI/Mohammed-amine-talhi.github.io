@@ -12,6 +12,7 @@ import AnimationsPanel from './panels/AnimationsPanel';
 import SkillsAdminPanel from './panels/SkillsPanel';
 import GraduationPanel from './panels/GraduationPanel';
 import SectionsPanel from './panels/SectionsPanel';
+import PerformancePanel, { useWeight, STATUS, size } from './panels/PerformancePanel';
 
 const TABS = [
   { id: 'projects', label: 'Projects' },
@@ -23,6 +24,7 @@ const TABS = [
   { id: 'profile', label: 'Profile' },
   { id: 'contact', label: 'Contact & CV' },
   { id: 'animations', label: 'Animations & Theme' },
+  { id: 'performance', label: 'Speed & files' },
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];
@@ -61,6 +63,8 @@ export default function AdminApp() {
   /** mtime of the config file when this session loaded it — the write guard. */
   const baseMtime = useRef<number | null>(null);
   const [conflict, setConflict] = useState<{ config: PortfolioConfig; mtime: number } | null>(null);
+  /** site weight, measured by the dev server — feeds the banner and the Speed tab */
+  const weight = useWeight();
 
   // Load from disk rather than trusting the bundled import, which can lag
   // behind if the file was edited after the dev server started.
@@ -116,6 +120,7 @@ export default function AdminApp() {
 
       baseMtime.current = json.mtime ?? baseMtime.current;
       setDirty(false);
+      weight.refresh();
       const n = (json.pruned ?? []).length;
       flash('Saved to ' + json.path + (n ? ` · ${n} unused file${n > 1 ? 's' : ''} removed` : ''));
     } catch (err) {
@@ -123,7 +128,7 @@ export default function AdminApp() {
     } finally {
       setSaving(false);
     }
-  }, [cfg, flash]);
+  }, [cfg, flash, weight]);
 
   // A photo was edited into a new file (privacy blur): point everything at the
   // new path, and carry its framing over. The old file is swept on save.
@@ -227,6 +232,36 @@ export default function AdminApp() {
         </nav>
       </header>
 
+      {/* speed banner: is the site light, and what is weighing it down */}
+      {weight.report && tab !== 'performance' && (
+        <div className={'border-b ' + STATUS[weight.report.status].tone}>
+          <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-4 gap-y-1 px-5 py-2 text-[11px]">
+            <span className="flex items-center gap-2 font-semibold">
+              <span className={'h-2 w-2 rounded-full ' + STATUS[weight.report.status].dot} />
+              Site speed: {STATUS[weight.report.status].label}
+            </span>
+            <span className="opacity-80">
+              page {size(weight.report.bundle + weight.report.eager)} · whole site{' '}
+              {size(weight.report.total + weight.report.bundle)}
+            </span>
+            {weight.report.heavy > 0 && (
+              <span className="min-w-0 truncate opacity-80">
+                {weight.report.heavy} heavy file{weight.report.heavy === 1 ? '' : 's'}:{' '}
+                {weight.report.files
+                  .filter((f) => f.heavy)
+                  .slice(0, 3)
+                  .map((f) => `${f.url.split('/').pop()?.slice(0, 26)} (${size(f.bytes)})`)
+                  .join(', ')}
+                {weight.report.heavy > 3 ? '…' : ''}
+              </span>
+            )}
+            <button onClick={() => setTab('performance')} className="ml-auto shrink-0 underline decoration-dotted">
+              {weight.report.heavy > 0 ? 'Review & compress →' : 'Details →'}
+            </button>
+          </div>
+        </div>
+      )}
+
       {conflict && (
         <div className="border-b border-amber-800/60 bg-amber-950/40">
           <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-3 px-5 py-3">
@@ -270,6 +305,7 @@ export default function AdminApp() {
         {tab === 'profile' && <ProfilePanel cfg={cfg} set={set} />}
         {tab === 'contact' && <ContactPanel cfg={cfg} set={set} />}
         {tab === 'animations' && <AnimationsPanel cfg={cfg} set={set} />}
+        {tab === 'performance' && <PerformancePanel report={weight.report} refresh={weight.refresh} />}
 
         <p className="mt-12 rounded-xl border border-line bg-ink-900 p-4 text-[11px] leading-relaxed text-zinc-500">
           <strong className="text-zinc-400">How this works.</strong> Saving writes{' '}

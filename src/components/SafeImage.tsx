@@ -39,6 +39,9 @@ export default function SafeImage({
     <img
       src={asset(src)}
       alt={alt}
+      // below-the-fold photos wait until the visitor scrolls near them
+      loading="lazy"
+      decoding="async"
       className={className}
       style={style}
       onError={() => {

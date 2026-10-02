@@ -2,6 +2,7 @@ import { TbFileTypePdf, TbPresentation, TbLayoutBoardSplit, TbBrandGithub, TbLin
 import { HiOutlineTrash } from 'react-icons/hi';
 import { Button, LocField, FileDrop, Field, Select } from './ui';
 import { ASSET_LABEL } from '../lib/data';
+import PdfTrim from './PdfTrim';
 import type { AssetKind, ProjectAsset } from '../lib/types';
 
 const rid = (p: string) => p + '-' + Math.random().toString(36).slice(2, 9);
@@ -67,6 +68,7 @@ export default function AssetEditor({
               </div>
 
               <FileDrop folder="docs" url={a.url} onChange={(url) => patch({ url })} />
+              <PdfTrim url={a.url} onReplaced={(url) => patch({ url })} />
 
               <div className="mt-3">
                 <LocField

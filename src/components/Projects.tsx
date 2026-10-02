@@ -21,6 +21,8 @@ import { visibleProjects, projectTags, config, endYear, projectAssets, ASSET_LAB
 import { dur, on } from '../lib/anim';
 import { cropStyle, resolveCrop, cropFor } from '../lib/crop';
 import { usePreloadImages } from '../lib/preload';
+import VideoModal, { type PlayableVideo } from './VideoModal';
+import { HiPlay } from 'react-icons/hi';
 import { asset } from '../lib/asset';
 import { useProjectFocusRequest, revealProjectCard } from '../lib/projectNav';
 import type { AssetKind, Project } from '../lib/types';
@@ -138,6 +140,8 @@ function GalleryTile({ src, onOpen }: { src: string; onOpen: () => void }) {
       <img
         src={asset(src)}
         alt=""
+        loading="lazy"
+        decoding="async"
         onError={() => setFailed(true)}
         style={cropStyle(cropFor(src))}
         className="h-full w-full transition-transform duration-500 group-hover/img:scale-105"
@@ -152,10 +156,12 @@ function GalleryTile({ src, onOpen }: { src: string; onOpen: () => void }) {
 function Journal({
   project: p,
   onShot,
+  onVideo,
   onClose,
 }: {
   project: Project;
   onShot: (i: number) => void;
+  onVideo: (v: PlayableVideo) => void;
   onClose: () => void;
 }) {
   const { t, lang } = useLang();
@@ -248,6 +254,39 @@ function Journal({
           </div>
         )}
 
+        {/* demo videos — poster tiles that open the pop-up player */}
+        {meta?.videos && meta.videos.length > 0 && (
+          <div className="mt-8 border-t border-line pt-7">
+            <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600">
+              {lang === 'fr' ? 'Vidéos' : 'Videos'} · {meta.videos.length}
+            </p>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {meta.videos.map((v) => {
+                const label = t(v.label)?.trim() || (lang === 'fr' ? 'Démonstration' : 'Demonstration');
+                return (
+                  <button
+                    key={v.id}
+                    onClick={() => onVideo({ url: v.url, poster: v.poster, muted: v.muted, title: t(p.title) + ' — ' + label })}
+                    className="group/vid relative aspect-video overflow-hidden rounded-xl border border-line bg-ink-950 text-left"
+                  >
+                    {v.poster && (
+                      <SafeImage
+                        src={v.poster}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover/vid:scale-105"
+                      />
+                    )}
+                    <span className="absolute inset-0 bg-gradient-to-t from-[#000]/70 via-transparent to-transparent" />
+                    <span className="absolute left-1/2 top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent-500 text-[color:var(--on-accent)] shadow-[0_10px_30px_-8px_#000] transition-transform duration-300 group-hover/vid:scale-110">
+                      <HiPlay size={26} className="ml-0.5" />
+                    </span>
+                    <span className="absolute bottom-2.5 left-3 right-3 truncate text-[12.5px] font-medium text-[#fff]">{label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* the work itself */}
         {gallery.length > 0 && (
           <div className="mt-8 border-t border-line pt-7">
@@ -274,6 +313,7 @@ export default function Projects() {
   const [showAll, setShowAll] = useState(false);
   const [openId, setOpenId] = useState<string | null>(null);
   const [shot, setShot] = useState<number | null>(null);
+  const [video, setVideo] = useState<PlayableVideo | null>(null);
   /** a project another section asked us to scroll to, once it has rendered */
   const [pendingFocus, setPendingFocus] = useState<string | null>(null);
   const PREVIEW = 6;
@@ -292,7 +332,7 @@ export default function Projects() {
   const isOpen = Boolean(project);
 
   // every project photo, warmed on idle, so a journal opens already painted
-  usePreloadImages(projects.flatMap((p) => galleryOf(p.id)));
+  usePreloadImages(projects.flatMap((p) => galleryOf(p.id)), 'projects');
 
   // Another section (a skill, say) wants to jump to a project. Clear anything
   // hiding it first — a tag filter, or the six-card preview — then scroll once
@@ -324,11 +364,11 @@ export default function Projects() {
   useEffect(() => {
     if (!isOpen) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && shot === null) setOpenId(null);
+      if (e.key === 'Escape' && shot === null && !video) setOpenId(null);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [isOpen, shot]);
+  }, [isOpen, shot, video]);
 
   return (
     <section id="projects" className="relative px-5 py-24 sm:px-8 sm:py-32">
@@ -428,7 +468,7 @@ export default function Projects() {
                 onClick={(e) => e.stopPropagation()}
                 className="relative my-auto w-full max-w-3xl overflow-hidden rounded-2xl border border-line bg-ink-900 shadow-2xl"
               >
-                <Journal project={project} onShot={setShot} onClose={() => setOpenId(null)} />
+                <Journal project={project} onShot={setShot} onVideo={setVideo} onClose={() => setOpenId(null)} />
               </motion.article>
             </motion.div>
           )}
@@ -436,6 +476,7 @@ export default function Projects() {
       </Portal>
 
       <Lightbox images={gallery} index={shot} onClose={() => setShot(null)} onIndex={setShot} />
+      <VideoModal video={video} onClose={() => setVideo(null)} />
     </section>
   );
 }

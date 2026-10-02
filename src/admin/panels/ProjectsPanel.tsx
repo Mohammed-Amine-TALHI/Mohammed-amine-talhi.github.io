@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { HiChevronDown, HiChevronUp, HiOutlinePlus, HiOutlineTrash } from 'react-icons/hi';
 import { Toggle, Card, Button, LocField, TagsInput, ImageDrop, Field } from '../ui';
 import AssetEditor from '../AssetEditor';
+import VideoEditor from '../VideoEditor';
 import { resolveCrop } from '../../lib/crop';
 import { resume } from '../../lib/data';
 import type { PortfolioConfig, Project } from '../../lib/types';
@@ -138,6 +139,11 @@ export default function ProjectsPanel({
                         }
                       />
                     </Field>
+
+                    <VideoEditor
+                      videos={cfg.projectMeta[p.id]?.videos ?? []}
+                      onChange={(videos) => set((d) => void (d.projectMeta[p.id] = { ...(d.projectMeta[p.id] ?? {}), videos }))}
+                    />
 
                     <Field label="Photo gallery" hint="the work itself — shown when the card is opened">
                       <ImageDrop
@@ -288,6 +294,11 @@ export default function ProjectsPanel({
                   }
                 />
               </Field>
+
+              <VideoEditor
+                videos={cfg.projectMeta[p.id]?.videos ?? []}
+                onChange={(videos) => set((d) => void (d.projectMeta[p.id] = { ...(d.projectMeta[p.id] ?? {}), videos }))}
+              />
 
               <Field label="Photo gallery" hint="the work itself — shown when the card is opened">
                 <ImageDrop

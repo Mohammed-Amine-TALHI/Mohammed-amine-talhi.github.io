@@ -19,14 +19,18 @@ import { Button } from './ui';
 
 export interface BlurSpot {
   id: number;
+  /** round for faces; rectangle for text, logos, table columns */
+  shape: 'round' | 'rect';
   x: number; // centre, 0..1 of width
   y: number; // centre, 0..1 of height
-  r: number; // radius, fraction of the shorter side
+  r: number; // round: radius, fraction of the shorter side
+  w: number; // rect: width, fraction of the image width
+  h: number; // rect: height, fraction of the image height
   strength: number; // 0.15 (light) .. 1 (heavy)
   feather: number; // 0 (hard edge) .. 1 (fades from the centre)
 }
 
-const DEFAULT_SPOT = { r: 0.07, strength: 0.55, feather: 0.6 };
+const DEFAULT_SPOT = { r: 0.07, w: 0.22, h: 0.06, strength: 0.55, feather: 0.6 };
 
 /** Paint the photo with every blur spot onto `ctx` at W×H. Shared by preview and export. */
 function paint(ctx: CanvasRenderingContext2D, img: HTMLImageElement, spots: BlurSpot[], W: number, H: number) {
@@ -37,6 +41,36 @@ function paint(ctx: CanvasRenderingContext2D, img: HTMLImageElement, spots: Blur
 
   const short = Math.min(W, H);
   for (const s of spots) {
+    if (s.shape === 'rect') {
+      const rw = s.w * W;
+      const rh = s.h * H;
+      const blur = Math.max(2, Math.min(rw, rh) * 0.35 * s.strength);
+      // feather: how far the edge fades, up to a third of the short side
+      const f = Math.min(rw, rh) * 0.33 * s.feather;
+      const pad = Math.ceil(blur * 2 + f);
+      const pw = Math.ceil(rw + pad * 2);
+      const ph = Math.ceil(rh + pad * 2);
+      const bx = Math.round(s.x * W - pw / 2);
+      const by = Math.round(s.y * H - ph / 2);
+
+      const patch = document.createElement('canvas');
+      patch.width = pw;
+      patch.height = ph;
+      const p = patch.getContext('2d')!;
+      p.filter = `blur(${blur}px)`;
+      p.drawImage(img, -bx, -by, W, H);
+
+      // keep a soft-edged rectangle of it
+      p.globalCompositeOperation = 'destination-in';
+      p.filter = f > 0.5 ? `blur(${f / 2}px)` : 'none';
+      p.fillStyle = '#000';
+      p.fillRect(pad + f / 2, pad + f / 2, rw - f, rh - f);
+      p.filter = 'none';
+
+      ctx.drawImage(patch, bx, by);
+      continue;
+    }
+
     const r = s.r * short;
     const blur = Math.max(1, r * 0.45 * s.strength);
     // the patch is larger than the circle so the blur has real pixels to pull from at its edge
@@ -81,6 +115,8 @@ export default function BlurEditor({
   const [spots, setSpots] = useState<BlurSpot[]>([]);
   const [sel, setSel] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
+  /** the shape a click on empty space drops */
+  const [mode, setMode] = useState<'round' | 'rect'>('round');
   const drag = useRef<{ id: number; dx: number; dy: number } | null>(null);
   const nextId = useRef(1);
 
@@ -113,10 +149,15 @@ export default function BlurEditor({
     const short = Math.min(W, H);
     for (const s of spots) {
       ctx.beginPath();
-      ctx.arc(s.x * W, s.y * H, s.r * short, 0, Math.PI * 2);
+      if (s.shape === 'rect') ctx.rect((s.x - s.w / 2) * W, (s.y - s.h / 2) * H, s.w * W, s.h * H);
+      else ctx.arc(s.x * W, s.y * H, s.r * short, 0, Math.PI * 2);
       ctx.setLineDash(s.id === sel ? [] : [5, 4]);
+      // dark under-stroke so the outline shows on white screenshots too
+      ctx.lineWidth = s.id === sel ? 3.5 : 2.5;
+      ctx.strokeStyle = 'rgba(0,0,0,0.45)';
+      ctx.stroke();
       ctx.lineWidth = s.id === sel ? 2 : 1;
-      ctx.strokeStyle = s.id === sel ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.55)';
+      ctx.strokeStyle = s.id === sel ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.7)';
       ctx.stroke();
     }
     ctx.setLineDash([]);
@@ -133,6 +174,10 @@ export default function BlurEditor({
       const short = Math.min(W, H);
       for (let i = spots.length - 1; i >= 0; i--) {
         const s = spots[i];
+        if (s.shape === 'rect') {
+          if (Math.abs(x - s.x) <= s.w / 2 && Math.abs(y - s.y) <= s.h / 2) return s;
+          continue;
+        }
         const d = Math.hypot((x - s.x) * W, (y - s.y) * H);
         if (d <= s.r * short) return s;
       }
@@ -150,7 +195,7 @@ export default function BlurEditor({
     } else {
       // click on empty space: drop a new blur there
       const id = nextId.current++;
-      setSpots((list) => [...list, { id, x, y, ...DEFAULT_SPOT }]);
+      setSpots((list) => [...list, { id, shape: mode, x, y, ...DEFAULT_SPOT }]);
       setSel(id);
       drag.current = { id, dx: 0, dy: 0 };
     }
@@ -175,8 +220,16 @@ export default function BlurEditor({
   /** Scroll over the photo resizes the selected blur. */
   const onWheel = (e: React.WheelEvent) => {
     if (sel === null) return;
+    const k = e.deltaY < 0 ? 1.08 : 0.92;
+    const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
     setSpots((list) =>
-      list.map((s) => (s.id === sel ? { ...s, r: Math.min(0.5, Math.max(0.015, s.r * (e.deltaY < 0 ? 1.08 : 0.92))) } : s)),
+      list.map((s) =>
+        s.id !== sel
+          ? s
+          : s.shape === 'rect'
+            ? { ...s, w: clamp(s.w * k, 0.01, 1), h: clamp(s.h * k, 0.01, 1) }
+            : { ...s, r: clamp(s.r * k, 0.015, 0.5) },
+      ),
     );
   };
 
@@ -235,8 +288,22 @@ export default function BlurEditor({
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-accent-400">Privacy blur</p>
           <p className="mt-0.5 text-[11px] text-zinc-500">
-            Click a face to drop a blur · drag to move · scroll to resize · fine-tune with the sliders.
+            Click the photo to drop a blur · drag to move · scroll to resize · fine-tune with the sliders.
           </p>
+          <div className="mt-2 inline-flex rounded-lg border border-line p-0.5 text-[11px]">
+            {(['round', 'rect'] as const).map((m) => (
+              <button
+                key={m}
+                onClick={() => setMode(m)}
+                className={
+                  'rounded-md px-2.5 py-1 transition-colors ' +
+                  (mode === m ? 'bg-accent-500 text-[color:var(--on-accent)]' : 'text-zinc-400 hover:text-zinc-200')
+                }
+              >
+                {m === 'round' ? '● Round — faces' : '▭ Rectangle — text, logos'}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="flex gap-2">
           <Button onClick={onClose}>Cancel</Button>
@@ -279,15 +346,22 @@ export default function BlurEditor({
                   <HiOutlineTrash size={13} />
                 </button>
               </div>
-              <Slider label="Size" value={selected.r} min={0.015} max={0.5} onChange={(v) => patch({ r: v })} />
+              {selected.shape === 'rect' ? (
+                <>
+                  <Slider label="Width" value={selected.w} min={0.01} max={1} onChange={(v) => patch({ w: v })} />
+                  <Slider label="Height" value={selected.h} min={0.01} max={1} onChange={(v) => patch({ h: v })} />
+                </>
+              ) : (
+                <Slider label="Size" value={selected.r} min={0.015} max={0.5} onChange={(v) => patch({ r: v })} />
+              )}
               <Slider label="Strength" value={selected.strength} min={0.15} max={1} onChange={(v) => patch({ strength: v })} />
               <Slider label="Soft edge" value={selected.feather} min={0} max={1} onChange={(v) => patch({ feather: v })} />
             </div>
           ) : (
             <p className="rounded-lg border border-dashed border-line p-3 text-[11px] leading-relaxed text-zinc-500">
               <HiOutlinePlus className="mr-1 inline" size={12} />
-              Click on the photo to add a round blur. Select one to adjust its size, strength and how softly it fades
-              into the picture.
+              Pick a shape, then click on the photo to add a blur. Select one to adjust its size, strength and how
+              softly it fades into the picture.
             </p>
           )}
 
@@ -302,7 +376,7 @@ export default function BlurEditor({
                     (s.id === sel ? 'border-accent-500/60 text-accent-300' : 'border-line text-zinc-500 hover:text-zinc-300')
                   }
                 >
-                  blur {i + 1}
+                  {s.shape === 'rect' ? '▭' : '●'} {i + 1}
                 </button>
               ))}
             </div>

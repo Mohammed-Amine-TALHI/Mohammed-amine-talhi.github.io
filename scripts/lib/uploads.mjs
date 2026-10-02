@@ -12,7 +12,7 @@ import { existsSync, readdirSync, statSync, unlinkSync } from 'node:fs';
 import { resolve, extname } from 'node:path';
 
 /** Folders the admin uploads into. Root ('') holds the profile photo. */
-export const UPLOAD_FOLDERS = ['', 'covers', 'docs', 'cv', 'leadership', 'visits', 'graduation', 'logos'];
+export const UPLOAD_FOLDERS = ['', 'covers', 'docs', 'cv', 'leadership', 'visits', 'graduation', 'logos', 'videos'];
 
 /** Files at the public root that are part of the site, not uploads. */
 const KEEP_ROOT = new Set(['favicon.svg', 'CNAME', 'robots.txt', '.nojekyll']);
@@ -20,6 +20,7 @@ const KEEP_ROOT = new Set(['favicon.svg', 'CNAME', 'robots.txt', '.nojekyll']);
 const UPLOAD_EXT = new Set([
   '.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif', '.svg',
   '.pdf', '.pptx', '.ppt', '.docx', '.doc', '.xlsx', '.zip',
+  '.mp4', '.webm', '.mov', '.m4v',
 ]);
 
 /** Every site-absolute path ("/covers/x.jpg") the config points at, with where it came from. */
@@ -36,7 +37,8 @@ export function referencedUrls(cfg) {
 
   for (const e of cfg.leadership ?? []) {
     const name = (e.title?.en || e.title?.fr || e.id || '').slice(0, 28);
-    (e.images ?? []).forEach((u) => note(u, `leadership · ${name}`));
+    // only the first photo is on the card; the rest live in the journal pop-up
+    (e.images ?? []).forEach((u, i) => note(u, `${i === 0 ? 'leadership cover' : 'leadership gallery'} · ${name}`));
     (e.assets ?? []).forEach((a) => note(a?.url, `leadership doc · ${name}`));
     for (const ev of e.events ?? []) (ev?.images ?? []).forEach((u) => note(u, `event · ${name}`));
   }
@@ -44,13 +46,18 @@ export function referencedUrls(cfg) {
     note(m?.cover, `project cover · ${id}`);
     (m?.gallery ?? []).forEach((u) => note(u, `project gallery · ${id}`));
     (m?.assets ?? []).forEach((a) => note(a?.url, `project doc · ${id}`));
+    for (const v of m?.videos ?? []) {
+      note(v?.url, `project video · ${id}`);
+      note(v?.poster, `video poster · ${id}`);
+    }
   }
   (cfg.visits?.images ?? []).forEach((u) => note(u, 'visits'));
   for (const v of Object.values(cfg.visits?.perVisit ?? {})) {
     (v?.images ?? []).forEach((u) => note(u, 'visit photo'));
     note(v?.url, 'visit link');
   }
-  (cfg.graduation?.images ?? []).forEach((u) => note(u, 'graduation'));
+  // the mosaic shows six; any further photo is only seen in the lightbox
+  (cfg.graduation?.images ?? []).forEach((u, i) => note(u, i < 6 ? 'graduation' : 'graduation gallery'));
   for (const [k, p] of Object.entries(cfg.languageProof ?? {})) {
     (p?.images ?? []).forEach((u) => note(u, `language · ${k}`));
     (p?.assets ?? []).forEach((a) => note(a?.url, `language doc · ${k}`));

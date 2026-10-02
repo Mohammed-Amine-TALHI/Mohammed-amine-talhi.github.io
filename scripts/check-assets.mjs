@@ -58,6 +58,7 @@ for (const e of cfg.leadership ?? []) {
 for (const m of Object.values(cfg.projectMeta ?? {})) {
   if (!alive(m.cover)) m.cover = '';
   if (m.assets) m.assets = m.assets.filter((a) => keep(a.url));
+  if (m.videos) m.videos = m.videos.filter((v) => keep(v.url));
 }
 if (cfg.visits) {
   cfg.visits.images = (cfg.visits.images ?? []).filter(keep);

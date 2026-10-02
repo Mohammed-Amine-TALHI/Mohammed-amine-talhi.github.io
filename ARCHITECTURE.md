@@ -339,7 +339,7 @@ instead of ~600 kB of engine.
 | `skills.ts` | Config skills → icon components. |
 | `iconRegistry.ts` | The 104 icons behind the picker. |
 | `skillLinks.ts` | Which projects used a skill. |
-| `preload.ts` | Warms images on idle so galleries open instantly. |
+| `preload.ts` | Warms gallery photos in the background: after load, on idle, two at a time, and only once the visitor scrolls near that section. Skipped on data-saver / 2G. |
 
 ### Two worth understanding properly
 
@@ -490,6 +490,38 @@ the new one everywhere in the config (`portfolio:replace-url` event →
 unused-file sweep on save. Unlike the crop it cannot be undone from the site —
 re-upload the original if you change your mind. A config-only blur would have
 left the sharp file publicly downloadable, which is why it is not done that way.
+
+The blur editor has two shapes: **round** (faces) and **rectangle** (text, logos,
+table columns in screenshots).
+
+**PDF trim works the same way.** Under every local PDF in a documents list,
+*"N pages — keep only a range…"* (`src/admin/PdfTrim.tsx` → `POST
+/__admin/split-pdf`, pdf-lib) writes a new PDF with just those pages and swaps
+it in; the full original is swept on save.
+
+**First-visit language.** `lib/i18n.tsx`: a saved choice wins; otherwise a French
+browser gets FR and any other gets EN. No network lookup is involved. The
+auto-detected value is never stored — only an explicit click on the EN/FR
+switch is.
+
+**Videos.** A project can carry demo videos (`projectMeta[id].videos`). Uploads
+go to `POST /__admin/upload-video` as a raw stream and are re-encoded by the
+bundled ffmpeg (`ffmpeg-static`) to a 720p H.264 MP4 plus a poster JPEG in
+`public/videos/`. The site shows poster tiles; the MP4 is only requested when
+the pop-up player (`VideoModal.tsx`) opens. Trim / remove-sound in the admin
+writes a new file, like the blur.
+
+**Speed & files tab.** `GET /__admin/weight` (`scripts/lib/media.mjs`) lists
+every upload with its size, who uses it and when a visitor pays for it — on the
+page, warmed in the background, or on click — and gives a fast / acceptable /
+slow verdict from the on-page total. `POST /__admin/compress` rewrites one file
+in place: photos via sharp, PDFs by recompressing their embedded pictures
+(pdf-lib + sharp; text and vectors untouched), videos via ffmpeg. A result is
+kept only if it is at least 5 % smaller.
+
+**Loading strategy.** Every `<img>` is `loading="lazy"`, so on-page photos load
+as they scroll into view; gallery photos are warmed by `preload.ts`; documents
+and videos load on click. Keep it that way when adding sections.
 
 **Removing a photo in the admin deletes the file on save.** The save handler
 runs `pruneUnused()` from `scripts/lib/uploads.mjs`: anything under `public/`

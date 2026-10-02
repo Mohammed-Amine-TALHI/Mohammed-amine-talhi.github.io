@@ -34,7 +34,7 @@ export default function LanguagesPanel() {
   const [shot, setShot] = useState<number | null>(null);
 
   // warm them so a certificate opens instantly
-  usePreloadImages(gallery);
+  usePreloadImages(gallery, 'skills');
 
   if (!langs.length) return null;
 

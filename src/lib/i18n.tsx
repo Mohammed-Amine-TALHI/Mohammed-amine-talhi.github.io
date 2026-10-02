@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { Lang, Loc } from './types';
 
 /* ---------------------------------------------------------------------------
@@ -111,20 +111,41 @@ interface Ctx {
   ui: (key: UIKey) => string;
 }
 
+/** Any of the browser's preferred languages starts with "fr". */
+function browserIsFrench(): boolean {
+  const list = navigator.languages?.length ? navigator.languages : [navigator.language];
+  return list.some((l) => (l || '').toLowerCase().startsWith('fr'));
+}
+
 const LangContext = createContext<Ctx | null>(null);
 const STORAGE_KEY = 'portfolio.lang';
 
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>(() => {
-    // a visitor who already used the switch keeps their choice; everyone
-    // else lands on French, whatever their browser language says
+  /** Did the visitor pick a language themselves (now or on an earlier visit)? */
+  const chosen = useRef<boolean>(false);
+
+  const [lang, setLangState] = useState<Lang>(() => {
+    // 1. a visitor who already used the switch keeps their choice
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === 'en' || saved === 'fr') return saved;
-    return 'fr';
+    if (saved === 'en' || saved === 'fr') {
+      chosen.current = true;
+      return saved;
+    }
+    // 2. otherwise a French browser gets French, any other gets English
+    return browserIsFrench() ? 'fr' : 'en';
   });
 
+  /** An explicit choice: remember it, and stop auto-detecting from then on. */
+  const setLang = (next: Lang | ((l: Lang) => Lang)) => {
+    chosen.current = true;
+    setLangState((prev) => {
+      const value = typeof next === 'function' ? next(prev) : next;
+      localStorage.setItem(STORAGE_KEY, value);
+      return value;
+    });
+  };
+
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, lang);
     document.documentElement.lang = lang;
   }, [lang]);
 

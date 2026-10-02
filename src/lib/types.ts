@@ -103,6 +103,18 @@ export interface ProjectAsset {
   url: string;
 }
 
+/** A demo video attached to a project, played in a pop-up. */
+export interface ProjectVideo {
+  id: string;
+  /** an MP4 under /videos/ */
+  url: string;
+  /** still frame shown behind the play button */
+  poster?: string;
+  label: Loc;
+  /** open with the sound off */
+  muted?: boolean;
+}
+
 export interface ProjectMeta {
   featured?: boolean;
   cover?: string;
@@ -112,6 +124,8 @@ export interface ProjectMeta {
   gallery?: string[];
   stack?: string[];
   assets?: ProjectAsset[];
+  /** demo videos, shown above the photo gallery */
+  videos?: ProjectVideo[];
 }
 
 /** A headline number for a leadership role, e.g. "150 000 MAD" / "sponsoring secured". */

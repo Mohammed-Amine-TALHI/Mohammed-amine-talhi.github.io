@@ -1,11 +1,15 @@
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
-import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, unlinkSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, unlinkSync, statSync, createWriteStream } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { resolve, extname, basename } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { PDFDocument } from 'pdf-lib';
 // @ts-expect-error plain ESM helper shared with the scripts/ folder
-import { pruneUnused } from './scripts/lib/uploads.mjs';
+import { pruneUnused, referencedUrls, UPLOAD_FOLDERS } from './scripts/lib/uploads.mjs';
+// @ts-expect-error plain ESM helper shared with the scripts/ folder
+import { encodeVideo, posterFrame, probeVideo, compressFile, siteWeight, VIDEO_EXT } from './scripts/lib/media.mjs';
 
 const ROOT = process.cwd();
 const CONFIG_PATH = resolve(ROOT, 'src/data/portfolio.config.json');
@@ -24,7 +28,7 @@ function readBody(req: any): Promise<string> {
   });
 }
 
-const ALLOWED_FOLDERS = new Set(['leadership', 'covers', 'visits', 'docs', 'cv', 'graduation', 'logos', '']);
+const ALLOWED_FOLDERS = new Set(['leadership', 'covers', 'visits', 'docs', 'cv', 'graduation', 'logos', 'videos', '']);
 const IMAGE_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif', '.svg']);
 const DOC_EXT = new Set(['.pdf', '.pptx', '.ppt', '.docx', '.doc', '.xlsx', '.zip']);
 /** Office formats that are turned into a PDF on upload (needs PowerPoint / Word on this machine). */
@@ -155,6 +159,119 @@ function adminApiPlugin(): Plugin {
             }
 
             return json(200, { ok: true, url: folder ? `/${folder}/${finalName}` : `/${finalName}`, converted: finalName !== name });
+          }
+
+          // ---- video upload: raw body streamed to disk, then made web-ready ---
+          // A phone clip is 50–300 MB of HEVC in a .MOV — far beyond the base64
+          // JSON route's cap, and not playable in every browser. It is streamed
+          // to a temp file and re-encoded to a 720p H.264 MP4 with a poster.
+          if (url === '/__admin/upload-video' && req.method === 'POST') {
+            const q = new URL(req.url ?? '', 'http://x').searchParams;
+            const filename = q.get('filename') ?? 'video.mp4';
+            const ext = extname(filename).toLowerCase();
+            if (!VIDEO_EXT.has(ext)) return json(400, { error: `unsupported video type ${ext}` });
+
+            const tmp = resolve(tmpdir(), `portfolio-upload-${Date.now().toString(36)}${ext}`);
+            await new Promise<void>((res, rej) => {
+              const out = createWriteStream(tmp);
+              req.pipe(out);
+              out.on('finish', () => res());
+              out.on('error', rej);
+              req.on('error', rej);
+            });
+
+            const dir = resolve(PUBLIC_DIR, 'videos');
+            mkdirSync(dir, { recursive: true });
+            const stem = `${basename(filename, ext).replace(/[^a-zA-Z0-9-_]/g, '-').slice(0, 50) || 'video'}-${Date.now().toString(36)}`;
+            try {
+              await encodeVideo(tmp, resolve(dir, stem + '.mp4'), { maxHeight: 720, crf: 27 });
+              await posterFrame(resolve(dir, stem + '.mp4'), resolve(dir, stem + '.jpg'), 0.5);
+            } finally {
+              if (existsSync(tmp)) unlinkSync(tmp);
+            }
+            const info = await probeVideo(resolve(dir, stem + '.mp4'));
+            console.log(`  [admin] video ${filename} -> videos/${stem}.mp4 (${Math.round(statSync(resolve(dir, stem + '.mp4')).size / 1024)} KB)`);
+            return json(200, { ok: true, url: `/videos/${stem}.mp4`, poster: `/videos/${stem}.jpg`, duration: info?.duration ?? 0 });
+          }
+
+          // ---- video details (duration, size) -------------------------------
+          if (url === '/__admin/video-info' && req.method === 'GET') {
+            const q = new URL(req.url ?? '', 'http://x').searchParams.get('url') ?? '';
+            const file = resolve(PUBLIC_DIR, q.replace(/^\//, ''));
+            if (!file.startsWith(PUBLIC_DIR) || !existsSync(file)) return json(404, { error: 'not found' });
+            return json(200, { ...(await probeVideo(file)), bytes: statSync(file).size });
+          }
+
+          // ---- trim / mute a video (writes a new file + poster) --------------
+          if (url === '/__admin/video-edit' && req.method === 'POST') {
+            const { url: vUrl, start = 0, end = 0, mute = false } = JSON.parse(await readBody(req));
+            const file = resolve(PUBLIC_DIR, String(vUrl).replace(/^\//, ''));
+            if (!file.startsWith(PUBLIC_DIR) || !existsSync(file)) return json(404, { error: 'not found' });
+            const dir = resolve(file, '..');
+            const stem = `${basename(file, extname(file)).replace(/-cut-[a-z0-9]+$/i, '').replace(/-[a-z0-9]{6,}$/i, '')}-cut-${Date.now().toString(36)}`;
+            await encodeVideo(file, resolve(dir, stem + '.mp4'), { start: Number(start) || 0, end: Number(end) || 0, mute: Boolean(mute), maxHeight: 720, crf: 27 });
+            await posterFrame(resolve(dir, stem + '.mp4'), resolve(dir, stem + '.jpg'), 0.5);
+            const info = await probeVideo(resolve(dir, stem + '.mp4'));
+            const rel = String(vUrl).replace(/[^/]+$/, '');
+            return json(200, { ok: true, url: rel + stem + '.mp4', poster: rel + stem + '.jpg', duration: info?.duration ?? 0 });
+          }
+
+          // ---- site weight report --------------------------------------------
+          if (url === '/__admin/weight' && req.method === 'GET') {
+            const cfg = JSON.parse(readFileSync(CONFIG_PATH, 'utf8'));
+            const report = siteWeight(PUBLIC_DIR, referencedUrls(cfg), UPLOAD_FOLDERS);
+            // the app itself: JS + CSS of the last production build, if there is one
+            let bundle = 0;
+            const assetsDir = resolve(ROOT, 'dist/assets');
+            if (existsSync(assetsDir)) {
+              for (const f of readdirSync(assetsDir)) if (/\.(js|css)$/.test(f)) bundle += statSync(resolve(assetsDir, f)).size;
+            }
+            return json(200, { ...report, bundle });
+          }
+
+          // ---- compress one upload in place ----------------------------------
+          if (url === '/__admin/compress' && req.method === 'POST') {
+            const { url: fUrl } = JSON.parse(await readBody(req));
+            const file = resolve(PUBLIC_DIR, String(fUrl).replace(/^\//, ''));
+            if (!file.startsWith(PUBLIC_DIR) || !existsSync(file)) return json(404, { error: 'not found' });
+            const result = await compressFile(file);
+            console.log(`  [admin] compress ${fUrl}: ${result.before} -> ${result.after}`);
+            return json(200, { ok: true, ...result });
+          }
+
+          // ---- how many pages does an uploaded PDF have? --------------------
+          if (url === '/__admin/pdf-info' && req.method === 'GET') {
+            const q = new URL(req.url ?? '', 'http://x').searchParams.get('url') ?? '';
+            const file = resolve(PUBLIC_DIR, q.replace(/^\//, ''));
+            if (!file.startsWith(PUBLIC_DIR) || !existsSync(file)) return json(404, { error: 'not found' });
+            const doc = await PDFDocument.load(readFileSync(file), { ignoreEncryption: true });
+            return json(200, { pages: doc.getPageCount() });
+          }
+
+          // ---- keep only a page range of a PDF (writes a new file) ----------
+          if (url === '/__admin/split-pdf' && req.method === 'POST') {
+            const { url: pdfUrl, from, to } = JSON.parse(await readBody(req));
+            const file = resolve(PUBLIC_DIR, String(pdfUrl).replace(/^\//, ''));
+            if (!file.startsWith(PUBLIC_DIR) || !existsSync(file)) return json(404, { error: 'not found' });
+
+            const src = await PDFDocument.load(readFileSync(file), { ignoreEncryption: true });
+            const n = src.getPageCount();
+            const a = Math.max(1, Math.floor(Number(from)));
+            const b = Math.min(n, Math.floor(Number(to)));
+            if (!(a <= b)) return json(400, { error: `bad page range ${from}–${to} (document has ${n})` });
+
+            const out = await PDFDocument.create();
+            const pages = await out.copyPages(src, Array.from({ length: b - a + 1 }, (_, i) => a - 1 + i));
+            pages.forEach((pg) => out.addPage(pg));
+
+            // "<name>-p1-3-<stamp>.pdf", next to the original
+            const dir = resolve(file, '..');
+            const stem = basename(file, '.pdf').replace(/-p\d+-\d+(-[a-z0-9]+)?$/i, '').replace(/-[a-z0-9]{6,}$/i, '');
+            const name = `${stem}-p${a}-${b}-${Date.now().toString(36)}.pdf`;
+            writeFileSync(resolve(dir, name), await out.save());
+            const rel = String(pdfUrl).replace(/[^/]+$/, name);
+            console.log(`  [admin] kept pages ${a}–${b} of ${basename(file)} -> ${name}`);
+            return json(200, { ok: true, url: rel, pages: b - a + 1 });
           }
 
           // ---- list uploaded images ----------------------------------------

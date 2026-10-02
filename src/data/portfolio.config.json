@@ -77,12 +77,12 @@
     }
   },
   "animation": {
-    "preset": "showcase",
-    "speed": 0.95,
+    "preset": "balanced",
+    "speed": 1,
     "nameEffect": "typewriter",
-    "backgroundBlooms": true,
+    "backgroundBlooms": false,
     "liquidEther": false,
-    "etherIntensity": 1.55,
+    "etherIntensity": 1,
     "orbitDots": true,
     "flowConsole": true,
     "timelinePulse": true,
@@ -90,7 +90,7 @@
     "scrollReveal": true,
     "sketches": true,
     "sketchDrift": true,
-    "sketchOpacity": 0.9,
+    "sketchOpacity": 0.7,
     "sketchSet": {}
   },
   "visibility": {
@@ -113,7 +113,7 @@
       "exp-pfe": true,
       "exp-uff": true,
       "exp-mppdl": true,
-      "exp-treasurer": true,
+      "exp-treasurer": false,
       "exp-ocp-intro": true
     }
   },
@@ -171,6 +171,28 @@
         "/covers/20250421_200442980_iOS-muq8u3ji.jpg",
         "/covers/20250430_014128442_iOS-blur-muq8v7pj.jpg",
         "/covers/20250427_130611041_iOS-muq8u3b9.jpg"
+      ],
+      "videos": [
+        {
+          "id": "vid-9slpa5z",
+          "url": "/videos/20250502_162551000_iOS-MOV-mur4e1xg.mp4",
+          "poster": "/videos/20250502_162551000_iOS-MOV-mur4e1xg.jpg",
+          "label": {
+            "en": "Demonstration — the machine in action",
+            "fr": "Démonstration — la machine en action"
+          },
+          "muted": false
+        },
+        {
+          "id": "vid-6zswx4a",
+          "url": "/videos/20250501_184951000_iOS-MP4-mur4e92u.mp4",
+          "poster": "/videos/20250501_184951000_iOS-MP4-mur4e92u.jpg",
+          "label": {
+            "en": "Short clip",
+            "fr": "Extrait"
+          },
+          "muted": true
+        }
       ]
     },
     "custom-design-apparel": {
@@ -364,6 +386,45 @@
         "/covers/2023_06_23_10_48_IMG_6548-muq7m4me.jpg",
         "/covers/Capture-d--cran-2023-07-09-114734-muq7mlsw.png"
       ]
+    },
+    "custom-pfe-ocp": {
+      "featured": true,
+      "cover": "/covers/pfe-ocp-cover-muqw6p4f.jpg",
+      "coverCrop": {
+        "x": 50,
+        "y": 50,
+        "zoom": 1
+      },
+      "gallery": [
+        "/covers/WhatsApp-Image-2026-10-02-at-1-04-54-PM--1--muqx30sg.jpeg",
+        "/covers/WhatsApp-Image-2026-10-02-at-1-04-50-PM--1--muqx30s9.jpeg",
+        "/covers/pfe-ocp-app-sequencement-3d-muqw6p4f.jpg",
+        "/covers/pfe-ocp-plan-30-jours-muqw6p4f.jpg",
+        "/covers/pfe-ocp-tambours-schema-blur-muqx92o7.jpg",
+        "/covers/pfe-ocp-tambours-fiche-muqw6p4f.jpg",
+        "/covers/WhatsApp-Image-2026-09-30-at-5-02-16-PM-muqxakvt.jpeg"
+      ],
+      "stack": [
+        "Python",
+        "MILP (PuLP / HiGHS)",
+        "Lean / VSM",
+        "React",
+        "Laravel",
+        "MySQL",
+        "3D visualisation",
+        "Excel"
+      ],
+      "assets": [
+        {
+          "id": "asset-pfe-report",
+          "kind": "report",
+          "label": {
+            "en": "Final-year project report — excerpt",
+            "fr": "Rapport de PFE — extrait"
+          },
+          "url": "/docs/Rapport-PFE-OCP-Ordonnancement-des-stocks-p1-3-muqy7z1x.pdf"
+        }
+      ]
     }
   },
   "customProjects": [
@@ -470,6 +531,58 @@
           "text": {
             "en": "Built the electrical architecture (two Arduino Mega, four motor drivers, Bluetooth link, ultrasonic, temperature, humidity and gas sensors on a LiPo pack) and a remote-control GUI sending Vx / Vy / Ω set-points and streaming sensor data.",
             "fr": "Réalisation de l'architecture électrique (deux Arduino Mega, quatre drivers moteur, liaison Bluetooth, capteurs ultrason, température, humidité et gaz sur batterie LiPo) et d'une interface de commande à distance envoyant les consignes Vx / Vy / Ω et affichant les capteurs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "custom-pfe-ocp",
+      "title": {
+        "en": "Final-Year Project — Stock Scheduling at the Ben Guerir Washing Plant (OCP)",
+        "fr": "PFE — Ordonnancement des stocks à la laverie de Ben Guerir (OCP)"
+      },
+      "tag": {
+        "en": "Supply Chain / Optimization",
+        "fr": "Supply Chain / Optimisation"
+      },
+      "period": {
+        "en": "April 2026 – Sept. 2026",
+        "fr": "Avril 2026 – Sept. 2026"
+      },
+      "bullets": [
+        {
+          "id": "b-pfe-1",
+          "text": {
+            "en": "The question: how to sequence the stockpiles so that the quality a train needs is reachable the moment it arrives — across the whole chain from the mine to the raw park, the washing plant, the washed park, the loading parks and the trains, with a single bucket-wheel reclaimer and one transfer bridge serving four loading parks.",
+            "fr": "La question : comment séquencer les tas pour que la qualité demandée soit accessible au moment où le train arrive — sur toute la chaîne mine → parc brut → laverie → parc lavé → parcs de chargement → trains, avec une seule roue-pelle et un seul pont transbordeur pour quatre parcs."
+          }
+        },
+        {
+          "id": "b-pfe-2",
+          "text": {
+            "en": "Field diagnostic with Lean tools (value-stream map, Ishikawa, 5 Whys) on real operating data: the product waits about 13 days in the raw park for 30 minutes of actual washing — the lever is the scheduling of reclaims, not the plant's capacity.",
+            "fr": "Diagnostic terrain avec les outils Lean (VSM, Ishikawa, 5 Pourquoi) sur données réelles d'exploitation : le produit attend environ 13 jours au parc brut pour 30 minutes de lavage effectif — le levier est l'ordonnancement des reprises, pas la capacité de la laverie."
+          }
+        },
+        {
+          "id": "b-pfe-3",
+          "text": {
+            "en": "Built a scheduling model that decides, shift by shift, which pile each machine works on while respecting the physical rules of the yard (the reclaimer never skips a pile, one-way access, one bridge). On a real 30-day programme of 134 trains it serves 104 of them instead of 83 — about +25 % tonnage loaded.",
+            "fr": "Construction d'un modèle d'ordonnancement qui décide, poste par poste, sur quel tas travaille chaque engin en respectant les règles physiques du parc (la roue-pelle ne saute jamais un tas, sens unique, un seul pont). Sur un programme réel de 134 trains en 30 jours, il en sert 104 au lieu de 83 — environ +25 % de tonnage chargé."
+          }
+        },
+        {
+          "id": "b-pfe-4",
+          "text": {
+            "en": "Delivered a decision-support web application for the flow department: three input screens, a one-click 30-day plan, indicators and planning, a 3D replay of the yard (piles, machines, trains) and an Excel workbook export used by operations.",
+            "fr": "Livraison d'une application web d'aide à la décision pour le service flux : trois écrans de saisie, un plan sur 30 jours en un clic, indicateurs et planning, une scène 3D qui rejoue le parc (tas, engins, trains) et un export en classeur Excel pour l'exploitation."
+          }
+        },
+        {
+          "id": "b-pfe-5",
+          "text": {
+            "en": "Delivered a second tool for maintenance — a web reference of conveyor drums: clickable plant schematic → conveyor → drum sheet (shaft, shell, drawings, spare status), global search and an admin editor — after showing that 377 conveyor stoppages in six months could make a whole park unreachable.",
+            "fr": "Livraison d'un second outil pour la maintenance — un référentiel web des tambours de convoyeurs : schéma cliquable de l'installation → convoyeur → fiche tambour (arbre, virole, plans, état des rechanges), recherche globale et éditeur administrateur — après avoir montré que 377 arrêts de convoyeurs en six mois pouvaient rendre un parc entier inaccessible."
           }
         }
       ]
@@ -755,6 +868,33 @@
             "fr": ""
           },
           "url": "/docs/CDC-NRC-2025-muq83fyr.pdf"
+        },
+        {
+          "id": "asset-etech-doc-spons",
+          "kind": "report",
+          "label": {
+            "en": "Sponsorship file",
+            "fr": "Dossier de sponsoring"
+          },
+          "url": "/docs/ETECH-Dossier-Sponsoring-1a0fc7c9fb3.pdf"
+        },
+        {
+          "id": "asset-etech-doc-plaq",
+          "kind": "presentation",
+          "label": {
+            "en": "E-TECH brochure",
+            "fr": "Plaquette E-TECH"
+          },
+          "url": "/docs/ETECH-Plaquette-1a0fc7c9fa4.pdf"
+        },
+        {
+          "id": "asset-etech-doc-urc",
+          "kind": "report",
+          "label": {
+            "en": "URC 2024 specifications",
+            "fr": "Cahier des charges URC 2024"
+          },
+          "url": "/docs/ETECH-Cahier-des-charges-URC-2024-1a0fc7c9f8b.pdf"
         }
       ],
       "kpis": [
@@ -1363,6 +1503,16 @@
     "/leadership/20220804_021134710_iOS-muqu9kep.jpg": {
       "x": 61.25000317891438,
       "y": 53.888893127441406,
+      "zoom": 1
+    },
+    "/covers/WhatsApp-Image-2026-10-02-at-1-04-54-PM--1--muqx30sg.jpeg": {
+      "x": 50.83332061767578,
+      "y": 63.61111534966363,
+      "zoom": 1
+    },
+    "/covers/WhatsApp-Image-2026-10-02-at-1-04-50-PM--1--muqx30s9.jpeg": {
+      "x": 50.208330154418945,
+      "y": 55.83333969116211,
       "zoom": 1
     }
   },
