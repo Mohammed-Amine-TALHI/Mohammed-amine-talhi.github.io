@@ -260,7 +260,8 @@ export type PaletteId = 'brand' | 'classic' | 'custom';
 
 /** Light (default) or dark, plus whether visitors get the switch at all. */
 export interface ThemeSettings {
-  default: 'light' | 'dark';
+  /** `auto` follows the sun: light from sunrise to sunset, dark at night */
+  default: 'light' | 'dark' | 'auto';
   /** show the sun/moon toggle at the bottom-right of the site */
   toggle: boolean;
   /** which colours: brand = UM6P orange + EMINES navy, classic = the original amber on black */

@@ -326,7 +326,8 @@ function defaultThemePlugin(): Plugin {
     transformIndexHtml(html) {
       try {
         const cfg = JSON.parse(readFileSync(CONFIG_PATH, 'utf8'));
-        const theme = cfg.theme?.default === 'dark' ? 'dark' : 'light';
+        const mode = cfg.theme?.default === 'dark' ? 'dark' : cfg.theme?.default === 'auto' ? 'auto' : 'light';
+        const theme = mode === 'dark' ? 'dark' : 'light';
         // the loader bar takes the palette's accent colour
         const accent =
           cfg.theme?.palette === 'custom' && /^#[0-9a-f]{6}$/i.test(cfg.theme?.accent ?? '')
@@ -335,7 +336,7 @@ function defaultThemePlugin(): Plugin {
               ? '#f59e0b'
               : '#e8412a';
         return html
-          .replace('<html lang="fr" data-theme="light">', `<html lang="fr" data-theme="${theme}"${theme === 'dark' ? ' class="dark"' : ''}>`)
+          .replace('<html lang="fr" data-theme="light">', `<html lang="fr" data-theme="${theme}" data-default="${mode}"${theme === 'dark' ? ' class="dark"' : ''}>`)
           .replace('background: #e8412a;', `background: ${accent};`);
       } catch {
         return html;

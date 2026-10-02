@@ -530,6 +530,15 @@ vendor chunks — the first screen needs about a third of the JavaScript it used
 to. Because sections mount late, `Nav.tsx` re-attaches its scroll-spy with a
 MutationObserver and `useDeferredHashScroll` handles links like `/#projects`.
 
+**Automatic theme.** `theme.default` can be `auto`: light between sunrise and
+sunset, dark at night. `lib/theme.tsx` computes the sun times from the visitor's
+time zone (a small table of zones with real coordinates, otherwise a longitude
+derived from the UTC offset) — no location permission, no network call. It is
+re-checked every minute and when the tab regains focus. The bottom-right switch
+cycles automatic → light → dark, and a visitor's choice is remembered. The
+inline script in `index.html` uses a rough 07:00–19:00 guess for the very first
+paint; the app corrects it to the real times as soon as it mounts.
+
 **Project order.** `order.mode` is `manual` (follows `order.projects`),
 `newest` or `oldest` (sorted by the dates parsed from each project's period —
 `periodRange()` / `orderedProjects()` in `lib/data.ts`). Custom projects take

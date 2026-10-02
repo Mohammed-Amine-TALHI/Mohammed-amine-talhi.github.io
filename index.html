@@ -21,7 +21,13 @@
          lives in the config bundle, which main.tsx applies once it has loaded. -->
     <script>
       try {
-        var t = localStorage.getItem('portfolio.theme');
+        var t = localStorage.getItem('portfolio.theme') || document.documentElement.dataset.default;
+        if (t === 'auto') {
+          // rough day/night guess for the very first paint; the app refines it
+          // to the real sunrise and sunset a moment later
+          var h = new Date().getHours();
+          t = h >= 7 && h < 19 ? 'light' : 'dark';
+        }
         if (t === 'dark' || t === 'light') {
           document.documentElement.dataset.theme = t;
           if (t === 'dark') document.documentElement.classList.add('dark');

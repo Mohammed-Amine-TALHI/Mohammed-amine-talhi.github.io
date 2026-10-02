@@ -1659,7 +1659,7 @@
     }
   },
   "theme": {
-    "default": "light",
+    "default": "auto",
     "toggle": true,
     "palette": "custom",
     "ink": "neutral",

@@ -141,16 +141,108 @@ export function applyPalette(p: Palette) {
 
 const STORAGE_KEY = 'portfolio.theme';
 
-export const defaultTheme: Theme = config.theme?.default === 'dark' ? 'dark' : 'light';
+/** What the visitor (or the admin default) asked for; `auto` follows the sun. */
+export type ThemeMode = Theme | 'auto';
 
-export function readStoredTheme(): Theme | null {
+export const defaultMode: ThemeMode =
+  config.theme?.default === 'dark' ? 'dark' : config.theme?.default === 'auto' ? 'auto' : 'light';
+
+export function readStoredMode(): ThemeMode | null {
   try {
     const v = localStorage.getItem(STORAGE_KEY);
-    return v === 'light' || v === 'dark' ? v : null;
+    return v === 'light' || v === 'dark' || v === 'auto' ? v : null;
   } catch {
     return null;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Sunrise / sunset.
+
+   Automatic mode shows the light theme while the sun is up where the visitor
+   is, and the dark one at night. No location permission is asked for: the
+   browser's time zone is enough to place the visitor to within an hour of
+   sun time. A handful of zones carry real coordinates; any other falls back
+   to a longitude derived from its UTC offset and a mid latitude.
+--------------------------------------------------------------------------- */
+const ZONES: Record<string, [number, number]> = {
+  'Africa/Casablanca': [33.6, -7.6],
+  'Africa/El_Aaiun': [27.1, -13.2],
+  'Europe/Paris': [48.9, 2.3],
+  'Europe/Brussels': [50.8, 4.4],
+  'Europe/Madrid': [40.4, -3.7],
+  'Europe/London': [51.5, -0.1],
+  'Europe/Berlin': [52.5, 13.4],
+  'Europe/Zurich': [47.4, 8.5],
+  'Europe/Amsterdam': [52.4, 4.9],
+  'Europe/Rome': [41.9, 12.5],
+  'Africa/Algiers': [36.8, 3.1],
+  'Africa/Tunis': [36.8, 10.2],
+  'Africa/Cairo': [30.0, 31.2],
+  'Asia/Dubai': [25.2, 55.3],
+  'Asia/Riyadh': [24.7, 46.7],
+  'America/New_York': [40.7, -74.0],
+  'America/Toronto': [43.7, -79.4],
+  'America/Sao_Paulo': [-23.5, -46.6],
+  'America/Los_Angeles': [34.1, -118.2],
+};
+
+/** Approximate coordinates of the visitor, from the time zone alone. */
+export function approxLocation(now = new Date()): { lat: number; lng: number; zone: string } {
+  let zone = '';
+  try {
+    zone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+  } catch {
+    /* very old browser */
+  }
+  if (ZONES[zone]) return { lat: ZONES[zone][0], lng: ZONES[zone][1], zone };
+  // standard (non-DST) offset: the larger of January's and July's
+  const y = now.getFullYear();
+  const std = Math.max(new Date(y, 0, 1).getTimezoneOffset(), new Date(y, 6, 1).getTimezoneOffset());
+  return { lat: 35, lng: (-std / 60) * 15, zone };
+}
+
+/**
+ * Today's sunrise and sunset at a place (the standard sunrise equation, good
+ * to a couple of minutes). Returns null during polar day or night.
+ */
+export function sunTimes(date: Date, lat: number, lng: number): { sunrise: Date; sunset: Date } | null {
+  const rad = Math.PI / 180;
+  const dayMs = 86_400_000;
+  const J1970 = 2440588;
+  const J2000 = 2451545;
+  const toJulian = (d: Date) => d.valueOf() / dayMs - 0.5 + J1970;
+  const fromJulian = (j: number) => new Date((j + 0.5 - J1970) * dayMs);
+
+  const lw = -lng * rad;
+  const phi = lat * rad;
+  const n = Math.round(toJulian(date) - J2000 - 0.0009 - lw / (2 * Math.PI));
+  const ds = 0.0009 + lw / (2 * Math.PI) + n;
+  const M = rad * (357.5291 + 0.98560028 * ds);
+  const C = rad * (1.9148 * Math.sin(M) + 0.02 * Math.sin(2 * M) + 0.0003 * Math.sin(3 * M));
+  const L = M + C + rad * 102.9372 + Math.PI;
+  const dec = Math.asin(Math.sin(L) * Math.sin(rad * 23.4397));
+  const noon = J2000 + ds + 0.0053 * Math.sin(M) - 0.0069 * Math.sin(2 * L);
+  // -0.833°: the sun's upper edge on the horizon, with refraction
+  const cosH = (Math.sin(-0.833 * rad) - Math.sin(phi) * Math.sin(dec)) / (Math.cos(phi) * Math.cos(dec));
+  if (cosH < -1 || cosH > 1) return null;
+  const H = Math.acos(cosH);
+  const set = J2000 + 0.0009 + (H + lw) / (2 * Math.PI) + n + 0.0053 * Math.sin(M) - 0.0069 * Math.sin(2 * L);
+  return { sunrise: fromJulian(noon - (set - noon)), sunset: fromJulian(set) };
+}
+
+/** Light while the sun is up, dark otherwise. */
+export function themeForNow(now = new Date()): Theme {
+  const { lat, lng } = approxLocation(now);
+  const sun = sunTimes(now, lat, lng);
+  if (!sun) {
+    const h = now.getHours();
+    return h >= 7 && h < 19 ? 'light' : 'dark';
+  }
+  return now >= sun.sunrise && now < sun.sunset ? 'light' : 'dark';
+}
+
+export const resolveMode = (mode: ThemeMode): Theme => (mode === 'auto' ? themeForNow() : mode);
 
 export function applyTheme(theme: Theme) {
   document.documentElement.dataset.theme = theme;
@@ -163,44 +255,55 @@ export function applyTheme(theme: Theme) {
 }
 
 interface Ctx {
+  /** the theme on screen right now */
   theme: Theme;
-  setTheme: (t: Theme) => void;
+  /** what was asked for: light, dark, or auto */
+  mode: ThemeMode;
+  setMode: (m: ThemeMode) => void;
+  /** cycle auto → light → dark → auto */
   toggle: () => void;
 }
 
 const ThemeContext = createContext<Ctx | null>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => readStoredTheme() ?? defaultTheme);
+  const [mode, setModeState] = useState<ThemeMode>(() => readStoredMode() ?? defaultMode);
+  const [theme, setTheme] = useState<Theme>(() => resolveMode(mode));
+
+  // in auto mode, follow the sun: re-check every minute and when the tab comes back
+  useEffect(() => {
+    setTheme(resolveMode(mode));
+    if (mode !== 'auto') return;
+    const tick = () => setTheme(themeForNow());
+    const timer = window.setInterval(tick, 60_000);
+    document.addEventListener('visibilitychange', tick);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', tick);
+    };
+  }, [mode]);
 
   useEffect(() => {
     applyPalette(resolvePalette(config.theme));
     applyTheme(theme);
   }, [theme]);
 
-  const value = useMemo<Ctx>(
-    () => ({
+  const value = useMemo<Ctx>(() => {
+    const setMode = (m: ThemeMode) => {
+      try {
+        localStorage.setItem(STORAGE_KEY, m);
+      } catch {
+        /* private mode — the choice just doesn't persist */
+      }
+      setModeState(m);
+    };
+    return {
       theme,
-      setTheme: (t) => {
-        try {
-          localStorage.setItem(STORAGE_KEY, t);
-        } catch {
-          /* private mode — the choice just doesn't persist */
-        }
-        setTheme(t);
-      },
-      toggle: () => {
-        const next: Theme = theme === 'dark' ? 'light' : 'dark';
-        try {
-          localStorage.setItem(STORAGE_KEY, next);
-        } catch {
-          /* ignore */
-        }
-        setTheme(next);
-      },
-    }),
-    [theme],
-  );
+      mode,
+      setMode,
+      toggle: () => setMode(mode === 'auto' ? 'light' : mode === 'light' ? 'dark' : 'auto'),
+    };
+  }, [theme, mode]);
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Card, Field, Toggle, Select } from '../ui';
 import { PRESETS, PRESET_LABEL, type Channel } from '../../lib/anim';
 import { SKETCH_META } from '../../components/Sketches';
-import { PALETTES } from '../../lib/theme';
+import { PALETTES, approxLocation, sunTimes } from '../../lib/theme';
 import type { AnimationPreset, NameEffect, PaletteId, PortfolioConfig, SketchId } from '../../lib/types';
 
 /* -------------------------------------------------------------------------- */
@@ -454,8 +454,8 @@ export default function AnimationsPanel({
           What a first-time visitor sees. Once they use the switch, their own choice is remembered on their device.
         </p>
         <Card className="space-y-4">
-          <div className="grid gap-2 sm:grid-cols-2">
-            {(['light', 'dark'] as const).map((th) => {
+          <div className="grid gap-2 sm:grid-cols-3">
+            {(['auto', 'light', 'dark'] as const).map((th) => {
               const active = (cfg.theme?.default ?? 'light') === th;
               return (
                 <button
@@ -471,15 +471,20 @@ export default function AnimationsPanel({
                       'grid h-10 w-14 shrink-0 place-items-center rounded-lg border font-mono text-[9px] ' +
                       (th === 'light' ? 'border-zinc-300 bg-[#fff] text-zinc-800' : 'border-zinc-700 bg-[#08080b] text-zinc-300')
                     }
+                    style={th === 'auto' ? { background: 'linear-gradient(105deg, #fff 50%, #08080b 50%)', color: '#888' } : undefined}
                   >
                     Aa
                   </span>
                   <span>
                     <span className={'block text-sm font-semibold ' + (active ? 'text-accent-300' : 'text-zinc-200')}>
-                      {th === 'light' ? 'White — default' : 'Dark'}
+                      {th === 'auto' ? 'Automatic' : th === 'light' ? 'White' : 'Dark'}
                     </span>
                     <span className="block text-[11px] text-zinc-500">
-                      {th === 'light' ? 'Paper background, graphite sketches.' : 'Ink background, chalk sketches.'}
+                      {th === 'auto'
+                        ? 'White by day, dark from sunset to sunrise.'
+                        : th === 'light'
+                          ? 'Paper background, graphite sketches.'
+                          : 'Ink background, chalk sketches.'}
                     </span>
                   </span>
                 </button>
@@ -591,11 +596,33 @@ export default function AnimationsPanel({
             )}
           </Field>
 
+          {cfg.theme?.default === 'auto' &&
+            (() => {
+              const loc = approxLocation();
+              const sun = sunTimes(new Date(), loc.lat, loc.lng);
+              const hm = (d: Date) => d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+              return (
+                <p className="rounded-lg border border-line bg-ink-950 px-3 py-2 text-[11px] leading-relaxed text-zinc-500">
+                  Each visitor gets the sun times of their own time zone — no location permission is asked.{' '}
+                  {sun ? (
+                    <>
+                      Here ({loc.zone || 'your zone'}) today: white from{' '}
+                      <span className="text-zinc-300">{hm(sun.sunrise)}</span> to{' '}
+                      <span className="text-zinc-300">{hm(sun.sunset)}</span>, dark otherwise.
+                    </>
+                  ) : (
+                    'No sunrise or sunset here today — falls back to 07:00–19:00.'
+                  )}{' '}
+                  A visitor who uses the switch keeps their own choice.
+                </p>
+              );
+            })()}
+
           <div className="flex items-center gap-4">
             <Toggle on={cfg.theme?.toggle !== false} onChange={(v) => set((d) => void (d.theme = { ...d.theme, toggle: v }))} />
             <div>
-              <div className="text-sm text-zinc-200">Show the sun / moon switch</div>
-              <div className="text-[11px] text-zinc-500">Bottom-right corner of every page. Off = visitors get the default only.</div>
+              <div className="text-sm text-zinc-200">Show the theme switch</div>
+              <div className="text-[11px] text-zinc-500">Bottom-right corner; each click goes automatic → light → dark. Off = visitors get the default only.</div>
             </div>
           </div>
         </Card>
