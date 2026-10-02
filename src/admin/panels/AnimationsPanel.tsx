@@ -520,6 +520,35 @@ export default function AnimationsPanel({
               })}
             </div>
 
+            {(cfg.theme?.palette ?? 'brand') !== 'custom' && (
+              <div className="mt-3">
+                <Field label="Dark theme tint" hint="how much of the brand colour goes into the dark background">
+                  <div className="flex items-center gap-4">
+                    <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-zinc-600">black</span>
+                    <input
+                      type="range"
+                      min={0}
+                      max={1}
+                      step={0.05}
+                      value={cfg.theme?.tint ?? PALETTES[(cfg.theme?.palette ?? 'brand') as 'brand' | 'classic'].tint}
+                      onChange={(e) => set((d) => void (d.theme = { ...d.theme, tint: Number(e.target.value) }))}
+                      className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-ink-800 accent-accent-500"
+                    />
+                    <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-zinc-600">tinted</span>
+                    <span className="w-12 shrink-0 text-right font-mono text-sm text-accent-400">
+                      {Math.round((cfg.theme?.tint ?? PALETTES[(cfg.theme?.palette ?? 'brand') as 'brand' | 'classic'].tint) * 100)}%
+                    </span>
+                    <button
+                      onClick={() => set((d) => { const t = { ...d.theme }; delete t.tint; d.theme = t; })}
+                      className="shrink-0 font-mono text-[10px] text-zinc-600 underline decoration-dotted hover:text-accent-500"
+                    >
+                      reset
+                    </button>
+                  </div>
+                </Field>
+              </div>
+            )}
+
             {(cfg.theme?.palette ?? 'brand') === 'custom' && (
               <div className="mt-3 grid gap-3 sm:grid-cols-3">
                 {(['accent', 'brand'] as const).map((k) => (
@@ -538,14 +567,26 @@ export default function AnimationsPanel({
                     </span>
                   </label>
                 ))}
-                <Select
-                  value={cfg.theme?.ink ?? 'navy'}
-                  onChange={(v) => set((d) => void (d.theme = { ...d.theme, ink: v as 'navy' | 'neutral' }))}
-                  options={[
-                    { value: 'navy', label: 'Dark theme tinted with the brand colour' },
-                    { value: 'neutral', label: 'Dark theme near-black, neutral greys' },
-                  ]}
-                />
+                <div className="sm:col-span-3">
+                  <Field label="Dark theme tint" hint="how much of the brand colour goes into the dark background">
+                    <div className="flex items-center gap-4">
+                      <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-zinc-600">black</span>
+                      <input
+                        type="range"
+                        min={0}
+                        max={1}
+                        step={0.05}
+                        value={cfg.theme?.tint ?? (cfg.theme?.ink === 'neutral' ? 0 : 1)}
+                        onChange={(e) => set((d) => void (d.theme = { ...d.theme, tint: Number(e.target.value) }))}
+                        className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-ink-800 accent-accent-500"
+                      />
+                      <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-zinc-600">tinted</span>
+                      <span className="w-12 shrink-0 text-right font-mono text-sm text-accent-400">
+                        {Math.round((cfg.theme?.tint ?? (cfg.theme?.ink === 'neutral' ? 0 : 1)) * 100)}%
+                      </span>
+                    </div>
+                  </Field>
+                </div>
               </div>
             )}
           </Field>

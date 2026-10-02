@@ -85,7 +85,11 @@ export interface ContactInfo {
   linkedinLabel: string;
   githubUrl: string;
   githubLabel: string;
+  /** channels switched off in the admin without clearing their value */
+  hidden?: Partial<Record<ContactChannel, boolean>>;
 }
+
+export type ContactChannel = 'email' | 'emailAlt' | 'phone' | 'phoneAlt' | 'linkedin' | 'github';
 
 /** What kind of document is attached to a project — drives its icon and colour. */
 export type AssetKind = 'report' | 'presentation' | 'poster' | 'code' | 'link';
@@ -239,8 +243,10 @@ export interface ThemeSettings {
   /** the two hues used when palette is `custom` */
   accent?: string;
   brand?: string;
-  /** dark-background family for a custom palette */
+  /** dark-background family for a custom palette (legacy — `tint` supersedes it) */
   ink?: 'navy' | 'neutral';
+  /** how strongly the dark theme is tinted with the brand colour, 0 (neutral black) .. 1 (full) */
+  tint?: number;
 }
 
 /** The graduation block: photos, a caption and the LinkedIn post link. */

@@ -14,14 +14,16 @@ export default function Contact() {
 
   // every value here is editable in the admin panel's Contact tab
   const channels = [
-    { Icon: HiOutlineMail, label: 'Email', value: contact.email, href: 'mailto:' + contact.email },
+    { key: 'email' as const, Icon: HiOutlineMail, label: 'Email', value: contact.email, href: 'mailto:' + contact.email },
     {
+      key: 'emailAlt' as const,
       Icon: HiOutlineMail,
       label: t({ en: 'Email (alt)', fr: 'Email (2)' }),
       value: contact.emailAlt,
       href: 'mailto:' + contact.emailAlt,
     },
     {
+      key: 'phone' as const,
       Icon: HiOutlinePhone,
       label: t({ en: 'Phone', fr: 'Téléphone' }),
       value: contact.phone,
@@ -29,13 +31,14 @@ export default function Contact() {
     },
     {
       Icon: HiOutlinePhone,
+      key: 'phoneAlt' as const,
       label: t({ en: 'Phone (FR)', fr: 'Téléphone (FR)' }),
       value: contact.phoneAlt,
       href: tel(contact.phoneAlt),
     },
-    { Icon: FaLinkedinIn, label: 'LinkedIn', value: contact.linkedinLabel, href: contact.linkedinUrl },
-    { Icon: FaGithub, label: 'GitHub', value: contact.githubLabel, href: contact.githubUrl },
-  ].filter((c) => c.value && c.href);
+    { key: 'linkedin' as const, Icon: FaLinkedinIn, label: 'LinkedIn', value: contact.linkedinLabel, href: contact.linkedinUrl },
+    { key: 'github' as const, Icon: FaGithub, label: 'GitHub', value: contact.githubLabel, href: contact.githubUrl },
+  ].filter((c) => c.value && c.href && !contact.hidden?.[c.key]);
 
   return (
     <section id="contact" className="relative px-5 pb-16 pt-24 sm:px-8 sm:pt-32">

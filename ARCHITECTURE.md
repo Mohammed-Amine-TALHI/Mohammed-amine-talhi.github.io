@@ -481,6 +481,16 @@ LinkedIn button text — uses `bg-[#fff]` / `text-[#fff]`; and any new hard-code
 **Deleting an upload doesn't unlink it.** Always `npm run check-assets` — or
 just let `npm run publish` do it for you.
 
+**The privacy blur is destructive on purpose.** Every photo thumbnail in the admin
+has a *Blur faces* button (`src/admin/BlurEditor.tsx`): click a face to drop a
+soft round blur, drag / scroll / sliders to adjust size, strength and edge.
+*Apply* bakes the blur into a NEW file, uploads it, and swaps the old path for
+the new one everywhere in the config (`portfolio:replace-url` event →
+`replaceUrlDeep` in `AdminApp.tsx`). The sharp original is then deleted by the
+unused-file sweep on save. Unlike the crop it cannot be undone from the site —
+re-upload the original if you change your mind. A config-only blur would have
+left the sharp file publicly downloadable, which is why it is not done that way.
+
 **Removing a photo in the admin deletes the file on save.** The save handler
 runs `pruneUnused()` from `scripts/lib/uploads.mjs`: anything under `public/`
 that no config field points at is unlinked. That list of fields lives in

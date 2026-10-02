@@ -24,6 +24,8 @@ export interface Palette {
   accent: string;
   brand: string;
   ink: 'navy' | 'neutral';
+  /** 0 = neutral near-black, 1 = fully tinted with the brand hue */
+  tint: number;
 }
 
 export const PALETTES: Record<Exclude<PaletteId, 'custom'>, Palette & { name: string; hint: string }> = {
@@ -33,6 +35,7 @@ export const PALETTES: Record<Exclude<PaletteId, 'custom'>, Palette & { name: st
     accent: '#e8412a',
     brand: '#1d2b5a',
     ink: 'navy',
+    tint: 1,
   },
   classic: {
     name: 'Classic amber',
@@ -40,20 +43,19 @@ export const PALETTES: Record<Exclude<PaletteId, 'custom'>, Palette & { name: st
     accent: '#f59e0b',
     brand: '#3f3f46',
     ink: 'neutral',
+    tint: 0,
   },
 };
 
 /** The palette the config asks for, resolved to concrete values. */
 export function resolvePalette(t: ThemeSettings | undefined): Palette {
   const id = t?.palette ?? 'brand';
-  if (id === 'custom') {
-    return {
-      accent: t?.accent || PALETTES.brand.accent,
-      brand: t?.brand || PALETTES.brand.brand,
-      ink: t?.ink ?? 'navy',
-    };
-  }
-  return PALETTES[id];
+  const base = id === 'custom'
+    ? { accent: t?.accent || PALETTES.brand.accent, brand: t?.brand || PALETTES.brand.brand, ink: t?.ink ?? 'navy', tint: t?.ink === 'neutral' ? 0 : 1 }
+    : { ...PALETTES[id] };
+  // the slider wins over the preset's default tint when it has been touched
+  if (typeof t?.tint === 'number') base.tint = Math.min(1, Math.max(0, t.tint));
+  return base;
 }
 
 /* ---------------------------------------------------------------------------
@@ -132,7 +134,9 @@ export function applyPalette(p: Palette) {
   el.style.setProperty('--on-accent-paper', onColor(achromatic(p.accent) && lum(p.accent) > 0.5 ? '#111116' : p.accent));
   el.style.setProperty('--on-accent-night', onColor(achromatic(p.accent) && lum(p.accent) < 0.2 ? '#f4f4f7' : p.accent));
   el.style.setProperty('--on-brand', onColor(p.brand));
-  el.dataset.ink = p.ink;
+  el.style.setProperty('--tint', String(p.tint));
+  // the neutral grey family only when the tint is fully off
+  el.dataset.ink = p.tint <= 0.02 ? 'neutral' : 'navy';
 }
 
 const STORAGE_KEY = 'portfolio.theme';

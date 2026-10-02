@@ -1,6 +1,16 @@
-import { Card, Field, Input, LocField, FileDrop, Button } from '../ui';
+import { Card, Field, Input, LocField, FileDrop, Button, Toggle } from '../ui';
 import { resume } from '../../lib/data';
-import type { PortfolioConfig } from '../../lib/types';
+import type { ContactChannel, PortfolioConfig } from '../../lib/types';
+
+/** The rows of the Contact section, each with its own on/off switch. */
+const CHANNELS: { key: ContactChannel; label: string }[] = [
+  { key: 'email', label: 'Email' },
+  { key: 'emailAlt', label: 'Second email' },
+  { key: 'phone', label: 'Phone' },
+  { key: 'phoneAlt', label: 'Second phone' },
+  { key: 'linkedin', label: 'LinkedIn' },
+  { key: 'github', label: 'GitHub' },
+];
 
 const CV_LANG = { en: '🇬🇧 English CV', fr: '🇫🇷 CV Français' } as const;
 
@@ -78,6 +88,30 @@ export default function ContactPanel({
             value={c.location}
             onChange={(v) => set((d) => void (d.contact.location = v))}
           />
+
+          <Field label="Shown in the Contact section" hint="switch a channel off without deleting its value">
+            <div className="grid gap-2 sm:grid-cols-3">
+              {CHANNELS.map(({ key, label }) => {
+                const value = {
+                  email: c.email, emailAlt: c.emailAlt, phone: c.phone, phoneAlt: c.phoneAlt,
+                  linkedin: c.linkedinUrl, github: c.githubUrl,
+                }[key];
+                const on = !c.hidden?.[key];
+                return (
+                  <div key={key} className="flex items-center gap-3 rounded-lg border border-line bg-ink-950 px-3 py-2">
+                    <Toggle
+                      on={on}
+                      onChange={(v) => set((d) => void (d.contact.hidden = { ...(d.contact.hidden ?? {}), [key]: !v }))}
+                    />
+                    <div className="min-w-0">
+                      <div className={'text-sm ' + (on ? 'text-zinc-200' : 'text-zinc-500')}>{label}</div>
+                      <div className="truncate font-mono text-[10px] text-zinc-600">{value || 'empty — hidden anyway'}</div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </Field>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="LinkedIn URL">

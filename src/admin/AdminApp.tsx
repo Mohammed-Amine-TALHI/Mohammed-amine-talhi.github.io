@@ -27,6 +27,22 @@ const TABS = [
 
 type TabId = (typeof TABS)[number]['id'];
 
+/** Replace every occurrence of one upload path in the config, in place. */
+function replaceUrlDeep(node: unknown, from: string, to: string): void {
+  if (Array.isArray(node)) {
+    node.forEach((v, i) => {
+      if (v === from) node[i] = to;
+      else replaceUrlDeep(v, from, to);
+    });
+  } else if (node && typeof node === 'object') {
+    const obj = node as Record<string, unknown>;
+    for (const k of Object.keys(obj)) {
+      if (obj[k] === from) obj[k] = to;
+      else replaceUrlDeep(obj[k], from, to);
+    }
+  }
+}
+
 /**
  * Local content manager.
  *
@@ -108,6 +124,24 @@ export default function AdminApp() {
       setSaving(false);
     }
   }, [cfg, flash]);
+
+  // A photo was edited into a new file (privacy blur): point everything at the
+  // new path, and carry its framing over. The old file is swept on save.
+  useEffect(() => {
+    const onReplace = (e: Event) => {
+      const { from, to } = (e as CustomEvent<{ from: string; to: string }>).detail;
+      set((d) => {
+        replaceUrlDeep(d, from, to);
+        if (d.crops?.[from]) {
+          d.crops[to] = d.crops[from];
+          delete d.crops[from];
+        }
+      });
+      flash('Blur applied — save to remove the original file');
+    };
+    window.addEventListener('portfolio:replace-url', onReplace);
+    return () => window.removeEventListener('portfolio:replace-url', onReplace);
+  }, [set, flash]);
 
   // Ctrl/Cmd+S saves
   useEffect(() => {

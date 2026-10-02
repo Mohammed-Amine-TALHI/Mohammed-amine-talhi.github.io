@@ -10,7 +10,8 @@
    its own two hexes) by setting three things on <html>:
 
      style="--accent: #e8412a; --brand: #1d2b5a"   the two hues
-     data-ink="navy" | "neutral"                     dark background family
+     style="--tint: 0.6"                             how much brand hue the dark blacks carry
+    data-ink="navy" | "neutral"                     text-grey family (neutral when tint = 0)
      data-theme="light" | "dark"                     the visitor's theme
 
    Presets live in src/lib/theme.tsx. Tailwind v4 emits `bg-accent-500` as
@@ -65,12 +66,14 @@
   color-scheme: dark;
 
   /* navy ink: the dark theme reads as the same brand as the white one */
-  --color-ink-950: color-mix(in oklab, var(--brand) 22%, #06080f);
-  --color-ink-900: color-mix(in oklab, var(--brand) 30%, #06080f);
-  --color-ink-850: color-mix(in oklab, var(--brand) 36%, #06080f);
-  --color-ink-800: color-mix(in oklab, var(--brand) 44%, #06080f);
-  --color-ink-700: color-mix(in oklab, var(--brand) 56%, #06080f);
-  --color-line: color-mix(in oklab, var(--brand) 66%, #0a0d18);
+  /* `--tint` (0..1, from the admin slider) scales how much brand hue goes into the blacks */
+  --tint: 1;
+  --color-ink-950: color-mix(in oklab, var(--brand) calc(22% * var(--tint)), #08080b);
+  --color-ink-900: color-mix(in oklab, var(--brand) calc(30% * var(--tint)), #0c0c11);
+  --color-ink-850: color-mix(in oklab, var(--brand) calc(36% * var(--tint)), #101017);
+  --color-ink-800: color-mix(in oklab, var(--brand) calc(44% * var(--tint)), #15151e);
+  --color-ink-700: color-mix(in oklab, var(--brand) calc(56% * var(--tint)), #1c1c27);
+  --color-line: color-mix(in oklab, var(--brand) calc(66% * var(--tint)), #242430);
 
   /* text-weight steps come from the "lit" variant, guaranteed readable on navy */
   --color-accent-300: color-mix(in oklab, var(--accent-lit) 75%, white);

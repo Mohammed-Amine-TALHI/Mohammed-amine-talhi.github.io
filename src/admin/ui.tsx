@@ -7,9 +7,11 @@ import {
   HiChevronLeft,
   HiChevronRight,
   HiOutlineScissors,
+  HiOutlineEyeOff,
 } from 'react-icons/hi';
 import type { Loc } from '../lib/types';
 import CropBox from './CropBox';
+import BlurEditor from './BlurEditor';
 import { resolveCrop, cropStyle, type Crop } from '../lib/crop';
 import { downscaleImage, formatBytes, isHeic, warmHeicDecoder } from './imageTools';
 
@@ -220,6 +222,32 @@ async function uploadOne(file: File, folder: string): Promise<string | null> {
   return null;
 }
 
+/** Folder an upload lives in, from its site path: "/covers/x.jpg" -> "covers", "/x.jpg" -> "". */
+const folderOf = (url: string) => {
+  const parts = url.replace(/^\//, '').split('/');
+  return parts.length > 1 ? parts[0] : '';
+};
+
+/**
+ * Store a blurred copy and tell the admin shell to swap it in everywhere.
+ * The swap is announced as an event rather than done through `onChange`
+ * because the same photo can be referenced from several places (a gallery,
+ * a cover, the crops table) that this field knows nothing about.
+ */
+async function storeBlurred(oldUrl: string, dataUrl: string, filename: string) {
+  const resp = await fetch('/__admin/upload', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ filename, folder: folderOf(oldUrl), dataUrl }),
+  });
+  const json = await resp.json();
+  if (!json.url) {
+    alert('Blur failed: ' + (json.error ?? 'unknown'));
+    return;
+  }
+  window.dispatchEvent(new CustomEvent('portfolio:replace-url', { detail: { from: oldUrl, to: json.url } }));
+}
+
 export function ImageDrop({
   images,
   onChange,
@@ -249,6 +277,8 @@ export function ImageDrop({
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
   /** which gallery photo is currently being reframed */
   const [cropping, setCropping] = useState<string | null>(null);
+  /** which photo has the privacy-blur editor open */
+  const [blurring, setBlurring] = useState<string | null>(null);
   // the picture the single-image crop frame acts on — the cover
   const cropTarget = images[0];
 
@@ -307,13 +337,25 @@ export function ImageDrop({
                 delete control. */}
             <div className="flex items-center justify-between border-t border-line px-1 py-1">
               {single ? (
-                <button
-                  onClick={() => onChange([])}
-                  title="Remove"
-                  className="mx-auto grid h-6 w-6 place-items-center rounded text-zinc-500 hover:text-red-400"
-                >
-                  <HiOutlineTrash size={12} />
-                </button>
+                <>
+                  <button
+                    onClick={() => setBlurring(blurring === src ? null : src)}
+                    title="Blur faces"
+                    className={
+                      'mx-auto grid h-6 w-6 place-items-center rounded ' +
+                      (blurring === src ? 'text-accent-400' : 'text-zinc-500 hover:text-accent-400')
+                    }
+                  >
+                    <HiOutlineEyeOff size={12} />
+                  </button>
+                  <button
+                    onClick={() => onChange([])}
+                    title="Remove"
+                    className="mx-auto grid h-6 w-6 place-items-center rounded text-zinc-500 hover:text-red-400"
+                  >
+                    <HiOutlineTrash size={12} />
+                  </button>
+                </>
               ) : (
                 <>
               <button
@@ -337,6 +379,17 @@ export function ImageDrop({
                   <HiOutlineScissors size={12} />
                 </button>
               )}
+
+              <button
+                onClick={() => setBlurring(blurring === src ? null : src)}
+                title="Blur faces"
+                className={
+                  'grid h-6 w-6 place-items-center rounded ' +
+                  (blurring === src ? 'text-accent-400' : 'text-zinc-500 hover:text-accent-400')
+                }
+              >
+                <HiOutlineEyeOff size={12} />
+              </button>
 
               <button
                 onClick={() => onChange(images.filter((x) => x !== src))}
@@ -390,6 +443,19 @@ export function ImageDrop({
       <p className="mt-2 font-mono text-[10px] text-zinc-600">
         saved to public/{folder || ''}/ — commit these files so they appear on the live site
       </p>
+
+      {/* privacy blur for one photo */}
+      {blurring && images.includes(blurring) && (
+        <BlurEditor
+          key={blurring}
+          src={blurring}
+          onClose={() => setBlurring(null)}
+          onApply={async (dataUrl, filename) => {
+            await storeBlurred(blurring, dataUrl, filename);
+            setBlurring(null);
+          }}
+        />
+      )}
 
       {/* reframing one gallery photo */}
       {itemCrops && cropping && (

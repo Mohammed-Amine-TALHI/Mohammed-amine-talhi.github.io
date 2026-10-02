@@ -31,7 +31,11 @@
     "linkedinUrl": "https://www.linkedin.com/in/mohammedaminetalhi",
     "linkedinLabel": "/mohammedaminetalhi",
     "githubUrl": "https://github.com/mohammed-amine-talhi",
-    "githubLabel": "@mohammed-amine-talhi"
+    "githubLabel": "@mohammed-amine-talhi",
+    "hidden": {
+      "phoneAlt": true,
+      "github": true
+    }
   },
   "cv": {
     "en": null,
@@ -73,12 +77,12 @@
     }
   },
   "animation": {
-    "preset": "balanced",
-    "speed": 1.25,
+    "preset": "showcase",
+    "speed": 0.95,
     "nameEffect": "typewriter",
     "backgroundBlooms": true,
     "liquidEther": false,
-    "etherIntensity": 0.65,
+    "etherIntensity": 1.55,
     "orbitDots": true,
     "flowConsole": true,
     "timelinePulse": true,
@@ -86,7 +90,7 @@
     "scrollReveal": true,
     "sketches": true,
     "sketchDrift": true,
-    "sketchOpacity": 0.6,
+    "sketchOpacity": 0.9,
     "sketchSet": {}
   },
   "visibility": {
@@ -162,7 +166,11 @@
         "/covers/IMG_6371-mt3fvrl0.jpg",
         "/covers/IMG_6088--1--mt3fs2c5.jpg",
         "/covers/maquette-PNG-muo1hsm0.png",
-        "/covers/IMG_6096-mt3fs2ta.jpg"
+        "/covers/IMG_6096-mt3fs2ta.jpg",
+        "/covers/Capture-d--cran-2024-11-13-192450-muq8pnpe.jpg",
+        "/covers/20250421_200442980_iOS-muq8u3ji.jpg",
+        "/covers/20250430_014128442_iOS-blur-muq8v7pj.jpg",
+        "/covers/20250427_130611041_iOS-muq8u3b9.jpg"
       ]
     },
     "custom-design-apparel": {
@@ -226,16 +234,18 @@
       }
     },
     "387557e5-2858-455d-ab3d-ba9f842fbe37": {
-      "cover": "/covers/2022_02_25_05_30_IMG_6179-muo0xfjx.jpg",
+      "cover": "/covers/2022_02_25_05_30_IMG_6178-muq7k5pj.jpg",
       "coverCrop": {
         "x": 32.08332856496176,
-        "y": 65.97333708142679,
+        "y": 44.14306234400999,
         "zoom": 1
       },
       "gallery": [
+        "/covers/Capture-d--cran-2023-07-09-114551-muo2c2ie.png",
         "/covers/2022_02_25_05_30_IMG_6177-muo0yv1h.jpg",
         "/covers/2022_02_25_05_30_IMG_6180-muo0yvrb.jpg",
-        "/covers/Capture-d--cran-2023-07-09-114551-muo2c2ie.png"
+        "/covers/2022_02_25_04_48_IMG_6176-muq7ksw4.jpg",
+        "/covers/2022_02_24_22_55_IMG_6171-muq7ktye.jpg"
       ],
       "stack": [
         "SolidWorks",
@@ -257,14 +267,15 @@
       ]
     },
     "d11ea9a6-2215-4240-9e12-01b8c0e2f032": {
-      "cover": "/covers/delta-robot-solidworks-1a0f8c1911a.png",
+      "cover": "/covers/Capture-PNG-muq7ily7.png",
       "coverCrop": {
-        "x": 50,
-        "y": 45,
+        "x": 87.5,
+        "y": 25.299496769706735,
         "zoom": 1
       },
       "gallery": [
-        "/covers/delta-robot-solidworks-1a0f8c1911a.png"
+        "/covers/Capture-PNG-muq7icpt.png",
+        "/covers/Capture-d--cran-2026-10-02-000637-muq7ifz9.jpg"
       ],
       "stack": [
         "SolidWorks",
@@ -305,6 +316,7 @@
       },
       "gallery": [
         "/covers/mars-rover-iso-1a0f8c1911e.webp",
+        "/covers/2023_06_23_11_33_IMG_6549-muq7h6ba.jpg",
         "/covers/mars-rover-top-1a0f8c19121.png",
         "/covers/mars-rover-mecanum-wheel-1a0f8c19123.png",
         "/covers/mars-rover-wheel-module-1a0f8c19125.png",
@@ -340,25 +352,17 @@
         "Python / Tkinter",
         "scikit-learn (KNN)"
       ],
-      "assets": [
-        {
-          "id": "asset-scara-deck",
-          "kind": "presentation",
-          "label": {
-            "en": "Defence deck — position control & AI",
-            "fr": "Soutenance — asservissement & commande par IA"
-          },
-          "url": "/docs/Robot-SCARA-Soutenance-asservissement-1a0f8c80e11.pdf"
-        }
-      ],
-      "cover": "/covers/scara-robot-solidworks-1a0f8cca7eb.png",
+      "assets": [],
+      "cover": "/covers/Capture-d--cran-2023-07-09-114734-muq7mwhn.png",
       "coverCrop": {
-        "x": 55,
-        "y": 45,
-        "zoom": 1.15
+        "x": 53.958333333333336,
+        "y": 38.07818674604825,
+        "zoom": 1
       },
       "gallery": [
-        "/covers/scara-robot-solidworks-1a0f8cca7eb.png"
+        "/covers/2023_06_23_12_49_IMG_6229-blur-muq7xg2d.jpg",
+        "/covers/2023_06_23_10_48_IMG_6548-muq7m4me.jpg",
+        "/covers/Capture-d--cran-2023-07-09-114734-muq7mlsw.png"
       ]
     }
   },
@@ -491,7 +495,18 @@
         "fr": "Capitaine des équipes de basketball de l'école et de l'université. Responsable de l'assiduité aux entraînements, des compositions et de la cohésion du groupe lors des tournois inter-écoles."
       },
       "images": [
-        "/leadership/IMG_3308-JPG-mt31zg9i.jpg"
+        "/leadership/20250327_000634000_iOS-muq0e799.jpg",
+        "/leadership/WhatsApp-Image-2026-10-01-at-8-09-33-PM-mupwss14.jpeg",
+        "/leadership/WhatsApp-Image-2026-10-01-at-8-09-33-PM--1--mupwss0t.jpeg",
+        "/leadership/IMG_3308-JPG-mt31zg9i.jpg",
+        "/leadership/2022_02_18_18_31_IMG_6138-JPG-mupwn5m6.jpg",
+        "/leadership/2022_05_12_17_34_IMG_7384-JPG-mupwn5mv.jpg",
+        "/leadership/2023_06_10_19_54_IMG_6047-mupwn65l.jpg",
+        "/leadership/20250116_195530000_iOS-mupwn5pi.jpg",
+        "/leadership/20250221_231429000_iOS-mupwn63v.jpg",
+        "/leadership/20250601_155821928_iOS-mupwn78g.jpg",
+        "/leadership/20241220_212918902_iOS-mupwn6cg.jpg",
+        "/leadership/20241219_153852216_iOS-mupwodpx.jpg"
       ],
       "tags": [
         "Basketball",
@@ -502,9 +517,9 @@
       "imagePosition": "top",
       "imageFit": "cover",
       "imageCrop": {
-        "x": 47.708324591318764,
-        "y": 10.062922512860752,
-        "zoom": 1
+        "x": 53.503777402820006,
+        "y": 30.755068908001377,
+        "zoom": 1.1
       }
     },
     {
@@ -518,22 +533,30 @@
         "fr": "Trésorier"
       },
       "period": {
-        "en": "Mar. 2024 – Apr. 2025",
-        "fr": "Mars 2024 – Avril 2025"
+        "en": "2024 – 2025",
+        "fr": "2024 – 2025"
       },
       "description": {
-        "en": "As Treasurer of the Student Council (BDE) at EMINES, I brought rigour and a strategic mindset to student life. The mission: robust, transparent financial management in support of ambitious projects that energise the campus.\nBeyond budgets and fund allocation, the role was a chance to make a tangible contribution to the dynamism of the student community. Working closely with the team, I made sure every investment was aligned with our values and maximised its impact for students.\nIt was also an operations job: with the team we organised two integration trips and a full calendar of events — the JIP day for 40 first-years at Terre d'Amanar near Marrakech, and the 3-day WEI in Taghazout and Paradise Valley (Agadir), where we carried full responsibility for 95 people: accommodation, meals, surf, hiking and sandboarding.\nThis complemented my parallel commitment at the ETECH EMINES club, where I secured the funding for our participation in the National Robotics Competition. Two facets of the same passion: combining financial sustainability with innovation and collective action.",
-        "fr": "Trésorier du Bureau des Élèves (BDE) de l'EMINES, j'ai mis ma rigueur et mon esprit stratégique au service de la vie étudiante. La mission : une gestion financière solide et transparente, au service de projets ambitieux qui dynamisent le campus.\nAu-delà des budgets et de l'allocation des fonds, ce rôle a été l'occasion de contribuer concrètement au dynamisme de la communauté étudiante. En étroite collaboration avec l'équipe, j'ai veillé à ce que chaque investissement soit aligné avec nos valeurs et maximise son impact pour les étudiants.\nC'était aussi un poste d'opérations : avec l'équipe, nous avons organisé deux voyages d'intégration et un calendrier complet d'événements — la JIP, une journée pour 40 nouveaux à Terre d'Amanar près de Marrakech, et le WEI de 3 jours à Taghazout et Paradise Valley (Agadir), où nous avons porté l'entière responsabilité de 95 personnes : hébergement, repas, surf, randonnée et sandboarding.\nCet engagement complétait mon rôle parallèle au club ETECH EMINES, où j'ai sécurisé le financement de notre participation à la Compétition Nationale de Robotique. Deux facettes d'une même passion : allier pérennité financière, innovation et action collective."
+        "en": "As Treasurer of the Student Council (BDE) at EMINES, I brought rigour and a strategic mindset to student life. The mission: robust, transparent financial management in support of ambitious projects that energise the campus.\nWe are the LAWKEEPERS. Before the mandate came the election: we ran for the 2024/2025 Student Council against another list, built our programme, shot our campaign video and carried the campaign on our Instagram page — and the students voted for us.\nBeyond budgets and fund allocation, the role was a chance to make a tangible contribution to the dynamism of the student community. Working closely with the team, I made sure every investment was aligned with our values and maximised its impact for students.\nIt was also an operations job: with the team we organised two integration trips and a full calendar of events — the JIP day for 40 first-years at Terre d'Amanar near Marrakech, and the 3-day WEI in Taghazout and Paradise Valley (Agadir), where we carried full responsibility for 95 people: accommodation, meals, surf, hiking and sandboarding.\nThis complemented my parallel commitment at the ETECH EMINES club, where I secured the funding for our participation in the National Robotics Competition. Two facets of the same passion: combining financial sustainability with innovation and collective action.",
+        "fr": "Trésorier du Bureau des Élèves (BDE) de l'EMINES, j'ai mis ma rigueur et mon esprit stratégique au service de la vie étudiante. La mission : une gestion financière solide et transparente, au service de projets ambitieux qui dynamisent le campus.\nNous sommes les LAWKEEPERS. Avant le mandat, il y a eu l'élection : nous nous sommes présentés au Bureau des Élèves 2024/2025 face à une autre liste, nous avons construit notre programme, tourné notre vidéo de campagne et porté la campagne sur notre page Instagram — et les étudiants nous ont élus.\nAu-delà des budgets et de l'allocation des fonds, ce rôle a été l'occasion de contribuer concrètement au dynamisme de la communauté étudiante. En étroite collaboration avec l'équipe, j'ai veillé à ce que chaque investissement soit aligné avec nos valeurs et maximise son impact pour les étudiants.\nC'était aussi un poste d'opérations : avec l'équipe, nous avons organisé deux voyages d'intégration et un calendrier complet d'événements — la JIP, une journée pour 40 nouveaux à Terre d'Amanar près de Marrakech, et le WEI de 3 jours à Taghazout et Paradise Valley (Agadir), où nous avons porté l'entière responsabilité de 95 personnes : hébergement, repas, surf, randonnée et sandboarding.\nCet engagement complétait mon rôle parallèle au club ETECH EMINES, où j'ai sécurisé le financement de notre participation à la Compétition Nationale de Robotique. Deux facettes d'une même passion : allier pérennité financière, innovation et action collective."
       },
       "images": [],
       "tags": [
         "Finance",
         "Governance",
         "Events",
+        "Campaign",
         "Student life"
       ],
       "accent": "emerald",
       "kpis": [
+        {
+          "value": "Élus",
+          "label": {
+            "en": "we, the LAWKEEPERS, won the 2024/25 student vote",
+            "fr": "nous, les LAWKEEPERS, avons remporté le vote étudiant 2024/25"
+          }
+        },
         {
           "value": "95",
           "label": {
@@ -564,6 +587,33 @@
         }
       ],
       "events": [
+        {
+          "id": "ev-campaign",
+          "title": {
+            "en": "BDE election campaign — we are the LAWKEEPERS",
+            "fr": "Campagne électorale BDE — nous sommes les LAWKEEPERS"
+          },
+          "place": {
+            "en": "EMINES, Ben Guerir",
+            "fr": "EMINES, Ben Guerir"
+          },
+          "date": {
+            "en": "2024",
+            "fr": "2024"
+          },
+          "people": "",
+          "description": {
+            "en": "We faced another list for the 2024/2025 Student Council. We wrote our programme, shot and edited our campaign video and kept our LAWKEEPERS Instagram page alive throughout the campaign — and we won the vote, which gave us the mandate.",
+            "fr": "Nous avons affronté une autre liste pour le Bureau des Élèves 2024/2025. Nous avons écrit notre programme, tourné et monté notre vidéo de campagne et fait vivre notre page Instagram LAWKEEPERS pendant toute la campagne — et nous avons remporté le vote, qui nous a donné le mandat."
+          },
+          "highlights": [
+            "Vidéo de campagne",
+            "Instagram",
+            "Programme",
+            "Élus"
+          ],
+          "images": []
+        },
         {
           "id": "ev-wei",
           "title": {
@@ -618,6 +668,26 @@
           ],
           "images": []
         }
+      ],
+      "assets": [
+        {
+          "id": "asset-bde-video",
+          "kind": "link",
+          "label": {
+            "en": "Our campaign video (YouTube)",
+            "fr": "Notre vidéo de campagne (YouTube)"
+          },
+          "url": "https://www.youtube.com/watch?v=E2lmBHfqlrY"
+        },
+        {
+          "id": "asset-bde-ig",
+          "kind": "link",
+          "label": {
+            "en": "Our Instagram page — LAWKEEPERS",
+            "fr": "Notre page Instagram — LAWKEEPERS"
+          },
+          "url": "https://www.instagram.com/lawkeepers_bde/"
+        }
       ]
     },
     {
@@ -638,7 +708,29 @@
         "en": "Over two consecutive years I helped organise several large-scale robotics competitions — the IRC (Intelligent Robots Cup) and the URC (University Robotic Competition) — before taking on the Head of the Sponsorship Division for the NRC (National Robotic Competition).\nIn that role I led the entire partnership strategy, which secured over 150,000 MAD in funding. I built lasting relationships with sponsors and made sure they were integrated into the event in a way that worked for them and for us.\nIn my second year I was also Treasurer of the club, in parallel with my role at the Student Council. The experience sharpened my skills in event project management, negotiation and team coordination.",
         "fr": "Pendant deux années consécutives, j'ai contribué à l'organisation de plusieurs compétitions de robotique d'envergure — l'IRC (Intelligent Robots Cup) et l'URC (University Robotic Competition) — avant de prendre la tête du pôle Sponsoring de la NRC (National Robotic Competition).\nÀ ce poste, j'ai piloté toute la stratégie de partenariats, qui a permis de sécuriser plus de 150 000 MAD de financement. J'ai construit des relations durables avec les sponsors et veillé à leur intégration optimale dans l'événement.\nEn deuxième année, j'ai également été trésorier du club, en parallèle de mon rôle au Bureau des Élèves. Cette expérience a renforcé mes compétences en gestion de projet événementiel, négociation et coordination d'équipe."
       },
-      "images": [],
+      "images": [
+        "/leadership/20240331_124711270_iOS-blur-muquaeh8.jpg",
+        "/leadership/IMG_0319-muqu9knr.jpg",
+        "/leadership/20240406_124652802_iOS-muqu9lyk.jpg",
+        "/leadership/IMG_1391-muqu9jfs.jpg",
+        "/leadership/20240331_112034112_iOS--1--blur-muqucudt.jpg",
+        "/leadership/20250209_101855278_iOS-muqu9lyu.jpg",
+        "/leadership/20250209_104313357_iOS-blur-muqudhtp.jpg",
+        "/leadership/20250209_110238588_iOS-blur-muqui5z6.jpg",
+        "/leadership/20250209_114100724_iOS-muqu9jd1.jpg",
+        "/leadership/20250209_114654859_iOS-muqu9lz4.jpg",
+        "/leadership/20250413_024543885_iOS-muqu9j7c.jpg",
+        "/leadership/20240331_123649530_iOS-muqu9ln2.jpg",
+        "/leadership/20240331_122528570_iOS-muqu9l60.jpg",
+        "/leadership/20240330_175446000_iOS-muqu9kxz.jpg",
+        "/leadership/20240330_161049890_iOS-muqu9jtb.jpg",
+        "/leadership/20220804_021134710_iOS-muqu9kep.jpg",
+        "/leadership/20220804_201248260_iOS-muqu9k8e.jpg",
+        "/leadership/20220804_213440220_iOS-muqu9k25.jpg",
+        "/leadership/20220804_215746080_iOS-muqu9le7.jpg",
+        "/leadership/20240210_084952518_iOS-muqu9m0v.jpg",
+        "/leadership/Capture-d--cran-2026-10-02-003511-muqu9j9j.jpg"
+      ],
       "tags": [
         "Robotics",
         "Sponsoring",
@@ -654,6 +746,15 @@
             "fr": "ETECH sur LinkedIn"
           },
           "url": "https://www.linkedin.com/company/emines-technology-club/posts/?feedView=all"
+        },
+        {
+          "id": "asset-bgz48ar",
+          "kind": "report",
+          "label": {
+            "en": "",
+            "fr": ""
+          },
+          "url": "/docs/CDC-NRC-2025-muq83fyr.pdf"
         }
       ],
       "kpis": [
@@ -754,7 +855,12 @@
           "images": []
         }
       ],
-      "accent": "sky"
+      "accent": "sky",
+      "imageCrop": {
+        "x": 50,
+        "y": 72.52168059638606,
+        "zoom": 1
+      }
     },
     {
       "id": "lead-esg",
@@ -1173,6 +1279,91 @@
       "x": 57.08333651224772,
       "y": 58.61112806532119,
       "zoom": 1
+    },
+    "/leadership/2022_02_18_18_31_IMG_6138-JPG-mupwn5m6.jpg": {
+      "x": 44.169048385330576,
+      "y": 50.75769957273589,
+      "zoom": 1.36
+    },
+    "/leadership/20241220_212918902_iOS-mupwn6cg.jpg": {
+      "x": 6.803259578534896,
+      "y": 100,
+      "zoom": 1.24
+    },
+    "/leadership/20250212_193341912_iOS-mupwqh2r.jpg": {
+      "x": 56.43381885453766,
+      "y": 54.69770306855246,
+      "zoom": 1.36
+    },
+    "/leadership/20241219_153852216_iOS-mupwodpx.jpg": {
+      "x": 53.750006357828774,
+      "y": 47.77777989705404,
+      "zoom": 1
+    },
+    "/leadership/20250221_231429000_iOS-mupwn63v.jpg": {
+      "x": 50.74405045736404,
+      "y": 67.11309902251713,
+      "zoom": 1.12
+    },
+    "/leadership/20250327_000634000_iOS-blur-muq0daab.jpg": {
+      "x": 50,
+      "y": 50,
+      "zoom": 1
+    },
+    "/leadership/20250327_000634000_iOS-muq0e799.jpg": {
+      "x": 55.33514057380566,
+      "y": 36.61836172647522,
+      "zoom": 1.15
+    },
+    "/covers/20250430_014128442_iOS-blur-muq8v7pj.jpg": {
+      "x": 50,
+      "y": 50,
+      "zoom": 1
+    },
+    "/covers/20250427_130611041_iOS-muq8u3b9.jpg": {
+      "x": 50,
+      "y": 50,
+      "zoom": 1
+    },
+    "/covers/20250421_200442980_iOS-muq8u3ji.jpg": {
+      "x": 49.79165395100912,
+      "y": 36.666668785942925,
+      "zoom": 1
+    },
+    "/covers/Capture-d--cran-2024-11-13-192450-muq8pnpe.jpg": {
+      "x": 54.79166507720947,
+      "y": 28.05555131700304,
+      "zoom": 1
+    },
+    "/leadership/IMG_0319-muqu9knr.jpg": {
+      "x": 85.41666666666666,
+      "y": 41.94444020589193,
+      "zoom": 1
+    },
+    "/leadership/IMG_1391-muqu9jfs.jpg": {
+      "x": 32.29166666666667,
+      "y": 35.555553436279304,
+      "zoom": 1
+    },
+    "/leadership/20250209_101855278_iOS-muqu9lyu.jpg": {
+      "x": 70.6250031789144,
+      "y": 48.0555534362793,
+      "zoom": 1
+    },
+    "/leadership/20250209_104313357_iOS-blur-muqudhtp.jpg": {
+      "x": 49.16667938232422,
+      "y": 63.888888888888886,
+      "zoom": 1
+    },
+    "/leadership/20250413_024543885_iOS-muqu9j7c.jpg": {
+      "x": 27.083333333333332,
+      "y": 45.833333333333336,
+      "zoom": 1
+    },
+    "/leadership/20220804_021134710_iOS-muqu9kep.jpg": {
+      "x": 61.25000317891438,
+      "y": 53.888893127441406,
+      "zoom": 1
     }
   },
   "theme": {
@@ -1180,7 +1371,9 @@
     "toggle": true,
     "palette": "brand",
     "ink": "neutral",
-    "accent": "#ffffff"
+    "accent": "#735bff",
+    "brand": "#4a0000",
+    "tint": 0.3
   },
   "graduation": {
     "enabled": true,
