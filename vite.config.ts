@@ -315,14 +315,56 @@ function adminApiPlugin(): Plugin {
   };
 }
 
+/**
+ * The instant shell in index.html is painted before the app (and the config
+ * inside it) has loaded, so the default theme chosen in the admin is written
+ * into the HTML itself. A visitor's saved choice still overrides it at runtime.
+ */
+function defaultThemePlugin(): Plugin {
+  return {
+    name: 'portfolio-default-theme',
+    transformIndexHtml(html) {
+      try {
+        const cfg = JSON.parse(readFileSync(CONFIG_PATH, 'utf8'));
+        const theme = cfg.theme?.default === 'dark' ? 'dark' : 'light';
+        // the loader bar takes the palette's accent colour
+        const accent =
+          cfg.theme?.palette === 'custom' && /^#[0-9a-f]{6}$/i.test(cfg.theme?.accent ?? '')
+            ? cfg.theme.accent
+            : cfg.theme?.palette === 'classic'
+              ? '#f59e0b'
+              : '#e8412a';
+        return html
+          .replace('<html lang="fr" data-theme="light">', `<html lang="fr" data-theme="${theme}"${theme === 'dark' ? ' class="dark"' : ''}>`)
+          .replace('background: #e8412a;', `background: ${accent};`);
+      } catch {
+        return html;
+      }
+    },
+  };
+}
+
 export default defineConfig({
   // '/' for a user page or a custom domain; '/<repo>/' for a project page.
   // The deploy workflow sets BASE_PATH automatically from the repository name.
   base: process.env.BASE_PATH || '/',
-  plugins: [react(), tailwindcss(), adminApiPlugin()],
+  plugins: [react(), tailwindcss(), adminApiPlugin(), defaultThemePlugin()],
   // honour a PORT assigned by the tooling, otherwise Vite's default
   server: { port: Number(process.env.PORT) || 5173 },
-  build: { outDir: 'dist', sourcemap: false },
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        // React and the animation library change rarely: separate files download
+        // in parallel with the app code and stay cached across deploys
+        manualChunks(id) {
+          if (/node_modules[\/](react|react-dom|scheduler)[\/]/.test(id)) return 'react';
+          if (/node_modules[\/](framer-motion|motion-dom|motion-utils)[\/]/.test(id)) return 'motion';
+        },
+      },
+    },
+  },
   // the HEIC decoder is one self-contained ESM file with the wasm inlined;
   // pre-bundling it is slow and it only ever loads inside the admin's worker
   optimizeDeps: { exclude: ['libheif-js'] },

@@ -12,7 +12,39 @@ import SafeImage from '../SafeImage';
 import { useLang } from '../../lib/i18n';
 import { dur } from '../../lib/anim';
 import { cropFor, cropStyle } from '../../lib/crop';
-import type { LeadershipEvent, LeadershipKpi } from '../../lib/types';
+import { HiOutlineExternalLink } from 'react-icons/hi';
+import type { LeadershipEvent, LeadershipKpi, LeadershipStep } from '../../lib/types';
+
+/* -------------------------------------------------------------------------- */
+/*  Timeline — how the role grew, one step per period                          */
+/* -------------------------------------------------------------------------- */
+export function Timeline({ steps, tone }: { steps: LeadershipStep[]; tone: { text: string; dot: string } }) {
+  const { t, lang } = useLang();
+  const items = steps.filter((s) => t(s.role)?.trim() || t(s.text)?.trim());
+  if (!items.length) return null;
+
+  return (
+    <div className="mx-auto mt-7 max-w-[62ch]">
+      <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600">
+        {lang === 'fr' ? 'Parcours' : 'Timeline'}
+      </p>
+      <ol className="relative ml-1.5 border-l border-line">
+        {items.map((s, i) => (
+          <li key={i} className={'relative pl-5 ' + (i === items.length - 1 ? '' : 'pb-5')}>
+            <span className={'absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full ring-4 ring-ink-900 ' + tone.dot} />
+            <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+              <span className="font-mono text-[10.5px] text-zinc-500">{t(s.period)}</span>
+              <span className={'text-[13px] font-semibold ' + tone.text}>{t(s.role)}</span>
+            </div>
+            {t(s.text)?.trim() && (
+              <p className="mt-1.5 whitespace-pre-line text-[13.5px] leading-relaxed text-zinc-400">{t(s.text)}</p>
+            )}
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
 
 /* -------------------------------------------------------------------------- */
 /*  Key figures — small tiles under the story                                  */
@@ -253,6 +285,17 @@ export function EventsBlock({
                           </motion.div>
                         )}
                       </AnimatePresence>
+
+                      {ev.url && (
+                        <a
+                          href={ev.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={'mt-3 flex items-center gap-1 self-start font-mono text-[11px] underline decoration-dotted underline-offset-2 transition-colors hover:text-accent-400 ' + tone.text}
+                        >
+                          {lang === 'fr' ? 'Voir le post' : 'See the post'} <HiOutlineExternalLink size={12} />
+                        </a>
+                      )}
 
                       {(ev.images.length > 1 || (t(ev.description)?.length ?? 0) > 160) && (
                         <button

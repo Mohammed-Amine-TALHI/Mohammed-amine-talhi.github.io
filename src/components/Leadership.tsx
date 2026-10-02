@@ -15,7 +15,7 @@ import { usePreloadImages } from '../lib/preload';
 import { cropStyle, resolveCrop, cropFor } from '../lib/crop';
 import type { AssetKind, LeadershipEntry } from '../lib/types';
 import { asset } from '../lib/asset';
-import { EventsBlock, KpiRow } from './leadership/EventsBlock';
+import { EventsBlock, KpiRow, Timeline } from './leadership/EventsBlock';
 
 /** Per-entry accent tints, picked in the admin panel. */
 const ACCENT: Record<string, { ring: string; text: string; glow: string; dot: string }> = {
@@ -238,6 +238,8 @@ function Journal({
             </p>
           ))}
         </div>
+
+        {e.timeline && e.timeline.length > 0 && <Timeline steps={e.timeline} tone={a} />}
 
         {e.kpis && e.kpis.length > 0 && <KpiRow kpis={e.kpis} accent={a.text} />}
 

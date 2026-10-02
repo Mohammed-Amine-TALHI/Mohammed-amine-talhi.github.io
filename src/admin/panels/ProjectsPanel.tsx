@@ -4,8 +4,8 @@ import { Toggle, Card, Button, LocField, TagsInput, ImageDrop, Field } from '../
 import AssetEditor from '../AssetEditor';
 import VideoEditor from '../VideoEditor';
 import { resolveCrop } from '../../lib/crop';
-import { resume } from '../../lib/data';
-import type { PortfolioConfig, Project } from '../../lib/types';
+import { resume, orderedProjects, periodRange } from '../../lib/data';
+import type { PortfolioConfig, Project, ProjectOrderMode } from '../../lib/types';
 
 const rid = (p: string) => p + '-' + Math.random().toString(36).slice(2, 9);
 
@@ -26,17 +26,32 @@ export default function ProjectsPanel({
 }) {
   const [open, setOpen] = useState<string | null>(null);
 
+  // the ResumeApp list below keeps its own arrows; both edit the same manual order
   const ordered = cfg.order.projects
     .map((id) => resume.projects.find((p) => p.id === id))
     .filter((p): p is Project => Boolean(p));
+  for (const p of resume.projects) if (!ordered.some((o) => o.id === p.id)) ordered.push(p);
 
-  const move = (index: number, dir: -1 | 1) => {
-    const next = index + dir;
-    if (next < 0 || next >= ordered.length) return;
+  /** every project, CV and portfolio-only, exactly as the site will show them */
+  const display = orderedProjects(cfg);
+  const mode: ProjectOrderMode = cfg.order.mode ?? 'manual';
+
+  const setMode = (next: ProjectOrderMode) =>
     set((d) => {
-      const list = [...d.order.projects];
-      [list[index], list[next]] = [list[next], list[index]];
+      // going manual starts from whatever is on screen, so nothing jumps
+      if (next === 'manual') d.order.projects = orderedProjects(d).map((p) => p.id);
+      d.order.mode = next;
+    });
+
+  /** Move one project in the full list; moving anything switches to manual. */
+  const moveDisplay = (index: number, dir: -1 | 1) => {
+    const target = index + dir;
+    if (target < 0 || target >= display.length) return;
+    set((d) => {
+      const list = orderedProjects(d).map((p) => p.id);
+      [list[index], list[target]] = [list[target], list[index]];
       d.order.projects = list;
+      d.order.mode = 'manual';
     });
   };
 
@@ -52,6 +67,87 @@ export default function ProjectsPanel({
 
   return (
     <div className="space-y-8">
+      {/* ------------------------------ display order ------------------------------ */}
+      <section>
+        <h2 className="mb-1 font-display text-lg font-semibold text-zinc-100">Display order</h2>
+        <p className="mb-4 text-xs text-zinc-500">
+          The order of the project grid on the site — every project, from the CV and portfolio-only.
+        </p>
+
+        <Card className="space-y-4">
+          <div className="grid gap-2 sm:grid-cols-3">
+            {(
+              [
+                ['newest', 'By date — newest first', 'Décroissant. Sorted automatically by end date.'],
+                ['oldest', 'By date — oldest first', 'Croissant. Sorted automatically by end date.'],
+                ['manual', 'Manual', 'You decide, with the arrows below.'],
+              ] as [ProjectOrderMode, string, string][]
+            ).map(([id, label, hint]) => {
+              const active = mode === id;
+              return (
+                <button
+                  key={id}
+                  onClick={() => setMode(id)}
+                  className={
+                    'rounded-xl border p-3 text-left transition-colors ' +
+                    (active ? 'border-accent-500/60 bg-accent-500/[0.08]' : 'border-line bg-ink-950 hover:border-zinc-600')
+                  }
+                >
+                  <span className={'block text-sm font-semibold ' + (active ? 'text-accent-300' : 'text-zinc-200')}>{label}</span>
+                  <span className="mt-0.5 block text-[11px] text-zinc-500">{hint}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="space-y-1">
+            {display.map((p, i) => {
+              const hidden = cfg.visibility.projects[p.id] === false;
+              const dated = periodRange(p.period).end > 0;
+              return (
+                <div
+                  key={p.id}
+                  className={
+                    'flex items-center gap-3 rounded-lg border border-line bg-ink-950 px-3 py-1.5 ' + (hidden ? 'opacity-40' : '')
+                  }
+                >
+                  <span className="w-6 shrink-0 text-right font-mono text-[11px] text-zinc-600">{i + 1}</span>
+                  <span className="min-w-0 flex-1 truncate text-[13px] text-zinc-200">{p.title.en || p.title.fr || p.id}</span>
+                  {hidden && <span className="shrink-0 font-mono text-[9px] uppercase text-zinc-600">hidden</span>}
+                  <span className={'shrink-0 font-mono text-[10px] ' + (dated ? 'text-zinc-500' : 'text-amber-400')}>
+                    {p.period.en || 'no date — sorted last'}
+                  </span>
+                  <span className="flex shrink-0 gap-1">
+                    <button
+                      onClick={() => moveDisplay(i, -1)}
+                      disabled={i === 0}
+                      title="Move up"
+                      className="grid h-6 w-6 place-items-center rounded-md border border-line text-zinc-500 hover:text-zinc-200 disabled:opacity-30"
+                    >
+                      <HiChevronUp size={13} />
+                    </button>
+                    <button
+                      onClick={() => moveDisplay(i, 1)}
+                      disabled={i === display.length - 1}
+                      title="Move down"
+                      className="grid h-6 w-6 place-items-center rounded-md border border-line text-zinc-500 hover:text-zinc-200 disabled:opacity-30"
+                    >
+                      <HiChevronDown size={13} />
+                    </button>
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+          {mode !== 'manual' && (
+            <p className="text-[11px] text-zinc-500">
+              Sorted automatically — a new project lands in the right place by its dates. Using an arrow switches to
+              Manual, starting from this order.
+            </p>
+          )}
+        </Card>
+      </section>
+
       {/* ------------------------- synced from ResumeApp ------------------------- */}
       <section>
         <header className="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -73,7 +169,7 @@ export default function ProjectsPanel({
         </header>
 
         <div className="space-y-2">
-          {ordered.map((p, i) => {
+          {ordered.map((p) => {
             const on = cfg.visibility.projects[p.id] !== false;
             const meta = cfg.projectMeta[p.id] ?? {};
             const isOpen = open === p.id;
@@ -98,20 +194,6 @@ export default function ProjectsPanel({
                   </div>
 
                   <div className="flex shrink-0 items-center gap-1">
-                    <button
-                      onClick={() => move(i, -1)}
-                      disabled={i === 0}
-                      className="grid h-7 w-7 place-items-center rounded-md border border-line text-zinc-500 hover:text-zinc-200 disabled:opacity-30"
-                    >
-                      <HiChevronUp size={14} />
-                    </button>
-                    <button
-                      onClick={() => move(i, 1)}
-                      disabled={i === ordered.length - 1}
-                      className="grid h-7 w-7 place-items-center rounded-md border border-line text-zinc-500 hover:text-zinc-200 disabled:opacity-30"
-                    >
-                      <HiChevronDown size={14} />
-                    </button>
                     <Button onClick={() => setOpen(isOpen ? null : p.id)}>{isOpen ? 'Close' : 'Details'}</Button>
                   </div>
                 </div>

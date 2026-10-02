@@ -15,23 +15,60 @@ export const config = configJson as unknown as PortfolioConfig;
 
 export const contact = config.contact;
 
-/** Projects the admin panel has switched ON, in the configured order, plus custom ones. */
-export function visibleProjects(): Project[] {
-  // custom projects take part in the ordering like any other, so a portfolio-only
-  // project can sit next to its CV siblings instead of always trailing the list
-  const custom = (config.customProjects ?? []).map((p) => ({ ...p, custom: true }));
+const MONTHS: Record<string, number> = {
+  jan: 1, feb: 2, fev: 2, mar: 3, apr: 4, avr: 4, may: 5, mai: 5, jun: 6, juin: 6,
+  jul: 7, juil: 7, aug: 8, aou: 8, sep: 9, oct: 10, nov: 11, dec: 12,
+};
+
+/**
+ * "Feb. 2025 – May 2025" → { start: 202502, end: 202505 } (year × 100 + month).
+ * A period with a single date uses it for both; no date at all gives zeros.
+ */
+export function periodRange(period?: { en: string; fr: string }): { start: number; end: number } {
+  const text = (period?.en || period?.fr || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '');
+  const found: number[] = [];
+  for (const m of text.matchAll(/([a-z]+)?\.?\s*(\d{4})/g)) {
+    const word = m[1] ?? '';
+    const key = Object.keys(MONTHS).sort((x, y) => y.length - x.length).find((k) => word.startsWith(k));
+    found.push(Number(m[2]) * 100 + (key ? MONTHS[key] : 0));
+  }
+  if (!found.length) return { start: 0, end: 0 };
+  return { start: found[0], end: found[found.length - 1] };
+}
+
+/**
+ * Every project (CV + portfolio-only) in display order.
+ *
+ * `manual` follows `order.projects`, with anything missing from that list at
+ * the end. `newest` / `oldest` sort by end date, then start date; undated
+ * projects always go last, and ties keep their manual order.
+ */
+export function orderedProjects(cfg: PortfolioConfig = config): Project[] {
+  const custom = (cfg.customProjects ?? []).map((p) => ({ ...p, custom: true }));
   const all = [...resume.projects, ...custom];
   const byId = new Map(all.map((p) => [p.id, p]));
-  const ordered = (config.order?.projects ?? [])
-    .map((id) => byId.get(id))
-    .filter((p): p is Project => Boolean(p));
+  const manual = (cfg.order?.projects ?? []).map((id) => byId.get(id)).filter((p): p is Project => Boolean(p));
+  for (const p of all) if (!manual.some((o) => o.id === p.id)) manual.push(p);
 
-  // anything missing from the order list still shows up, at the end
-  for (const p of all) {
-    if (!ordered.some((o) => o.id === p.id)) ordered.push(p);
-  }
+  const mode = cfg.order?.mode ?? 'manual';
+  if (mode === 'manual') return manual;
 
-  return ordered.filter((p) => config.visibility?.projects?.[p.id] !== false);
+  const dir = mode === 'newest' ? -1 : 1;
+  return manual
+    .map((p, i) => ({ p, i, r: periodRange(p.period) }))
+    .sort((a, b) => {
+      if (!a.r.end !== !b.r.end) return a.r.end ? -1 : 1; // undated last
+      return dir * (a.r.end - b.r.end) || dir * (a.r.start - b.r.start) || a.i - b.i;
+    })
+    .map((x) => x.p);
+}
+
+/** Projects the admin panel has switched ON, in display order. */
+export function visibleProjects(): Project[] {
+  return orderedProjects().filter((p) => config.visibility?.projects?.[p.id] !== false);
 }
 
 /** Experiences the admin panel has switched ON. */

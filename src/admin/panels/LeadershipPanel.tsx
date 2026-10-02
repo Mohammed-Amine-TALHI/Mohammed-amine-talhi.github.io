@@ -203,6 +203,36 @@ export default function LeadershipPanel({
               hint="report, poster, deck or link — shown inside the journal view"
             />
 
+            {/* ------------------------------ timeline ------------------------------ */}
+            <Field label="Timeline" hint="how the role evolved — one step per year or position, shown under the story">
+              <div className="space-y-3">
+                {(e.timeline ?? []).map((st, si) => (
+                  <div key={si} className="space-y-3 rounded-xl border border-line bg-ink-950/50 p-3">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[10px] text-zinc-600">step {si + 1}</span>
+                      <Button variant="danger" onClick={() => set((d) => void d.leadership[i].timeline!.splice(si, 1))}>
+                        <HiOutlineTrash size={13} />
+                      </Button>
+                    </div>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <LocField label="Period" value={st.period} onChange={(v) => set((d) => void (d.leadership[i].timeline![si].period = v))} placeholder="2023 – 2024" />
+                      <LocField label="Role" value={st.role} onChange={(v) => set((d) => void (d.leadership[i].timeline![si].role = v))} placeholder="Project lead" />
+                    </div>
+                    <LocField label="What I did" multiline value={st.text} onChange={(v) => set((d) => void (d.leadership[i].timeline![si].text = v))} />
+                  </div>
+                ))}
+                <Button
+                  onClick={() =>
+                    set((d) => void (d.leadership[i].timeline = [...(d.leadership[i].timeline ?? []), { period: { en: '', fr: '' }, role: { en: '', fr: '' }, text: { en: '', fr: '' } }]))
+                  }
+                >
+                  <span className="flex items-center gap-1.5">
+                    <HiOutlinePlus size={13} /> Add a step
+                  </span>
+                </Button>
+              </div>
+            </Field>
+
             {/* ------------------------------ key figures ------------------------------ */}
             <Field label="Key figures" hint="small number tiles under the story — value + what it means">
               <div className="space-y-2">
@@ -255,6 +285,9 @@ export default function LeadershipPanel({
                         <Input value={ev.people ?? ''} placeholder="95" onChange={(x) => set((d) => void (d.leadership[i].events![evi].people = x.target.value))} />
                       </Field>
                     </div>
+                    <Field label="Link" hint="optional — a post or page about this event">
+                      <Input value={ev.url ?? ''} placeholder="https://www.instagram.com/p/…" onChange={(x) => set((d) => void (d.leadership[i].events![evi].url = x.target.value))} />
+                    </Field>
                     <LocField label="What we did" multiline value={ev.description} onChange={(v) => set((d) => void (d.leadership[i].events![evi].description = v))} />
                     <Field label="Highlights" hint="short chips">
                       <TagsInput value={ev.highlights ?? []} onChange={(v) => set((d) => void (d.leadership[i].events![evi].highlights = v))} placeholder="Surf, Hiking, Sandboarding" />

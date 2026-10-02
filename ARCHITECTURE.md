@@ -519,6 +519,22 @@ in place: photos via sharp, PDFs by recompressing their embedded pictures
 (pdf-lib + sharp; text and vectors untouched), videos via ffmpeg. A result is
 kept only if it is at least 5 % smaller.
 
+**First paint.** Three things keep a phone from showing a blank page: (1) an
+*instant shell* — name, role and a loader bar — is written straight into
+`index.html` with inline CSS, so it paints from the HTML alone; a small Vite
+plugin (`defaultThemePlugin`) bakes the admin's default theme and accent into
+it. (2) Fonts are bundled (`@fontsource-variable/*`, imported in `main.tsx`),
+so no third-party stylesheet can block rendering. (3) Every section below the
+hero is a `lazy()` chunk in `App.tsx`, and React / framer-motion are separate
+vendor chunks — the first screen needs about a third of the JavaScript it used
+to. Because sections mount late, `Nav.tsx` re-attaches its scroll-spy with a
+MutationObserver and `useDeferredHashScroll` handles links like `/#projects`.
+
+**Project order.** `order.mode` is `manual` (follows `order.projects`),
+`newest` or `oldest` (sorted by the dates parsed from each project's period —
+`periodRange()` / `orderedProjects()` in `lib/data.ts`). Custom projects take
+part like any other.
+
 **Loading strategy.** Every `<img>` is `loading="lazy"`, so on-page photos load
 as they scroll into view; gallery photos are warmed by `preload.ts`; documents
 and videos load on click. Keep it that way when adding sections.

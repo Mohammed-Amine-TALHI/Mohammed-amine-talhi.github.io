@@ -146,6 +146,15 @@ export interface LeadershipEvent {
   /** short chips: "Surf", "Hiking", "3 days" */
   highlights: string[];
   images: string[];
+  /** a post or page about the event */
+  url?: string;
+}
+
+/** One step of a role's progression, e.g. a year on a club's board. */
+export interface LeadershipStep {
+  period: Loc;
+  role: Loc;
+  text: Loc;
 }
 
 export interface LeadershipEntry {
@@ -158,6 +167,8 @@ export interface LeadershipEntry {
   tags: string[];
   /** reports, posters, decks and links — same shape as a project's */
   assets?: ProjectAsset[];
+  /** how the role evolved, shown as a small timeline under the story */
+  timeline?: LeadershipStep[];
   /** headline numbers shown under the story */
   kpis?: LeadershipKpi[];
   /** the big events, shown as one expandable box in the journal */
@@ -299,6 +310,9 @@ export interface LanguageProof {
   label: string;
 }
 
+/** How the project grid is ordered. */
+export type ProjectOrderMode = 'manual' | 'newest' | 'oldest';
+
 export interface PortfolioConfig {
   profile: {
     photo: string;
@@ -324,7 +338,12 @@ export interface PortfolioConfig {
     projects: Record<string, boolean>;
     experiences: Record<string, boolean>;
   };
-  order: { projects: string[] };
+  order: {
+    /** manual sequence of project ids — used when `mode` is manual */
+    projects: string[];
+    /** manual (default), or sorted by the project's dates */
+    mode?: ProjectOrderMode;
+  };
   projectMeta: Record<string, ProjectMeta>;
   customProjects: Project[];
   leadership: LeadershipEntry[];

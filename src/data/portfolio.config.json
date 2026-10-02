@@ -78,7 +78,7 @@
   },
   "animation": {
     "preset": "balanced",
-    "speed": 1,
+    "speed": 0.95,
     "nameEffect": "typewriter",
     "backgroundBlooms": false,
     "liquidEther": false,
@@ -120,8 +120,8 @@
   "order": {
     "projects": [
       "proj-carprice",
-      "ca3769bf-a035-4a43-b4c1-a4e0cffc5321",
       "proj-basketball",
+      "ca3769bf-a035-4a43-b4c1-a4e0cffc5321",
       "79d4c398-841d-423e-9e19-1681fd6639dd",
       "36357954-de95-472f-805c-c53f977dbec5",
       "32889b55-7765-4b67-9f80-98cdbda19151",
@@ -132,7 +132,8 @@
       "1f01525d-6b09-422e-b7e8-a2d3bf3b4bf6",
       "d11ea9a6-2215-4240-9e12-01b8c0e2f032",
       "387557e5-2858-455d-ab3d-ba9f842fbe37"
-    ]
+    ],
+    "mode": "manual"
   },
   "projectMeta": {
     "proj-basketball": {
@@ -197,9 +198,10 @@
     },
     "custom-design-apparel": {
       "stack": [
-        "Adobe Illustrator",
-        "Vector design",
-        "Print production"
+        "Supplier sourcing",
+        "Negotiation",
+        "Quality control",
+        "Order follow-up"
       ],
       "gallery": [
         "/covers/Capture-d--cran-2026-08-24-173733-mt7h3je2.png",
@@ -265,7 +267,6 @@
       "gallery": [
         "/covers/Capture-d--cran-2023-07-09-114551-muo2c2ie.png",
         "/covers/2022_02_25_05_30_IMG_6177-muo0yv1h.jpg",
-        "/covers/2022_02_25_05_30_IMG_6180-muo0yvrb.jpg",
         "/covers/2022_02_25_04_48_IMG_6176-muq7ksw4.jpg",
         "/covers/2022_02_24_22_55_IMG_6171-muq7ktye.jpg"
       ],
@@ -425,18 +426,48 @@
           "url": "/docs/Rapport-PFE-OCP-Ordonnancement-des-stocks-p1-3-muqy7z1x.pdf"
         }
       ]
+    },
+    "651aa022-98b2-4e81-afc0-f294d041d55c": {
+      "cover": "/covers/bourse-aux-livres-accueil-mur9bdm7.jpg",
+      "coverCrop": {
+        "x": 50,
+        "y": 0,
+        "zoom": 1
+      },
+      "gallery": [
+        "/covers/bourse-aux-livres-catalogue-mur9bdm7.jpg",
+        "/covers/bourse-aux-livres-fiche-livre-mur9bdm7.jpg"
+      ],
+      "stack": [
+        "React",
+        "Laravel",
+        "REST API",
+        "MySQL",
+        "Eloquent"
+      ],
+      "assets": [
+        {
+          "id": "asset-bal-github",
+          "kind": "code",
+          "label": {
+            "en": "Source code on GitHub",
+            "fr": "Code source sur GitHub"
+          },
+          "url": "https://github.com/Mohammed-Amine-TALHI/Bourse-aux-livres"
+        }
+      ]
     }
   },
   "customProjects": [
     {
       "id": "custom-design-apparel",
       "title": {
-        "en": "Team Apparel Design — Jerseys & Hoodie",
-        "fr": "Design des Tenues d'Équipe — Maillots & Hoodie"
+        "en": "Team Apparel — Sourcing Jerseys & Hoodie",
+        "fr": "Tenues d'Équipe — Approvisionnement Maillots & Hoodie"
       },
       "tag": {
-        "en": "Graphic Design",
-        "fr": "Design Graphique"
+        "en": "Purchasing / Supply Chain",
+        "fr": "Achats / Supply Chain"
       },
       "period": {
         "en": "2023 – 2025",
@@ -446,22 +477,22 @@
         {
           "id": "b-design-1",
           "text": {
-            "en": "Designed three basketball jerseys and a team hoodie in Adobe Illustrator, from first sketch through to the print-ready files.",
-            "fr": "Conception de trois maillots de basketball et d'un hoodie d'équipe sous Adobe Illustrator, du premier croquis aux fichiers prêts à l'impression."
+            "en": "Ran the purchase of the team kit — three sublimated basketball jerseys and a hoodie — end to end: found a supplier, briefed the need and negotiated price, quantities and lead time.",
+            "fr": "Pilotage de l'achat des tenues de l'équipe — trois maillots de basketball en sublimation et un hoodie — de bout en bout : recherche d'un fournisseur, expression du besoin et négociation du prix, des quantités et du délai."
           }
         },
         {
           "id": "b-design-2",
           "text": {
-            "en": "Worked to real production constraints: colour separation, placement of numbers and names, and fabric-safe contrast so the design survived the printing process.",
-            "fr": "Travail sous contraintes de production réelles : séparation des couleurs, placement des numéros et des noms, et contraste adapté au tissu pour que le design résiste à l'impression."
+            "en": "Specified and checked quality with the supplier: fabric, print durability, sizes, and the placement of numbers and names.",
+            "fr": "Définition et contrôle de la qualité avec le fournisseur : tissu, tenue de l'impression, tailles, placement des numéros et des noms."
           }
         },
         {
           "id": "b-design-3",
           "text": {
-            "en": "All four pieces were produced and worn by the team — the photographs below are the finished kit in use, not mockups.",
-            "fr": "Les quatre pièces ont été produites et portées par l'équipe — les photos ci-dessous montrent les tenues réelles en usage, et non des maquettes."
+            "en": "Followed the order through to delivery and distribution to the players. All four pieces were produced and worn by the team — the photos below show the real kit in use.",
+            "fr": "Suivi de la commande jusqu'à la livraison et la distribution aux joueurs. Les quatre pièces ont été produites et portées par l'équipe — les photos ci-dessous montrent les tenues réelles en usage."
           }
         }
       ]
@@ -810,16 +841,16 @@
         "fr": "ETECH — Club Technologique EMINES"
       },
       "role": {
-        "en": "Head of Sponsorship · Treasurer",
-        "fr": "Responsable Sponsoring · Trésorier"
+        "en": "Board member — Project lead, then Treasurer & Head of Sponsorship",
+        "fr": "Membre du bureau — Responsable Projet, puis Trésorier & Responsable Sponsoring"
       },
       "period": {
-        "en": "2023 – 2025",
-        "fr": "2023 – 2025"
+        "en": "2022 – 2025",
+        "fr": "2022 – 2025"
       },
       "description": {
-        "en": "Over two consecutive years I helped organise several large-scale robotics competitions — the IRC (Intelligent Robots Cup) and the URC (University Robotic Competition) — before taking on the Head of the Sponsorship Division for the NRC (National Robotic Competition).\nIn that role I led the entire partnership strategy, which secured over 150,000 MAD in funding. I built lasting relationships with sponsors and made sure they were integrated into the event in a way that worked for them and for us.\nIn my second year I was also Treasurer of the club, in parallel with my role at the Student Council. The experience sharpened my skills in event project management, negotiation and team coordination.",
-        "fr": "Pendant deux années consécutives, j'ai contribué à l'organisation de plusieurs compétitions de robotique d'envergure — l'IRC (Intelligent Robots Cup) et l'URC (University Robotic Competition) — avant de prendre la tête du pôle Sponsoring de la NRC (National Robotic Competition).\nÀ ce poste, j'ai piloté toute la stratégie de partenariats, qui a permis de sécuriser plus de 150 000 MAD de financement. J'ai construit des relations durables avec les sponsors et veillé à leur intégration optimale dans l'événement.\nEn deuxième année, j'ai également été trésorier du club, en parallèle de mon rôle au Bureau des Élèves. Cette expérience a renforcé mes compétences en gestion de projet événementiel, négociation et coordination d'équipe."
+        "en": "E-TECH is the robotics club of EMINES. I started by helping the board run its competitions, was selected onto the board the following year, and stayed two years: six events organised as a board member, among them the URC (UM6P Robotics Competition), the local round where the university selects its teams, and the NRC (National Robotics Competition), the national event where they represent it.\nMy thread through all of it was the part nobody sees: the logistics behind a big event, then its money. Behind a 24-hour hackathon there is an enormous amount of logistics — and a budget that has to be there on the day.\nThank you to the sponsors who trusted us; they are listed in the sponsorship file below.",
+        "fr": "E-TECH est le club de robotique de l'EMINES. J'ai commencé par aider le bureau sur ses compétitions, j'ai été sélectionné pour l'intégrer l'année suivante, et j'y suis resté deux ans : six événements organisés en tant que membre du bureau, dont l'URC (UM6P Robotics Competition), l'étape locale où l'université sélectionne ses équipes, et la NRC (National Robotics Competition), la compétition nationale où elles la représentent.\nMon fil conducteur a été la partie que personne ne voit : la logistique derrière un grand événement, puis son financement. Derrière un hackathon de 24 heures, il y a une logistique énorme — et un budget qui doit être là le jour J.\nMerci aux sponsors qui nous ont fait confiance ; ils figurent dans le dossier de sponsoring ci-dessous."
       },
       "images": [
         "/leadership/20240331_124711270_iOS-blur-muquaeh8.jpg",
@@ -846,8 +877,9 @@
       ],
       "tags": [
         "Robotics",
+        "Logistics",
         "Sponsoring",
-        "Negotiation",
+        "Treasury",
         "Events"
       ],
       "assets": [
@@ -895,9 +927,34 @@
             "fr": "Cahier des charges URC 2024"
           },
           "url": "/docs/ETECH-Cahier-des-charges-URC-2024-1a0fc7c9f8b.pdf"
+        },
+        {
+          "id": "asset-etech-board2",
+          "kind": "link",
+          "label": {
+            "en": "Board announcement — year 2 (Treasurer)",
+            "fr": "Annonce du bureau — 2ᵉ année (Trésorier)"
+          },
+          "url": "https://www.instagram.com/p/C8adFHtKFHc/"
+        },
+        {
+          "id": "asset-etech-board1",
+          "kind": "link",
+          "label": {
+            "en": "Board announcement — year 1 (Project lead)",
+            "fr": "Annonce du bureau — 1ʳᵉ année (Responsable Projet)"
+          },
+          "url": "https://www.instagram.com/p/CtHb3Q9qLSm/"
         }
       ],
       "kpis": [
+        {
+          "value": "6",
+          "label": {
+            "en": "events organised as a board member",
+            "fr": "événements organisés en tant que membre du bureau"
+          }
+        },
         {
           "value": "150 000+",
           "label": {
@@ -906,93 +963,134 @@
           }
         },
         {
-          "value": "3",
+          "value": "170+",
           "label": {
-            "en": "competitions organised — IRC, URC, NRC",
-            "fr": "compétitions organisées — IRC, URC, NRC"
+            "en": "students at the 7th NRC",
+            "fr": "étudiants à la 7ᵉ édition de la NRC"
+          }
+        },
+        {
+          "value": "30+",
+          "label": {
+            "en": "schools at the 7th NRC",
+            "fr": "écoles à la 7ᵉ édition de la NRC"
           }
         },
         {
           "value": "2",
           "label": {
-            "en": "years on the organising committee",
-            "fr": "ans au comité d'organisation"
+            "en": "years on the board",
+            "fr": "ans au bureau"
           }
         }
       ],
       "events": [
         {
-          "id": "ev-nrc",
+          "id": "ev-nrc7",
           "title": {
-            "en": "NRC — National Robotic Competition",
-            "fr": "NRC — Compétition Nationale de Robotique"
+            "en": "NRC — 7th edition: Rescue & First Aid",
+            "fr": "NRC — 7ᵉ édition : Sauvetage & Secourisme"
           },
           "place": {
             "en": "EMINES, Ben Guerir",
             "fr": "EMINES, Ben Guerir"
           },
           "date": {
-            "en": "",
-            "fr": ""
+            "en": "2024 – 2025",
+            "fr": "2024 – 2025"
+          },
+          "people": "170",
+          "description": {
+            "en": "170+ students, 30+ schools, 1 passion. Second year on the board: the event's logistics, its treasury and its sponsorship.",
+            "fr": "170+ étudiants, 30+ écoles, 1 passion. Deuxième année au bureau : la logistique de l'événement, sa trésorerie et son sponsoring."
+          },
+          "highlights": [
+            "Sponsoring",
+            "Trésorerie",
+            "Logistique",
+            "24 h"
+          ],
+          "images": [],
+          "url": "https://www.instagram.com/p/DOmAsDBCMjC/"
+        },
+        {
+          "id": "ev-urc2",
+          "title": {
+            "en": "URC — Rescue & First Aid",
+            "fr": "URC — Sauvetage & Secourisme"
+          },
+          "place": {
+            "en": "UM6P, Ben Guerir",
+            "fr": "UM6P, Ben Guerir"
+          },
+          "date": {
+            "en": "2024 – 2025",
+            "fr": "2024 – 2025"
           },
           "people": "",
           "description": {
-            "en": "Led the sponsorship division: partnership strategy, sponsor relations and their integration into the event — 150,000+ MAD raised.",
-            "fr": "Direction du pôle sponsoring : stratégie de partenariats, relations sponsors et intégration dans l'événement — plus de 150 000 MAD levés."
+            "en": "The university's internal round, on the same theme as that year's NRC — Rescue & First Aid. It is where the robot and the evaluation mock-up are tested, and where the winning teams are selected to represent EMINES and UM6P at the national competition. The whole logistics chain was under my responsibility.",
+            "fr": "L'étape locale, au sein de l'université, sur le même thème que la NRC de l'année — Sauvetage & Secourisme. C'est là que le robot et la maquette d'évaluation sont testés, et que les équipes gagnantes sont sélectionnées pour représenter l'EMINES et l'UM6P à la compétition nationale. Toute la chaîne logistique était sous ma responsabilité."
           },
           "highlights": [
-            "Head of Sponsorship",
-            "150 000+ MAD"
+            "Logistique",
+            "Trésorerie",
+            "Sélection pour la NRC"
           ],
-          "images": []
+          "images": [],
+          "url": "https://www.instagram.com/p/DG_xkIaNyrS/"
+        },
+        {
+          "id": "ev-nrc",
+          "title": {
+            "en": "NRC — 6th edition: Towards an Industry 4.0",
+            "fr": "NRC — 6ᵉ édition : Vers une industrie 4.0"
+          },
+          "place": {
+            "en": "EMINES, Ben Guerir",
+            "fr": "EMINES, Ben Guerir"
+          },
+          "date": {
+            "en": "2023 – 2024",
+            "fr": "2023 – 2024"
+          },
+          "people": "",
+          "description": {
+            "en": "National Robotics Competition, 6th edition: a 24-hour hackathon on the theme “Towards an Industry 4.0”. First year on the board, in charge of event logistics.",
+            "fr": "National Robotics Competition, 6ᵉ édition : hackathon de 24 heures sur le thème « Vers une industrie 4.0 ». Première année au bureau, responsable de la logistique de l'événement."
+          },
+          "highlights": [
+            "Logistique",
+            "24 h"
+          ],
+          "images": [],
+          "url": "https://www.instagram.com/p/DDAONdsumR3/"
         },
         {
           "id": "ev-urc",
           "title": {
-            "en": "URC — University Robotic Competition",
-            "fr": "URC — University Robotic Competition"
+            "en": "URC — Towards an Industry 4.0",
+            "fr": "URC — Vers une industrie 4.0"
           },
           "place": {
-            "en": "",
-            "fr": ""
+            "en": "UM6P, Ben Guerir",
+            "fr": "UM6P, Ben Guerir"
           },
           "date": {
-            "en": "",
-            "fr": ""
+            "en": "2023 – 2024",
+            "fr": "2023 – 2024"
           },
           "people": "",
           "description": {
-            "en": "Organising committee.",
-            "fr": "Comité d'organisation."
+            "en": "The university's internal round, on the same theme as that year's NRC — “Towards an Industry 4.0”. It is where the robot and the evaluation mock-up are tested, and where the winning teams are selected to represent EMINES and UM6P at the national competition. I was in charge of event logistics.",
+            "fr": "L'étape locale, au sein de l'université, sur le même thème que la NRC de l'année — « Vers une industrie 4.0 ». C'est là que le robot et la maquette d'évaluation sont testés, et que les équipes gagnantes sont sélectionnées pour représenter l'EMINES et l'UM6P à la compétition nationale. J'étais responsable de la logistique de l'événement."
           },
           "highlights": [
-            "Organising committee"
+            "Logistique",
+            "Sélection pour la NRC"
           ],
-          "images": []
-        },
-        {
-          "id": "ev-irc",
-          "title": {
-            "en": "IRC — Intelligent Robots Cup",
-            "fr": "IRC — Intelligent Robots Cup"
-          },
-          "place": {
-            "en": "",
-            "fr": ""
-          },
-          "date": {
-            "en": "",
-            "fr": ""
-          },
-          "people": "",
-          "description": {
-            "en": "Organising committee.",
-            "fr": "Comité d'organisation."
-          },
-          "highlights": [
-            "Organising committee"
-          ],
-          "images": []
+          "images": [],
+          "url": "https://www.instagram.com/p/C4tezHrLFjo/"
         }
       ],
       "accent": "sky",
@@ -1000,7 +1098,51 @@
         "x": 50,
         "y": 72.52168059638606,
         "zoom": 1
-      }
+      },
+      "timeline": [
+        {
+          "period": {
+            "en": "2022 – 2023",
+            "fr": "2022 – 2023"
+          },
+          "role": {
+            "en": "Volunteer alongside the board",
+            "fr": "Bénévole auprès du bureau"
+          },
+          "text": {
+            "en": "Helped the board members run the home-automation competition, the URC and the NRC. That commitment is what got me selected to join the board.",
+            "fr": "Aide aux membres du bureau sur la compétition de domotique, l'URC et la NRC. C'est cet engagement qui m'a valu d'être sélectionné pour intégrer le bureau."
+          }
+        },
+        {
+          "period": {
+            "en": "2023 – 2024",
+            "fr": "2023 – 2024"
+          },
+          "role": {
+            "en": "Board member — Project lead · event logistics lead",
+            "fr": "Membre du bureau — Responsable Projet · responsable logistique des événements"
+          },
+          "text": {
+            "en": "Project lead inside the club, and in charge of logistics during the competitions (URC, NRC). The logistics ran well — which is why I was given all of it the following year.",
+            "fr": "Responsable Projet au sein du club, et responsable de la logistique pendant les compétitions (URC, NRC). La logistique a bien fonctionné — c'est pourquoi on me l'a confiée en entier l'année suivante."
+          }
+        },
+        {
+          "period": {
+            "en": "2024 – 2025",
+            "fr": "2024 – 2025"
+          },
+          "role": {
+            "en": "Treasurer · Head of Sponsorship · all event logistics",
+            "fr": "Trésorier · Responsable Sponsoring · toute la logistique des événements"
+          },
+          "text": {
+            "en": "All the logistics behind the events: moving the evaluation mock-ups, making sure equipment and robot components were available, coordinating with the school's general services, power outlets, tables and chairs for the participants.\nAs Treasurer I was the first to check the accounts and the availability of funds for each event — which is why I also led sponsorship, contacting sponsors with my team: 150,000+ MAD secured for the NRC. In parallel, I was Treasurer of the Student Council (BDE).",
+            "fr": "Toute la logistique derrière les événements : déplacement des maquettes d'évaluation, disponibilité du matériel et des composants des robots, communication avec les moyens généraux, prises électriques, tables et chaises pour les participants.\nEn tant que trésorier, j'étais le premier à vérifier les comptes et la disponibilité des fonds pour chaque événement — c'est pourquoi j'ai aussi dirigé le sponsoring, en contactant les sponsors avec mon équipe : plus de 150 000 MAD sécurisés pour la NRC. En parallèle, j'étais trésorier du Bureau des Élèves (BDE)."
+          }
+        }
+      ]
     },
     {
       "id": "lead-esg",
@@ -1519,11 +1661,11 @@
   "theme": {
     "default": "light",
     "toggle": true,
-    "palette": "brand",
+    "palette": "custom",
     "ink": "neutral",
-    "accent": "#735bff",
+    "accent": "#ff5252",
     "brand": "#4a0000",
-    "tint": 0.3
+    "tint": 0
   },
   "graduation": {
     "enabled": true,

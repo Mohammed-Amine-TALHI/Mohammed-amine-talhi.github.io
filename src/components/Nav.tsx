@@ -40,11 +40,25 @@ export default function Nav() {
       },
       { rootMargin: '-45% 0px -50% 0px' },
     );
-    LINKS.forEach(({ href }) => {
-      const el = document.querySelector(href);
-      if (el) observer.observe(el);
-    });
-    return () => observer.disconnect();
+    // Sections arrive in their own chunks, so some don't exist yet at mount:
+    // keep looking until every link has found its target.
+    const watched = new Set<Element>();
+    const attach = () => {
+      LINKS.forEach(({ href }) => {
+        const el = document.querySelector(href);
+        if (el && !watched.has(el)) {
+          watched.add(el);
+          observer.observe(el);
+        }
+      });
+    };
+    attach();
+    const mo = new MutationObserver(attach);
+    mo.observe(document.body, { childList: true, subtree: true });
+    return () => {
+      mo.disconnect();
+      observer.disconnect();
+    };
   }, []);
 
   return (

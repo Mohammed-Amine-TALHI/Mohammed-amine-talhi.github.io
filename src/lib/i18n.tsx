@@ -12,7 +12,7 @@ const UI = {
   'nav.projects': { en: 'Projects', fr: 'Projets' },
   'nav.skills': { en: 'Skills', fr: 'Compétences' },
   'nav.languages': { en: 'Languages', fr: 'Langues' },
-  'nav.graduation': { en: 'Graduation', fr: 'Diplôme' },
+  'nav.graduation': { en: 'Ceremony', fr: 'Cérémonie' },
   'nav.leadership': { en: 'Leadership', fr: 'Engagement' },
   'nav.contact': { en: 'Contact', fr: 'Contact' },
 
@@ -62,7 +62,7 @@ const UI = {
     fr: 'Ajoutez vos clubs, le basketball et vos photos de vie associative depuis le panneau admin local.',
   },
 
-  'graduation.eyebrow': { en: 'Milestone', fr: 'Étape' },
+  'graduation.eyebrow': { en: 'Graduation ceremony', fr: 'Cérémonie de remise des diplômes' },
   'graduation.title': { en: 'Graduation — Engineer, EMINES – UM6P', fr: 'Diplôme — Ingénieur, EMINES – UM6P' },
   'graduation.post': { en: 'Read the LinkedIn post', fr: 'Lire le post LinkedIn' },
   'graduation.soon': { en: 'LinkedIn post coming soon', fr: 'Post LinkedIn à venir' },

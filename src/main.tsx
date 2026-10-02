@@ -1,5 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+// self-hosted variable fonts — only the subsets a page uses are downloaded
+import '@fontsource-variable/inter';
+import '@fontsource-variable/sora';
+import '@fontsource-variable/jetbrains-mono';
 import './index.css';
 import App from './App';
 import { LangProvider } from './lib/i18n';
