@@ -107,7 +107,11 @@
       "cb535df5-8f3e-4388-a261-15d92eca49f6": true,
       "1f01525d-6b09-422e-b7e8-a2d3bf3b4bf6": true,
       "d11ea9a6-2215-4240-9e12-01b8c0e2f032": true,
-      "387557e5-2858-455d-ab3d-ba9f842fbe37": true
+      "387557e5-2858-455d-ab3d-ba9f842fbe37": true,
+      "custom-design-apparel": true,
+      "custom-8zi9hk0": true,
+      "custom-mars-rover": true,
+      "custom-pfe-ocp": true
     },
     "experiences": {
       "exp-pfe": true,
@@ -119,6 +123,7 @@
   },
   "order": {
     "projects": [
+      "custom-pfe-ocp",
       "proj-carprice",
       "proj-basketball",
       "ca3769bf-a035-4a43-b4c1-a4e0cffc5321",
@@ -128,10 +133,13 @@
       "651aa022-98b2-4e81-afc0-f294d041d55c",
       "f89014ee-bb6a-4ac7-abe0-b55dae3222db",
       "110b9ba6-913b-4378-9715-583458a7e334",
+      "custom-mars-rover",
       "cb535df5-8f3e-4388-a261-15d92eca49f6",
       "1f01525d-6b09-422e-b7e8-a2d3bf3b4bf6",
       "d11ea9a6-2215-4240-9e12-01b8c0e2f032",
-      "387557e5-2858-455d-ab3d-ba9f842fbe37"
+      "387557e5-2858-455d-ab3d-ba9f842fbe37",
+      "custom-design-apparel",
+      "custom-8zi9hk0"
     ],
     "mode": "manual"
   },

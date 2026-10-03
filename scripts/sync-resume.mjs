@@ -194,12 +194,17 @@ const reconcile = (items, map) => {
   return ids;
 };
 
-const projectIds = reconcile(resume.projects, config.visibility.projects);
+// Projects come from two places: the CV and the portfolio-only list in the
+// config (customProjects). Both must count as "known" here — otherwise every
+// publish deleted the custom projects from the manual order (sending them to
+// the end of the grid) and reset their show/hide switch.
+const allProjects = [...resume.projects, ...(config.customProjects ?? [])];
+const projectIds = reconcile(allProjects, config.visibility.projects);
 reconcile(resume.experiences, config.visibility.experiences);
 
 // keep the manual ordering list clean: drop dead ids, append new ones
 config.order.projects = config.order.projects.filter((id) => projectIds.has(id));
-for (const p of resume.projects) {
+for (const p of allProjects) {
   if (!config.order.projects.includes(p.id)) config.order.projects.push(p.id);
 }
 
