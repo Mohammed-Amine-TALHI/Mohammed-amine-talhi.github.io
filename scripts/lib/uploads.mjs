@@ -15,7 +15,20 @@ import { resolve, extname } from 'node:path';
 export const UPLOAD_FOLDERS = ['', 'covers', 'docs', 'cv', 'leadership', 'visits', 'graduation', 'logos', 'videos'];
 
 /** Files at the public root that are part of the site, not uploads. */
-const KEEP_ROOT = new Set(['favicon.svg', 'CNAME', 'robots.txt', '.nojekyll']);
+const KEEP_ROOT = new Set([
+  'favicon.svg',
+  'favicon.ico',
+  'favicon.png',
+  'apple-touch-icon.png',
+  'icon-192.png',
+  'icon-512.png',
+  'profile-icon-master.png',
+  'site.webmanifest',
+  'admin.webmanifest',
+  'CNAME',
+  'robots.txt',
+  '.nojekyll',
+]);
 
 const UPLOAD_EXT = new Set([
   '.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif', '.svg',

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { HiOutlineSave, HiOutlineExternalLink, HiOutlineRefresh, HiOutlineCloudUpload } from 'react-icons/hi';
+import { HiOutlineSave, HiOutlineExternalLink, HiOutlineRefresh, HiOutlineCloudUpload, HiOutlineLink, HiOutlineClipboardCopy } from 'react-icons/hi';
 import { config as initialConfig } from '../lib/data';
 import type { PortfolioConfig } from '../lib/types';
 import { Button } from './ui';
@@ -37,6 +37,15 @@ type PublishStatus = {
   output: string;
 };
 
+type RemoteStatus = {
+  configured: boolean;
+  httpsPort: number;
+  localPort: number;
+  origin: string;
+  adminUrl: string;
+  error?: string;
+};
+
 /** Replace every occurrence of one upload path in the config, in place. */
 function replaceUrlDeep(node: unknown, from: string, to: string): void {
   if (Array.isArray(node)) {
@@ -67,6 +76,8 @@ export default function AdminApp() {
   const [dirty, setDirty] = useState(false);
   const [saving, setSaving] = useState(false);
   const [publishStatus, setPublishStatus] = useState<PublishStatus | null>(null);
+  const [remoteStatus, setRemoteStatus] = useState<RemoteStatus | null>(null);
+  const [fixingRemote, setFixingRemote] = useState(false);
   const [toast, setToast] = useState<{ msg: string; err?: boolean } | null>(null);
   const toastTimer = useRef<number>(0);
   /** mtime of the config file when this session loaded it — the write guard. */
@@ -99,25 +110,52 @@ export default function AdminApp() {
     toastTimer.current = window.setTimeout(() => setToast(null), 2800);
   }, []);
 
-  // The admin is its own installable phone web app. Keep this manifest out of
-  // the public portfolio shell and attach it only while the admin is open.
+  // Give the private tool its own install metadata while preserving the public
+  // portfolio metadata when the visitor returns to the landing page.
   useEffect(() => {
     const previousTitle = document.title;
     const theme = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
     const previousTheme = theme?.content;
-    const manifest = document.createElement('link');
-    manifest.rel = 'manifest';
-    manifest.href = '/admin.webmanifest';
-    document.head.appendChild(manifest);
-    const appleTitle = document.createElement('meta');
-    appleTitle.name = 'apple-mobile-web-app-title';
-    appleTitle.content = 'Portfolio Admin';
-    document.head.appendChild(appleTitle);
+    const manifest = document.querySelector<HTMLLinkElement>('#app-manifest');
+    const previousManifest = manifest?.getAttribute('href');
+    const cleanups: Array<() => void> = [];
+    const setMeta = (attribute: 'name' | 'property', key: string, content: string) => {
+      let element = document.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
+      const created = !element;
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+      const previous = element.content;
+      element.content = content;
+      cleanups.push(() => {
+        if (created) element?.remove();
+        else if (element) element.content = previous;
+      });
+    };
+
+    const iconUrl = new URL('/icon-512.png', window.location.origin).href;
+    setMeta('name', 'description', 'Private mobile control panel for Mohammed TALHI’s portfolio.');
+    setMeta('name', 'application-name', 'Portfolio Admin');
+    setMeta('name', 'apple-mobile-web-app-title', 'Portfolio Admin');
+    setMeta('name', 'robots', 'noindex, nofollow');
+    setMeta('name', 'twitter:card', 'summary');
+    setMeta('name', 'twitter:title', 'Portfolio Admin — Mohammed TALHI');
+    setMeta('name', 'twitter:description', 'Private Tailscale portfolio control panel.');
+    setMeta('name', 'twitter:image', iconUrl);
+    setMeta('property', 'og:title', 'Portfolio Admin — Mohammed TALHI');
+    setMeta('property', 'og:description', 'Private Tailscale portfolio control panel.');
+    setMeta('property', 'og:url', window.location.href);
+    setMeta('property', 'og:image', iconUrl);
+    setMeta('property', 'og:image:alt', 'Portrait of Mohammed Amine TALHI');
+
+    if (manifest) manifest.href = '/admin.webmanifest';
     document.title = 'Portfolio Admin — Mohammed TALHI';
     if (theme) theme.content = '#0a0a0f';
     return () => {
-      manifest.remove();
-      appleTitle.remove();
+      cleanups.reverse().forEach((cleanup) => cleanup());
+      if (manifest && previousManifest) manifest.setAttribute('href', previousManifest);
       document.title = previousTitle;
       if (theme && previousTheme) theme.content = previousTheme;
     };
@@ -149,6 +187,46 @@ export default function AdminApp() {
       window.clearInterval(timer);
     };
   }, [flash]);
+
+  const refreshRemote = useCallback(async () => {
+    try {
+      const response = await fetch('/__admin/remote');
+      const json = await response.json();
+      setRemoteStatus(json);
+    } catch (error) {
+      setRemoteStatus({ configured: false, httpsPort: 8445, localPort: 5173, origin: '', adminUrl: '', error: (error as Error).message });
+    }
+  }, []);
+
+  useEffect(() => {
+    refreshRemote();
+  }, [refreshRemote]);
+
+  const fixRemote = useCallback(async () => {
+    setFixingRemote(true);
+    try {
+      const response = await fetch('/__admin/remote', { method: 'POST' });
+      const json = await response.json();
+      if (!response.ok) throw new Error(json.error ?? 'could not configure Tailscale');
+      setRemoteStatus(json);
+      flash(`Tailscale link locked to port ${json.httpsPort}`);
+    } catch (error) {
+      flash((error as Error).message, true);
+      await refreshRemote();
+    } finally {
+      setFixingRemote(false);
+    }
+  }, [flash, refreshRemote]);
+
+  const copyRemoteLink = useCallback(async () => {
+    if (!remoteStatus?.adminUrl) return;
+    try {
+      await navigator.clipboard.writeText(remoteStatus.adminUrl);
+      flash('Private admin link copied');
+    } catch {
+      flash('Could not copy the link', true);
+    }
+  }, [flash, remoteStatus]);
 
   /** Mutate a draft copy, mark dirty. Keeps every panel's call-site terse. */
   const set = useCallback((fn: (draft: PortfolioConfig) => void) => {
@@ -320,6 +398,31 @@ export default function AdminApp() {
           ))}
         </nav>
       </header>
+
+      <div className={'border-b ' + (remoteStatus?.configured ? 'border-emerald-900/50 bg-emerald-950/20' : 'border-amber-900/50 bg-amber-950/20')}>
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-2 px-3 py-2 text-[11px] sm:px-5">
+          <HiOutlineLink className={remoteStatus?.configured ? 'text-emerald-400' : 'text-amber-400'} size={14} />
+          <span className="font-semibold text-zinc-300">
+            {remoteStatus?.configured ? `Remote link fixed on port ${remoteStatus.httpsPort}` : 'Remote link needs repair'}
+          </span>
+          {remoteStatus?.adminUrl && (
+            <a href={remoteStatus.adminUrl} className="min-w-0 truncate font-mono text-zinc-500 hover:text-zinc-300">
+              {remoteStatus.adminUrl}
+            </a>
+          )}
+          <div className="ml-auto flex gap-2">
+            {remoteStatus?.adminUrl && (
+              <button onClick={copyRemoteLink} className="flex items-center gap-1 rounded-md border border-line px-2.5 py-1.5 text-zinc-400 hover:text-zinc-100">
+                <HiOutlineClipboardCopy size={12} /> Copy
+              </button>
+            )}
+            <button onClick={fixRemote} disabled={fixingRemote} className="flex items-center gap-1 rounded-md border border-line px-2.5 py-1.5 text-zinc-300 hover:border-zinc-600 disabled:opacity-40">
+              <HiOutlineRefresh size={12} className={fixingRemote ? 'animate-spin' : ''} />
+              {fixingRemote ? 'Fixing…' : 'Lock fixed port'}
+            </button>
+          </div>
+        </div>
+      </div>
 
       {publishStatus?.finishedAt && (
         <details className={'border-b px-3 py-2 text-[11px] sm:px-5 ' + (publishStatus.exitCode === 0 ? 'border-emerald-900/50 bg-emerald-950/20' : 'border-red-900/50 bg-red-950/20')}>

@@ -10,6 +10,8 @@ import { PDFDocument } from 'pdf-lib';
 import { pruneUnused, referencedUrls, UPLOAD_FOLDERS } from './scripts/lib/uploads.mjs';
 // @ts-expect-error plain ESM helper shared with the scripts/ folder
 import { encodeVideo, posterFrame, probeVideo, compressFile, siteWeight, VIDEO_EXT } from './scripts/lib/media.mjs';
+// @ts-expect-error plain ESM helper shared with the scripts/ folder
+import { configureRemote, inspectRemote } from './scripts/configure-tailscale.mjs';
 
 const ROOT = process.cwd();
 const CONFIG_PATH = resolve(ROOT, 'src/data/portfolio.config.json');
@@ -198,6 +200,20 @@ function adminApiPlugin(): Plugin {
             });
 
             return json(202, publishState);
+          }
+
+          // ---- keep the private admin on one explicit HTTPS port -----------
+          if (url === '/__admin/remote' && req.method === 'GET') {
+            try {
+              return json(200, inspectRemote());
+            } catch (error) {
+              return json(503, { configured: false, error: (error as Error).message });
+            }
+          }
+
+          if (url === '/__admin/remote' && req.method === 'POST') {
+            if (!sameOrigin(req)) return json(403, { error: 'cross-origin remote configuration blocked' });
+            return json(200, configureRemote());
           }
 
           // ---- image upload (base64 data URL -> public/<folder>/) ----------

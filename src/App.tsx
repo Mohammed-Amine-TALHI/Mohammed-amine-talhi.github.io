@@ -57,8 +57,11 @@ function useHashRoute() {
 export default function App() {
   const hash = useHashRoute();
   useDeferredHashScroll();
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
 
-  if (AdminApp && hash.startsWith('#/admin')) {
+  // iOS removes URL fragments when it creates a Home Screen web clip. Keep the
+  // old hash route for bookmarks, but give the installable admin a real path.
+  if (AdminApp && (path === '/admin' || hash.startsWith('#/admin'))) {
     // the admin is always dark — it is a tool, not part of the site's look
     document.documentElement.dataset.theme = 'dark';
     return (

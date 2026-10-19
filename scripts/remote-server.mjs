@@ -37,10 +37,20 @@ const tailscaleAddress = tailscaleIp();
 const host = process.env.PORTFOLIO_HOST || '127.0.0.1';
 const port = process.env.PORT || '5173';
 const vite = resolve(process.cwd(), 'node_modules/vite/bin/vite.js');
+const configureTailscale = resolve(process.cwd(), 'scripts/configure-tailscale.mjs');
 let child;
 let stopping = false;
 
 function start() {
+  try {
+    const configured = JSON.parse(
+      execFileSync(process.execPath, [configureTailscale], { encoding: 'utf8', windowsHide: true }).trim(),
+    );
+    console.log(`Fixed Tailscale link: ${configured.adminUrl}`);
+  } catch (error) {
+    console.warn(`Could not lock the Tailscale HTTPS port: ${error.message}`);
+    console.warn('The local admin will still start; use `npm run remote:fix` to repair the private link.');
+  }
   console.log(`\nPortfolio admin backend: http://${host}:${port}/#/admin`);
   console.log(`Tailscale connected as ${tailscaleAddress}; use the private HTTPS Serve URL on your phone.\n`);
   child = spawn(process.execPath, [vite, '--host', host, '--port', port], {

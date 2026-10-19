@@ -94,8 +94,17 @@ export default function Contact() {
 
         <footer className="mt-24 flex flex-col items-center gap-2 border-t border-line pt-8 text-center sm:flex-row sm:justify-between sm:text-left">
           <p className="font-mono text-[11px] text-zinc-600">
-            © {new Date().getFullYear()} {contact.displayName}
-          </p>
+              ©{' '}
+              <a
+                href="/admin"
+                aria-hidden="true"
+                tabIndex={-1}
+                className="cursor-text text-inherit no-underline outline-none focus:outline-none"
+              >
+                {new Date().getFullYear()}
+              </a>{' '}
+              {contact.displayName}
+            </p>
           <p className="font-mono text-[11px] text-zinc-700">{ui('footer.built')}</p>
         </footer>
       </div>

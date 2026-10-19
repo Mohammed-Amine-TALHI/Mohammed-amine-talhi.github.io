@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "admin": "vite --open /#/admin",
     "remote": "node scripts/remote-server.mjs",
+    "remote:fix": "node scripts/configure-tailscale.mjs",
     "remote:install": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-remote-startup.ps1",
     "publish": "node scripts/publish.mjs",
     "icons": "node scripts/generate-icons.mjs",

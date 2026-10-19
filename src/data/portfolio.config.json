@@ -114,7 +114,10 @@
       "custom-design-apparel": true,
       "custom-8zi9hk0": true,
       "custom-mars-rover": true,
-      "custom-pfe-ocp": true
+      "custom-pfe-ocp": true,
+      "custom-tealhi": true,
+      "custom-candidature-tracker": true,
+      "custom-agentic-application-workflow": true
     },
     "experiences": {
       "exp-pfe": true,
@@ -127,6 +130,9 @@
   "order": {
     "projects": [
       "custom-pfe-ocp",
+      "custom-agentic-application-workflow",
+      "custom-tealhi",
+      "custom-candidature-tracker",
       "proj-basketball",
       "proj-carprice",
       "ca3769bf-a035-4a43-b4c1-a4e0cffc5321",
@@ -467,9 +473,225 @@
           "url": "https://github.com/Mohammed-Amine-TALHI/Bourse-aux-livres"
         }
       ]
+    },
+    "custom-tealhi": {
+      "cover": "/covers/tealhi-resume-versions.jpg",
+      "coverCrop": {
+        "x": 50,
+        "y": 18,
+        "zoom": 1
+      },
+      "gallery": [
+        "/covers/tealhi-resume-versions.jpg",
+        "/covers/tealhi-master-resume.jpg"
+      ],
+      "stack": [
+        "Next.js",
+        "TypeScript",
+        "LaTeX / PDF",
+        "Excel",
+        "Local-first"
+      ],
+      "assets": []
+    },
+    "custom-candidature-tracker": {
+      "cover": "/covers/candidature-tracker-dashboard.jpg",
+      "coverCrop": {
+        "x": 50,
+        "y": 25,
+        "zoom": 1
+      },
+      "gallery": [
+        "/covers/candidature-tracker-dashboard.jpg",
+        "/covers/candidature-tracker-new-application.jpg",
+        "/covers/candidature-tracker-follow-ups.jpg"
+      ],
+      "stack": [
+        "Next.js",
+        "TypeScript",
+        "Analytics",
+        "Excel import / export",
+        "Local-first"
+      ],
+      "assets": []
+    },
+    "custom-agentic-application-workflow": {
+      "cover": "/covers/tealhi-tracker-agentic-workflow.gif",
+      "coverCrop": {
+        "x": 50,
+        "y": 50,
+        "zoom": 1
+      },
+      "gallery": [
+        "/covers/tealhi-tracker-agentic-workflow.gif"
+      ],
+      "stack": [
+        "AI agents",
+        "Workflow orchestration",
+        "Human-in-the-loop",
+        "Tealhi",
+        "Candidature Tracker"
+      ],
+      "assets": []
     }
   },
   "customProjects": [
+    {
+      "id": "custom-tealhi",
+      "title": {
+        "en": "Tealhi — Local CV Tailoring Studio",
+        "fr": "Tealhi — Studio local de personnalisation de CV"
+      },
+      "tag": {
+        "en": "HR Tech / Productivity",
+        "fr": "HR Tech / Productivité"
+      },
+      "period": {
+        "en": "2026 – Present",
+        "fr": "2026 – Aujourd'hui"
+      },
+      "bullets": [
+        {
+          "id": "b-tealhi-vision",
+          "text": {
+            "en": "Vision — reduce the time between finding an opportunity and submitting a relevant, polished CV. I developed Tealhi as a private, local-first workspace that turns one master career profile into controlled, job-specific resume versions without losing the source of truth.",
+            "fr": "Vision — réduire le temps entre l'identification d'une opportunité et l'envoi d'un CV pertinent et soigné. J'ai développé Tealhi comme un espace de travail privé et local-first, capable de transformer un profil professionnel maître en versions ciblées sans perdre la source de vérité."
+          }
+        },
+        {
+          "id": "b-tealhi-master",
+          "text": {
+            "en": "Centralizes experiences, projects, education, skills and reusable French/English content in a master resume; supports PDF or LaTeX import and spreadsheet-based bulk editing.",
+            "fr": "Centralise les expériences, projets, formations, compétences et contenus réutilisables en français et en anglais dans un CV maître ; permet l'import PDF ou LaTeX et l'édition en masse via Excel."
+          }
+        },
+        {
+          "id": "b-tealhi-versions",
+          "text": {
+            "en": "Creates, searches, duplicates and edits targeted resume versions, with selective experience/project activation, bilingual export, PDF preview and polished LaTeX generation.",
+            "fr": "Crée, recherche, duplique et modifie des versions de CV ciblées, avec activation sélective des expériences et projets, export bilingue, aperçu PDF et génération LaTeX soignée."
+          }
+        },
+        {
+          "id": "b-tealhi-reuse",
+          "text": {
+            "en": "Reuses validated content across CVs, cover-letter templates and interview scripts so tailoring remains fast, consistent and traceable instead of starting from a blank document for every offer.",
+            "fr": "Réutilise les contenus validés entre les CV, les modèles de lettres de motivation et les scripts d'entretien afin que l'adaptation reste rapide, cohérente et traçable, sans repartir d'une page blanche pour chaque offre."
+          }
+        },
+        {
+          "id": "b-tealhi-kpis",
+          "text": {
+            "en": "KPIs to complete — average CV tailoring time, number of reusable versions generated, export success rate and improvement in offer-to-application lead time.",
+            "fr": "KPIs à compléter — temps moyen d'adaptation d'un CV, nombre de versions réutilisables générées, taux de réussite des exports et réduction du délai entre l'offre et la candidature."
+          }
+        }
+      ]
+    },
+    {
+      "id": "custom-candidature-tracker",
+      "title": {
+        "en": "Candidature Tracker — Application Tracking System",
+        "fr": "Candidature Tracker — Système de suivi des candidatures"
+      },
+      "tag": {
+        "en": "Tracking System / Analytics",
+        "fr": "Système de suivi / Analytics"
+      },
+      "period": {
+        "en": "2026 – Present",
+        "fr": "2026 – Aujourd'hui"
+      },
+      "bullets": [
+        {
+          "id": "b-tracker-vision",
+          "text": {
+            "en": "Vision — digitize the job-search process and preserve a reliable history of every action. I built this local tracking system to replace scattered spreadsheets, messages and browser tabs with one operational view of the application pipeline.",
+            "fr": "Vision — digitaliser la recherche d'emploi et conserver un historique fiable de chaque action. J'ai développé ce système de suivi local pour remplacer les fichiers Excel, messages et onglets dispersés par une vue opérationnelle unique du pipeline de candidatures."
+          }
+        },
+        {
+          "id": "b-tracker-intake",
+          "text": {
+            "en": "Captures an application through quick entry, Excel import or smart paste of a job offer, URL or LinkedIn confirmation; the structured form records company, role, source, location, dates, status, contact and notes.",
+            "fr": "Enregistre une candidature par saisie rapide, import Excel ou collage intelligent d'une offre, d'une URL ou d'une confirmation LinkedIn ; le formulaire structuré conserve l'entreprise, le poste, la source, le lieu, les dates, le statut, le contact et les notes."
+          }
+        },
+        {
+          "id": "b-tracker-followups",
+          "text": {
+            "en": "Organizes follow-ups with due dates, reminders and no-response handling, while filters and a weekly objective keep the workload visible and actionable.",
+            "fr": "Organise les relances avec échéances, rappels et gestion des absences de réponse, tandis que les filtres et l'objectif hebdomadaire rendent la charge visible et directement actionnable."
+          }
+        },
+        {
+          "id": "b-tracker-dashboard",
+          "text": {
+            "en": "Provides a dashboard for pipeline status, application volume, response behavior and time-to-response, and links each application to the exact Tealhi CV version that was sent.",
+            "fr": "Fournit un tableau de bord sur les statuts du pipeline, le volume de candidatures, les réponses et leurs délais, et relie chaque candidature à la version exacte du CV Tealhi envoyée."
+          }
+        },
+        {
+          "id": "b-tracker-kpis",
+          "text": {
+            "en": "KPIs to complete — applications centralized, follow-ups completed on time, response/interview/offer rates, average response time and data-completeness rate.",
+            "fr": "KPIs à compléter — candidatures centralisées, relances réalisées à temps, taux de réponse/d'entretien/d'offre, délai moyen de réponse et taux de complétude des données."
+          }
+        }
+      ]
+    },
+    {
+      "id": "custom-agentic-application-workflow",
+      "title": {
+        "en": "Tealhi × Tracker — Agentic Application Workflow",
+        "fr": "Tealhi × Tracker — Workflow agentique de candidature"
+      },
+      "tag": {
+        "en": "AI Agents / Automation",
+        "fr": "Agents IA / Automatisation"
+      },
+      "period": {
+        "en": "2026 – Present",
+        "fr": "2026 – Aujourd'hui"
+      },
+      "bullets": [
+        {
+          "id": "b-agent-vision",
+          "text": {
+            "en": "The third step connects Tealhi and Candidature Tracker into one assisted workflow: move from an opportunity to a tailored application and a traceable follow-up record with fewer manual hand-offs.",
+            "fr": "La troisième étape relie Tealhi et Candidature Tracker dans un même flux assisté : passer d'une opportunité à une candidature personnalisée puis à un suivi traçable, avec moins de ressaisies manuelles."
+          }
+        },
+        {
+          "id": "b-agent-orchestration",
+          "text": {
+            "en": "Specialized agents can search and screen opportunities, assess profile fit, select the strongest validated CV reference and prepare the application package while preserving factual content and the chosen LaTeX template.",
+            "fr": "Des agents spécialisés peuvent rechercher et filtrer les opportunités, évaluer l'adéquation du profil, sélectionner le meilleur CV de référence validé et préparer le dossier de candidature tout en préservant les faits et le modèle LaTeX choisi."
+          }
+        },
+        {
+          "id": "b-agent-loop",
+          "text": {
+            "en": "A human-in-the-loop checkpoint keeps final approval under my control; once validated, the workflow records the company, role, source, selected CV and next follow-up in the tracker.",
+            "fr": "Un point de contrôle human-in-the-loop me laisse la validation finale ; après approbation, le workflow enregistre dans le tracker l'entreprise, le poste, la source, le CV retenu et la prochaine relance."
+          }
+        },
+        {
+          "id": "b-agent-showcase",
+          "text": {
+            "en": "The animated showcase below documents the end-to-end orchestration and the exchange of structured information between the agents, Tealhi and the tracking system.",
+            "fr": "La démonstration animée ci-dessous documente l'orchestration de bout en bout et l'échange d'informations structurées entre les agents, Tealhi et le système de suivi."
+          }
+        },
+        {
+          "id": "b-agent-kpis",
+          "text": {
+            "en": "KPIs to complete — end-to-end application cycle time, automation rate, manual actions avoided, agent output approval rate and percentage of applications created with complete traceability.",
+            "fr": "KPIs à compléter — temps de cycle complet d'une candidature, taux d'automatisation, actions manuelles évitées, taux d'approbation des résultats des agents et part des candidatures créées avec une traçabilité complète."
+          }
+        }
+      ]
+    },
     {
       "id": "custom-design-apparel",
       "title": {
