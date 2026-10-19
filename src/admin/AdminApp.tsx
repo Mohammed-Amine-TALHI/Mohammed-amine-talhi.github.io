@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { HiOutlineSave, HiOutlineExternalLink, HiOutlineRefresh } from 'react-icons/hi';
+import { HiOutlineSave, HiOutlineExternalLink, HiOutlineRefresh, HiOutlineCloudUpload } from 'react-icons/hi';
 import { config as initialConfig } from '../lib/data';
 import type { PortfolioConfig } from '../lib/types';
 import { Button } from './ui';
@@ -28,6 +28,14 @@ const TABS = [
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];
+
+type PublishStatus = {
+  running: boolean;
+  startedAt: string | null;
+  finishedAt: string | null;
+  exitCode: number | null;
+  output: string;
+};
 
 /** Replace every occurrence of one upload path in the config, in place. */
 function replaceUrlDeep(node: unknown, from: string, to: string): void {
@@ -58,6 +66,7 @@ export default function AdminApp() {
   const [tab, setTab] = useState<TabId>('projects');
   const [dirty, setDirty] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [publishStatus, setPublishStatus] = useState<PublishStatus | null>(null);
   const [toast, setToast] = useState<{ msg: string; err?: boolean } | null>(null);
   const toastTimer = useRef<number>(0);
   /** mtime of the config file when this session loaded it — the write guard. */
@@ -90,6 +99,57 @@ export default function AdminApp() {
     toastTimer.current = window.setTimeout(() => setToast(null), 2800);
   }, []);
 
+  // The admin is its own installable phone web app. Keep this manifest out of
+  // the public portfolio shell and attach it only while the admin is open.
+  useEffect(() => {
+    const previousTitle = document.title;
+    const theme = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    const previousTheme = theme?.content;
+    const manifest = document.createElement('link');
+    manifest.rel = 'manifest';
+    manifest.href = '/admin.webmanifest';
+    document.head.appendChild(manifest);
+    const appleTitle = document.createElement('meta');
+    appleTitle.name = 'apple-mobile-web-app-title';
+    appleTitle.content = 'Portfolio Admin';
+    document.head.appendChild(appleTitle);
+    document.title = 'Portfolio Admin — Mohammed TALHI';
+    if (theme) theme.content = '#0a0a0f';
+    return () => {
+      manifest.remove();
+      appleTitle.remove();
+      document.title = previousTitle;
+      if (theme && previousTheme) theme.content = previousTheme;
+    };
+  }, []);
+
+  // Publishing runs on the PC and can outlive a phone request. Polling makes
+  // reconnects and screen-locks safe: the phone simply resumes showing status.
+  useEffect(() => {
+    let previousRunning = false;
+    let cancelled = false;
+    const refresh = async () => {
+      try {
+        const response = await fetch('/__admin/publish');
+        const next = (await response.json()) as PublishStatus;
+        if (cancelled) return;
+        setPublishStatus(next);
+        if (previousRunning && !next.running && next.finishedAt) {
+          flash(next.exitCode === 0 ? 'Published successfully' : 'Publish failed — check the log below', next.exitCode !== 0);
+        }
+        previousRunning = next.running;
+      } catch {
+        // The persistent server may be restarting; the next poll will recover.
+      }
+    };
+    refresh();
+    const timer = window.setInterval(refresh, 2000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+    };
+  }, [flash]);
+
   /** Mutate a draft copy, mark dirty. Keeps every panel's call-site terse. */
   const set = useCallback((fn: (draft: PortfolioConfig) => void) => {
     setCfg((prev) => {
@@ -114,7 +174,7 @@ export default function AdminApp() {
       if (res.status === 409) {
         setConflict({ config: json.config, mtime: json.mtime });
         flash('Not saved — the file changed on disk', true);
-        return;
+        return false;
       }
       if (!res.ok) throw new Error(json.error ?? 'save failed');
 
@@ -123,12 +183,35 @@ export default function AdminApp() {
       weight.refresh();
       const n = (json.pruned ?? []).length;
       flash('Saved to ' + json.path + (n ? ` · ${n} unused file${n > 1 ? 's' : ''} removed` : ''));
+      return true;
     } catch (err) {
       flash((err as Error).message, true);
+      return false;
     } finally {
       setSaving(false);
     }
   }, [cfg, flash, weight]);
+
+  const publish = useCallback(async () => {
+    if (dirty && !(await save())) return;
+    setPublishStatus((current) => ({
+      running: true,
+      startedAt: new Date().toISOString(),
+      finishedAt: null,
+      exitCode: null,
+      output: current?.output ?? '',
+    }));
+    try {
+      const response = await fetch('/__admin/publish', { method: 'POST' });
+      const json = await response.json();
+      if (!response.ok) throw new Error(json.error ?? 'publish failed to start');
+      setPublishStatus(json);
+      flash('Publish started — you can keep editing while it runs');
+    } catch (error) {
+      setPublishStatus((current) => current ? { ...current, running: false } : null);
+      flash((error as Error).message, true);
+    }
+  }, [dirty, flash, save]);
 
   // A photo was edited into a new file (privacy blur): point everything at the
   // new path, and carry its framing over. The old file is swept on save.
@@ -183,44 +266,50 @@ export default function AdminApp() {
   return (
     <div className="min-h-screen bg-ink-950 text-zinc-300">
       <header className="sticky top-0 z-40 border-b border-line bg-ink-950/95 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-3 px-5 py-3.5">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-accent-400 to-accent-700 font-display text-xs font-bold text-[color:var(--on-accent)]">
-            MA
-          </span>
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-3 px-3 py-3.5 sm:px-5">
+          <img src="/favicon.png" alt="" className="h-9 w-9 rounded-full" />
           <div className="mr-auto">
             <h1 className="font-display text-sm font-semibold text-zinc-100">Portfolio admin</h1>
             <p className="font-mono text-[10px] text-zinc-600">
-              local only · {counts.projects} projects · {counts.docs} docs · {counts.skills} skills ·{' '}
+              private via Tailscale · {counts.projects} projects · {counts.docs} docs · {counts.skills} skills ·{' '}
               {counts.leadership} leadership · {counts.cv}/2 CVs
             </p>
           </div>
 
-          <a
-            href="#/"
-            className="flex items-center gap-1.5 rounded-lg border border-line px-3.5 py-2 text-xs text-zinc-400 transition-colors hover:text-zinc-100"
-          >
-            <HiOutlineExternalLink size={13} /> View site
-          </a>
-          <Button onClick={() => { setCfg(structuredClone(initialConfig)); setDirty(false); flash('Reverted to last saved file'); }}>
-            <span className="flex items-center gap-1.5">
-              <HiOutlineRefresh size={13} /> Revert
-            </span>
-          </Button>
-          <Button variant="primary" onClick={save} disabled={!dirty || saving}>
-            <span className="flex items-center gap-1.5">
-              <HiOutlineSave size={13} />
-              {saving ? 'Saving…' : dirty ? 'Save changes' : 'Saved'}
-            </span>
-          </Button>
+          <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto">
+            <a
+              href="#/"
+              className="flex items-center justify-center gap-1.5 rounded-lg border border-line px-3.5 py-2 text-xs text-zinc-400 transition-colors hover:text-zinc-100"
+            >
+              <HiOutlineExternalLink size={13} /> View site
+            </a>
+            <Button onClick={() => { setCfg(structuredClone(initialConfig)); setDirty(false); flash('Reverted to last saved file'); }}>
+              <span className="flex items-center justify-center gap-1.5">
+                <HiOutlineRefresh size={13} /> Revert
+              </span>
+            </Button>
+            <Button variant="primary" onClick={save} disabled={!dirty || saving || publishStatus?.running}>
+              <span className="flex items-center justify-center gap-1.5">
+                <HiOutlineSave size={13} />
+                {saving ? 'Saving…' : dirty ? 'Save changes' : 'Saved'}
+              </span>
+            </Button>
+            <Button variant="primary" onClick={publish} disabled={saving || publishStatus?.running}>
+              <span className="flex items-center justify-center gap-1.5">
+                <HiOutlineCloudUpload size={14} />
+                {publishStatus?.running ? 'Publishing…' : 'Publish site'}
+              </span>
+            </Button>
+          </div>
         </div>
 
-        <nav className="mx-auto flex max-w-5xl flex-wrap gap-1 px-5 pb-2">
+        <nav className="mx-auto flex max-w-5xl gap-1 overflow-x-auto px-3 pb-2 sm:px-5">
           {TABS.map((t) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
               className={
-                'rounded-lg px-3.5 py-2 text-xs transition-colors ' +
+                'shrink-0 rounded-lg px-3.5 py-2 text-xs transition-colors ' +
                 (tab === t.id
                   ? 'bg-white/[0.07] text-zinc-100'
                   : 'text-zinc-500 hover:text-zinc-300')
@@ -231,6 +320,15 @@ export default function AdminApp() {
           ))}
         </nav>
       </header>
+
+      {publishStatus?.finishedAt && (
+        <details className={'border-b px-3 py-2 text-[11px] sm:px-5 ' + (publishStatus.exitCode === 0 ? 'border-emerald-900/50 bg-emerald-950/20' : 'border-red-900/50 bg-red-950/20')}>
+          <summary className="mx-auto max-w-5xl cursor-pointer font-semibold">
+            Last publish {publishStatus.exitCode === 0 ? 'succeeded' : 'failed'} · view log
+          </summary>
+          <pre className="mx-auto mt-2 max-h-48 max-w-5xl overflow-auto whitespace-pre-wrap font-mono text-[10px] text-zinc-400">{publishStatus.output}</pre>
+        </details>
+      )}
 
       {/* speed banner: is the site light, and what is weighing it down */}
       {weight.report && tab !== 'performance' && (
@@ -295,7 +393,7 @@ export default function AdminApp() {
         </div>
       )}
 
-      <main className="mx-auto max-w-5xl px-5 py-8">
+      <main className="mx-auto max-w-5xl px-3 py-6 sm:px-5 sm:py-8">
         {tab === 'projects' && <ProjectsPanel cfg={cfg} set={set} />}
         {tab === 'skills' && <SkillsAdminPanel cfg={cfg} set={set} />}
         {tab === 'leadership' && <LeadershipPanel cfg={cfg} set={set} />}
@@ -312,7 +410,7 @@ export default function AdminApp() {
           <code className="text-accent-500">src/data/portfolio.config.json</code> and any uploaded images into{' '}
           <code className="text-accent-500">public/</code>. This admin UI itself is stripped out of{' '}
           <code className="text-accent-500">npm run build</code>, so it never reaches GitHub Pages — but you do need to
-          commit the config file and the images for your choices to show up on the live site.
+          tap <strong className="text-zinc-400">Publish site</strong> to build, commit, and push the saved changes.
         </p>
       </main>
 

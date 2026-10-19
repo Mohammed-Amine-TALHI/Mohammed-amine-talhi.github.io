@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, unlinkSync, statSync, createWriteStream } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { resolve, extname, basename } from 'node:path';
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { PDFDocument } from 'pdf-lib';
 // @ts-expect-error plain ESM helper shared with the scripts/ folder
 import { pruneUnused, referencedUrls, UPLOAD_FOLDERS } from './scripts/lib/uploads.mjs';
@@ -14,6 +14,36 @@ import { encodeVideo, posterFrame, probeVideo, compressFile, siteWeight, VIDEO_E
 const ROOT = process.cwd();
 const CONFIG_PATH = resolve(ROOT, 'src/data/portfolio.config.json');
 const PUBLIC_DIR = resolve(ROOT, 'public');
+
+type PublishState = {
+  running: boolean;
+  startedAt: string | null;
+  finishedAt: string | null;
+  exitCode: number | null;
+  output: string;
+};
+
+const publishState: PublishState = {
+  running: false,
+  startedAt: null,
+  finishedAt: null,
+  exitCode: null,
+  output: '',
+};
+
+function sameOrigin(req: any): boolean {
+  const origin = req.headers.origin;
+  if (!origin) return true;
+  try {
+    return new URL(origin).host === req.headers.host;
+  } catch {
+    return false;
+  }
+}
+
+function appendPublishOutput(chunk: unknown) {
+  publishState.output = (publishState.output + String(chunk)).slice(-30_000);
+}
 
 /** Read a request body as a string. */
 function readBody(req: any): Promise<string> {
@@ -124,6 +154,50 @@ function adminApiPlugin(): Plugin {
               mtime: statSync(CONFIG_PATH).mtimeMs,
               pruned,
             });
+          }
+
+          // ---- publish the saved site (build, commit, push) ----------------
+          if (url === '/__admin/publish' && req.method === 'GET') {
+            return json(200, publishState);
+          }
+
+          if (url === '/__admin/publish' && req.method === 'POST') {
+            if (!sameOrigin(req)) return json(403, { error: 'cross-origin publish blocked' });
+            if (publishState.running) return json(409, { error: 'publish already running', ...publishState });
+
+            publishState.running = true;
+            publishState.startedAt = new Date().toISOString();
+            publishState.finishedAt = null;
+            publishState.exitCode = null;
+            publishState.output = '';
+
+            const child = spawn(process.execPath, [resolve(ROOT, 'scripts/publish.mjs')], {
+              cwd: ROOT,
+              env: process.env,
+              windowsHide: true,
+              stdio: ['ignore', 'pipe', 'pipe'],
+            });
+            child.stdout.on('data', (chunk) => {
+              appendPublishOutput(chunk);
+              process.stdout.write(chunk);
+            });
+            child.stderr.on('data', (chunk) => {
+              appendPublishOutput(chunk);
+              process.stderr.write(chunk);
+            });
+            child.once('error', (error) => {
+              appendPublishOutput(`\n${error.message}\n`);
+              publishState.running = false;
+              publishState.finishedAt = new Date().toISOString();
+              publishState.exitCode = 1;
+            });
+            child.once('exit', (code) => {
+              publishState.running = false;
+              publishState.finishedAt = new Date().toISOString();
+              publishState.exitCode = code ?? 1;
+            });
+
+            return json(202, publishState);
           }
 
           // ---- image upload (base64 data URL -> public/<folder>/) ----------
@@ -351,7 +425,12 @@ export default defineConfig({
   base: process.env.BASE_PATH || '/',
   plugins: [react(), tailwindcss(), adminApiPlugin(), defaultThemePlugin()],
   // honour a PORT assigned by the tooling, otherwise Vite's default
-  server: { port: Number(process.env.PORT) || 5173 },
+  server: {
+    port: Number(process.env.PORT) || 5173,
+    // Requests arrive through the private HTTPS hostname created by
+    // `tailscale serve`; Vite otherwise rejects that Host header.
+    allowedHosts: ['.ts.net'],
+  },
   build: {
     outDir: 'dist',
     sourcemap: false,
