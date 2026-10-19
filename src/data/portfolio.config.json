@@ -38,10 +38,13 @@
     }
   },
   "cv": {
-    "en": null,
+    "en": {
+      "url": "/cv/CV-Mohammed-Amine-TALHI-CDI-Supply-Chain-EN.pdf",
+      "updated": "2026-10-18T23:18:22.481Z"
+    },
     "fr": {
-      "url": "/cv/CV_Mohammed_Amine_TALHI_-muot4bvt.pdf",
-      "updated": "2026-10-01T00:39:39.310Z"
+      "url": "/cv/CV-Mohammed-Amine-TALHI-CDI-Supply-Chain-FR.pdf",
+      "updated": "2026-10-18T23:18:22.481Z"
     }
   },
   "visits": {
