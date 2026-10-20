@@ -93,8 +93,17 @@
     "scrollReveal": true,
     "sketches": true,
     "sketchDrift": true,
-    "sketchOpacity": 0.75,
-    "sketchSet": {}
+    "sketchOpacity": 0.45,
+    "sketchSet": {
+      "vsm": true,
+      "erp": true,
+      "dmaic": true,
+      "ishikawa": true,
+      "process": true,
+      "gantt": true,
+      "network": true,
+      "kanban": true
+    }
   },
   "visibility": {
     "projects": {
