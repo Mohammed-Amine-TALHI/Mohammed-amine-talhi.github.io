@@ -1061,6 +1061,33 @@
             "Atlas"
           ],
           "images": []
+        },
+        {
+          "id": "ev-bde-traditional-evening",
+          "title": {
+            "en": "Traditional evening for EMINES students",
+            "fr": "Soirée traditionnelle pour les étudiants de l'EMINES"
+          },
+          "place": {
+            "en": "EMINES – UM6P, Ben Guerir",
+            "fr": "EMINES – UM6P, Ben Guerir"
+          },
+          "date": {
+            "en": "2024 – 2025",
+            "fr": "2024 – 2025"
+          },
+          "people": "",
+          "description": {
+            "en": "A traditional evening organised by the Student Council to bring EMINES students together and celebrate Moroccan cultural heritage in a warm, shared setting. The event combined student-life coordination, logistics and team organisation to create a unifying moment on campus.",
+            "fr": "Une soirée traditionnelle organisée par le BDE pour rassembler les étudiants de l'EMINES et célébrer le patrimoine culturel marocain dans une ambiance conviviale. L'événement a mobilisé la coordination de la vie étudiante, la logistique et l'organisation de l'équipe afin de créer un moment fédérateur sur le campus."
+          },
+          "highlights": [
+            "Culture marocaine",
+            "Vie étudiante",
+            "Logistique",
+            "Cohésion"
+          ],
+          "images": []
         }
       ],
       "assets": [
