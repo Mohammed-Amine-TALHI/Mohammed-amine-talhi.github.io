@@ -9,7 +9,7 @@
     },
     "intro": {
       "en": "Hi, I'm Mohammed Amine — a Supply Chain Engineer, graduated from EMINES – UM6P (School of Industrial Management), and open to a permanent role in supply chain, process & production or IT/ERP consulting.\n\nWhat I actually enjoy is the messy middle: the gap between a plant's real shop-floor data and the decision someone has to make at 6am. I build the models that close it — MILP sequencing, Lean diagnostics, forecasting — and the digital layer that makes them usable: dashboards, ERP flows (SAP S/4HANA), process maps. My final-year project at OCP was exactly that: optimizing the mine → washing plant → train-loading chain, where a Lean diagnostic showed a 0.15% process cycle efficiency hiding inside an 11.7-day lead time.\n\nI've done it in Morocco, in Brazil, in French warehouses. Off the clock, I captained the EMINES and UM6P basketball teams — which, it turns out, is also a scheduling problem.",
-      "fr": "Bonjour, je suis Mohammed Amine — ingénieur Supply Chain, diplômé de l'EMINES – UM6P (School of Industrial Management), ouvert à un CDI en supply chain, process & production ou conseil IT/ERP.\n\nCe qui me passionne vraiment, c'est le terrain intermédiaire : l'écart entre les données réelles d'un site et la décision qu'il faut prendre à 6h du matin. Je construis les modèles qui comblent cet écart — ordonnancement MILP, diagnostics Lean, prévision — et la couche digitale qui les rend exploitables : tableaux de bord, flux ERP (SAP S/4HANA), cartographies de processus. Mon PFE chez OCP, c'était exactement ça : optimiser la chaîne mine → laverie → chargement train, où un diagnostic Lean a révélé une efficacité de cycle de 0,15 % cachée dans un délai de 11,7 jours.\n\nJe l'ai fait au Maroc, au Brésil, dans des entrepôts français. En dehors, j'ai été capitaine des équipes de basketball de l'EMINES et de l'UM6P — ce qui, au fond, est aussi un problème d'ordonnancement."
+      "fr": "Bonjour, je suis Mohammed Amine — ingénieur Supply Chain, diplômé de l'EMINES – UM6P (School of Industrial Management), ouvert à un CDI en supply chain, process & production ou conseil IT/ERP.\n\nCe qui me passionne, c'est la construction d'une supply chain plus autonome : un système capable de comprendre les données du terrain, d'anticiper les besoins et de transformer l'information en décisions opérationnelles. J'explore particulièrement les agents IA et l'automatisation des processus pour connecter la planification, l'exécution et le suivi, réduire les tâches répétitives et rendre les équipes plus réactives.\n\nMon approche relie l'intelligence artificielle aux fondamentaux de la supply chain et des opérations : prévision, planification, ordonnancement, amélioration continue, tableaux de bord et systèmes ERP. Je m'intéresse notamment à SAP S/4HANA et à la manière dont les flux, les données et les agents intelligents peuvent coopérer pour construire des processus plus fluides, fiables et traçables."
     },
     "photoCrop": {
       "x": 55.119605123260875,
@@ -483,7 +483,8 @@
       },
       "gallery": [
         "/covers/tealhi-resume-versions.jpg",
-        "/covers/tealhi-master-resume.jpg"
+        "/covers/tealhi-master-resume.jpg",
+        "/covers/11-tealhi-bullet-selection-16x9-mvfyja6g.png"
       ],
       "stack": [
         "Next.js",
@@ -504,7 +505,9 @@
       "gallery": [
         "/covers/candidature-tracker-dashboard.jpg",
         "/covers/candidature-tracker-new-application.jpg",
-        "/covers/candidature-tracker-follow-ups.jpg"
+        "/covers/candidature-tracker-follow-ups.jpg",
+        "/covers/04-tracker-inbox-16x9-mvfyjz8x.png",
+        "/covers/09-tracker-linkedin-network-16x9-blur-blur-mvfyp5am.png"
       ],
       "stack": [
         "Next.js",
@@ -1395,7 +1398,9 @@
         "en": "The Engineers Sport Games is the national inter-school sports competition hosted at EMINES – UM6P: for its 5th edition, 12 engineering-school delegations came to Ben Guerir to compete over several days.\nI was responsible for catering and food service for the whole event — planning every meal for 12 delegations of around 40 people each, roughly 480 athletes and staff, from supplier negotiation and quantities to the on-site service schedule around the matches.\nA logistics problem as much as a hospitality one: forecasting demand per day and per service, securing the suppliers, keeping the budget and making sure nobody plays on an empty stomach.",
         "fr": "Les Engineers Sport Games sont la compétition sportive nationale inter-écoles accueillie à l'EMINES – UM6P : pour sa 5ᵉ édition, 12 délégations d'écoles d'ingénieurs sont venues à Ben Guerir s'affronter pendant plusieurs jours.\nJ'étais responsable de la restauration et du catering de tout l'événement — planification de chaque repas pour 12 délégations d'environ 40 personnes, soit près de 480 athlètes et encadrants, de la négociation fournisseurs et des quantités jusqu'au planning de service sur site autour des matchs.\nUn problème de logistique autant que d'hospitalité : prévoir la demande par jour et par service, sécuriser les fournisseurs, tenir le budget et s'assurer que personne ne joue le ventre vide."
       },
-      "images": [],
+      "images": [
+        "/leadership/img0XqY9A-LPua4ULmhzs6fs-mvfy70cn.jpg"
+      ],
       "tags": [
         "Events",
         "Logistics",
@@ -1462,10 +1467,30 @@
             "Fournisseurs",
             "Budget"
           ],
-          "images": []
+          "images": [
+            "/leadership/imgYqpr2RgUKa6yTxH0HnKFu-mvfy7f5o.jpg",
+            "/leadership/imgApUZW-lVAbEoUrc7YZC76-mvfy7mlj.jpg",
+            "/leadership/imgBkaoTR-CBNF7QOaDl5hcS-mvfy7s7z.jpg",
+            "/leadership/imgM1vaOOalfOynDCPfIAJ_H-mvfy7wv4.jpg",
+            "/leadership/imgz5utah5NJOoyyVDs-bOF9-mvfy817z.jpg",
+            "/leadership/imgJIjoWLzJTtUkI1XmeshJw-mvfy8b6x.jpg",
+            "/leadership/imgAc5aROO1itGzQDk9s6Q7n-mvfy8f0s.jpg",
+            "/leadership/imgWuWPl8fk_-ToU_91IKi02-mvfy915s.jpg",
+            "/leadership/img4Wt6Es-Dskrko_KAroswp-mvfy90iq.jpg",
+            "/leadership/imgEuZFREJMP2X1eo6X3Qb3o-mvfy90q2.jpg",
+            "/leadership/imgRLpH5wIxPScSqIltGpFNd-mvfy90x8.jpg",
+            "/leadership/imgVzA-QCxrttZ4i0696UE0b-mvfy9083.jpg",
+            "/leadership/imgU3Av9CJ5PYKnUCAyJy8DY-mvfy9e4r.jpg",
+            "/leadership/imgDcGYGeau_5YFPpL0k_ngO-mvfy9ec1.jpg"
+          ]
         }
       ],
-      "accent": "violet"
+      "accent": "violet",
+      "imageCrop": {
+        "x": 50,
+        "y": 50,
+        "zoom": 1
+      }
     },
     {
       "id": "lead-rir4mav",
@@ -1889,11 +1914,17 @@
       "x": 50.208330154418945,
       "y": 55.83333969116211,
       "zoom": 1
+    },
+    "/covers/09-tracker-linkedin-network-16x9-blur-blur-mvfyp5am.png": {
+      "x": 24.583323796590168,
+      "y": 51.11109415690104,
+      "zoom": 1.12
     }
   },
   "theme": {
     "default": "auto",
     "toggle": true,
+    "projectImageEffects": false,
     "palette": "custom",
     "ink": "neutral",
     "accent": "#ff5252",

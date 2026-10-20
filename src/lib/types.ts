@@ -264,6 +264,8 @@ export interface ThemeSettings {
   default: 'light' | 'dark' | 'auto';
   /** show the sun/moon toggle at the bottom-right of the site */
   toggle: boolean;
+  /** dim project cover images and add the bottom readability gradient */
+  projectImageEffects?: boolean;
   /** which colours: brand = UM6P orange + EMINES navy, classic = the original amber on black */
   palette?: PaletteId;
   /** the two hues used when palette is `custom` */

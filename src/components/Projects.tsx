@@ -45,6 +45,7 @@ const galleryOf = (id: string) => config.projectMeta?.[id]?.gallery ?? [];
 function Card({ project: p, index, onOpen }: { project: Project; index: number; onOpen: () => void }) {
   const { t, lang } = useLang();
   const meta = config.projectMeta?.[p.id];
+  const imageEffects = config.theme?.projectImageEffects !== false;
   const assets = projectAssets(p.id);
   const gallery = galleryOf(p.id);
   const year = endYear(p.period);
@@ -69,9 +70,12 @@ function Card({ project: p, index, onOpen }: { project: Project; index: number; 
           <SafeImage
             src={meta.cover}
             style={cropStyle(resolveCrop({ imageCrop: meta.coverCrop }))}
-            className="h-full w-full opacity-70 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
+            className={
+              'h-full w-full transition-all duration-700 group-hover:scale-105 ' +
+              (imageEffects ? 'opacity-70 group-hover:opacity-100' : 'opacity-100')
+            }
           />
-          <span className="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/20 to-transparent" />
+          {imageEffects && <span className="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/20 to-transparent" />}
           {gallery.length > 0 && (
             <span className="absolute bottom-2 right-2 flex items-center gap-1 rounded-md bg-ink-950/80 px-2 py-1 font-mono text-[10px] text-zinc-300">
               <HiOutlinePhotograph size={11} />

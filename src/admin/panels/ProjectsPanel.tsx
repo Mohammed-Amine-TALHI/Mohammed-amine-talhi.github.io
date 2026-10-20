@@ -67,6 +67,27 @@ export default function ProjectsPanel({
 
   return (
     <div className="space-y-8">
+      <section>
+        <h2 className="mb-1 font-display text-lg font-semibold text-zinc-100">Project image appearance</h2>
+        <p className="mb-4 text-xs text-zinc-500">
+          Control the gradient and dark shading applied to project cover images.
+        </p>
+        <Card>
+          <div className="flex items-center gap-4">
+            <Toggle
+              on={cfg.theme?.projectImageEffects !== false}
+              onChange={(v) => set((d) => void (d.theme = { ...d.theme, projectImageEffects: v }))}
+            />
+            <div>
+              <div className="text-sm text-zinc-200">Gradients and shades on project pictures</div>
+              <div className="text-[11px] text-zinc-500">
+                On adds a dark readability gradient and soft shade. Off displays every cover at full brightness.
+              </div>
+            </div>
+          </div>
+        </Card>
+      </section>
+
       {/* ------------------------------ display order ------------------------------ */}
       <section>
         <h2 className="mb-1 font-display text-lg font-semibold text-zinc-100">Display order</h2>
