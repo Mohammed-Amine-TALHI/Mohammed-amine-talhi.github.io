@@ -12,8 +12,8 @@
       "fr": "Bonjour, je suis Mohammed Amine — ingénieur Supply Chain, diplômé de l'EMINES – UM6P (School of Industrial Management), ouvert à un CDI en supply chain, process & production ou conseil IT/ERP.\n\nCe qui me passionne, c'est la construction d'une supply chain plus autonome : un système capable de comprendre les données du terrain, d'anticiper les besoins et de transformer l'information en décisions opérationnelles. J'explore particulièrement les agents IA et l'automatisation des processus pour connecter la planification, l'exécution et le suivi, réduire les tâches répétitives et rendre les équipes plus réactives.\n\nMon approche relie l'intelligence artificielle aux fondamentaux de la supply chain et des opérations : prévision, planification, ordonnancement, amélioration continue, tableaux de bord et systèmes ERP. Je m'intéresse notamment à SAP S/4HANA et à la manière dont les flux, les données et les agents intelligents peuvent coopérer pour construire des processus plus fluides, fiables et traçables."
     },
     "photoCrop": {
-      "x": 55.119605123260875,
-      "y": 65.92593281357377,
+      "x": 55.379156618277484,
+      "y": 71.63606570393921,
       "zoom": 1.12
     },
     "schoolLogo": "/logos/emines-rmbgj-munqsy7a.png"
@@ -132,7 +132,7 @@
       "exp-pfe": true,
       "exp-uff": true,
       "exp-mppdl": true,
-      "exp-treasurer": false,
+      "exp-treasurer": true,
       "exp-ocp-intro": true
     }
   },
