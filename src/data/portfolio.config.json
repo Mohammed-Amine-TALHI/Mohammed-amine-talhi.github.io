@@ -1399,7 +1399,22 @@
         "fr": "Les Engineers Sport Games sont la compétition sportive nationale inter-écoles accueillie à l'EMINES – UM6P : pour sa 5ᵉ édition, 12 délégations d'écoles d'ingénieurs sont venues à Ben Guerir s'affronter pendant plusieurs jours.\nJ'étais responsable de la restauration et du catering de tout l'événement — planification de chaque repas pour 12 délégations d'environ 40 personnes, soit près de 480 athlètes et encadrants, de la négociation fournisseurs et des quantités jusqu'au planning de service sur site autour des matchs.\nUn problème de logistique autant que d'hospitalité : prévoir la demande par jour et par service, sécuriser les fournisseurs, tenir le budget et s'assurer que personne ne joue le ventre vide."
       },
       "images": [
-        "/leadership/img0XqY9A-LPua4ULmhzs6fs-mvfy70cn.jpg"
+        "/leadership/img0XqY9A-LPua4ULmhzs6fs-mvfy70cn.jpg",
+        "/leadership/imgYqpr2RgUKa6yTxH0HnKFu-mvfzba70.jpg",
+        "/leadership/imgApUZW-lVAbEoUrc7YZC76-mvfzba4v.jpg",
+        "/leadership/imgBkaoTR-CBNF7QOaDl5hcS-mvfzbp6h.jpg",
+        "/leadership/imgM1vaOOalfOynDCPfIAJ_H-mvfzbov4.jpg",
+        "/leadership/imgz5utah5NJOoyyVDs-bOF9-mvfzbp0l.jpg",
+        "/leadership/imgRLpH5wIxPScSqIltGpFNd-mvfzchsm.jpg",
+        "/leadership/imgJIjoWLzJTtUkI1XmeshJw-mvfzchlm.jpg",
+        "/leadership/imgAc5aROO1itGzQDk9s6Q7n-mvfzchyb.jpg",
+        "/leadership/imgWuWPl8fk_-ToU_91IKi02-mvfzdekz.jpg",
+        "/leadership/img4Wt6Es-Dskrko_KAroswp-mvfzde0g.jpg",
+        "/leadership/imgE-UxRhT7zqyA3tmL15rP3-mvfzde7b.jpg",
+        "/leadership/imgVzA-QCxrttZ4i0696UE0b-mvfzddne.jpg",
+        "/leadership/imgILXGVnSDdOr7H2C8mCqmX_w1200-mvfzddnq.jpeg",
+        "/leadership/imgU3Av9CJ5PYKnUCAyJy8DY-mvfzddqm.jpg",
+        "/leadership/imgDcGYGeau_5YFPpL0k_ngO-mvfzdedq.jpg"
       ],
       "tags": [
         "Events",
@@ -1467,22 +1482,7 @@
             "Fournisseurs",
             "Budget"
           ],
-          "images": [
-            "/leadership/imgYqpr2RgUKa6yTxH0HnKFu-mvfy7f5o.jpg",
-            "/leadership/imgApUZW-lVAbEoUrc7YZC76-mvfy7mlj.jpg",
-            "/leadership/imgBkaoTR-CBNF7QOaDl5hcS-mvfy7s7z.jpg",
-            "/leadership/imgM1vaOOalfOynDCPfIAJ_H-mvfy7wv4.jpg",
-            "/leadership/imgz5utah5NJOoyyVDs-bOF9-mvfy817z.jpg",
-            "/leadership/imgJIjoWLzJTtUkI1XmeshJw-mvfy8b6x.jpg",
-            "/leadership/imgAc5aROO1itGzQDk9s6Q7n-mvfy8f0s.jpg",
-            "/leadership/imgWuWPl8fk_-ToU_91IKi02-mvfy915s.jpg",
-            "/leadership/img4Wt6Es-Dskrko_KAroswp-mvfy90iq.jpg",
-            "/leadership/imgEuZFREJMP2X1eo6X3Qb3o-mvfy90q2.jpg",
-            "/leadership/imgRLpH5wIxPScSqIltGpFNd-mvfy90x8.jpg",
-            "/leadership/imgVzA-QCxrttZ4i0696UE0b-mvfy9083.jpg",
-            "/leadership/imgU3Av9CJ5PYKnUCAyJy8DY-mvfy9e4r.jpg",
-            "/leadership/imgDcGYGeau_5YFPpL0k_ngO-mvfy9ec1.jpg"
-          ]
+          "images": []
         }
       ],
       "accent": "violet",
@@ -1919,6 +1919,11 @@
       "x": 24.583323796590168,
       "y": 51.11109415690104,
       "zoom": 1.12
+    },
+    "/leadership/imgWuWPl8fk_-ToU_91IKi02-mvfzdekz.jpg": {
+      "x": 50,
+      "y": 50,
+      "zoom": 1
     }
   },
   "theme": {
