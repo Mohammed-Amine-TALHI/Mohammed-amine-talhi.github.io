@@ -1,6 +1,6 @@
 {
   "profile": {
-    "photo": "/DSC03556-munu9hv7.jpg",
+    "photo": "/Mohammed-TALHI-jpg-mvjouo88.jpg",
     "resumeUrl": "",
     "githubUrl": "https://github.com/mohammed-amine-talhi",
     "headline": {
@@ -81,7 +81,7 @@
   },
   "animation": {
     "preset": "balanced",
-    "speed": 0.95,
+    "speed": 1,
     "nameEffect": "typewriter",
     "backgroundBlooms": false,
     "liquidEther": false,
@@ -93,7 +93,7 @@
     "scrollReveal": true,
     "sketches": true,
     "sketchDrift": true,
-    "sketchOpacity": 0.45,
+    "sketchOpacity": 0.7,
     "sketchSet": {
       "vsm": true,
       "erp": true,
@@ -1982,9 +1982,9 @@
     "default": "auto",
     "toggle": true,
     "projectImageEffects": false,
-    "palette": "custom",
+    "palette": "brand",
     "ink": "neutral",
-    "accent": "#ff5252",
+    "accent": "#a60321",
     "brand": "#4a0000",
     "tint": 0
   },
