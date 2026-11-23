@@ -126,7 +126,8 @@
       "custom-pfe-ocp": true,
       "custom-tealhi": true,
       "custom-candidature-tracker": true,
-      "custom-agentic-application-workflow": true
+      "custom-agentic-application-workflow": true,
+      "custom-owlcount": true
     },
     "experiences": {
       "exp-pfe": true,
@@ -139,6 +140,7 @@
   "order": {
     "projects": [
       "custom-pfe-ocp",
+      "custom-owlcount",
       "custom-agentic-application-workflow",
       "custom-tealhi",
       "custom-candidature-tracker",
@@ -545,9 +547,99 @@
         "Candidature Tracker"
       ],
       "assets": []
+    },
+    "custom-owlcount": {
+      "featured": true,
+      "cover": "/covers/owlcount-budget-plan-desktop.jpg",
+      "coverCrop": {
+        "x": 50,
+        "y": 42,
+        "zoom": 1
+      },
+      "gallery": [
+        "/covers/owlcount-budget-plan-desktop.jpg",
+        "/covers/owlcount-net-worth-desktop.jpg",
+        "/covers/owlcount-dashboard-mobile.jpg"
+      ],
+      "stack": [
+        "Next.js / React",
+        "TypeScript / JavaScript",
+        "REST APIs",
+        "SQL / Cloudflare D1",
+        "Appwrite",
+        "PWA / IndexedDB",
+        "Responsive UI/UX",
+        "Python / FastAPI — roadmap",
+        "BigQuery · Cloud SQL · Cloud Run — roadmap",
+        "Retool / Appsmith — roadmap",
+        "Planning / Forecasting — roadmap"
+      ],
+      "assets": [
+        {
+          "id": "asset-owlcount-code",
+          "kind": "code",
+          "label": {
+            "en": "OWLCount source code",
+            "fr": "Code source d’OWLCount"
+          },
+          "url": "https://github.com/Mohammed-Amine-TALHI/OWLcount"
+        }
+      ]
     }
   },
   "customProjects": [
+    {
+      "id": "custom-owlcount",
+      "title": {
+        "en": "OWLCount — Financial Operations App",
+        "fr": "OWLCount — Application de pilotage financier"
+      },
+      "tag": {
+        "en": "App Builder / Business Operations",
+        "fr": "App Builder / Opérations métier"
+      },
+      "period": {
+        "en": "2026 – Present",
+        "fr": "2026 – Aujourd’hui"
+      },
+      "bullets": [
+        {
+          "id": "b-owlcount-product",
+          "text": {
+            "en": "Built a full-stack, installable finance PWA that replaces fragmented spreadsheets with one operational application for personal and business workspaces: transactions, accounts, envelope budgets, goals, debts, recurring payments, assets, net worth and forecasts.",
+            "fr": "Développement d’une PWA financière full-stack et installable qui remplace des fichiers Excel dispersés par une application métier unique pour les espaces personnels et professionnels : transactions, comptes, budgets par enveloppes, objectifs, dettes, paiements récurrents, actifs, patrimoine et prévisions."
+          }
+        },
+        {
+          "id": "b-owlcount-architecture",
+          "text": {
+            "en": "Designed the local-first data architecture around durable browser storage, offline capture, CSV migration, validated JSON backup/restore and a synchronization boundary for Appwrite and Cloudflare D1, with REST-ready domain operations.",
+            "fr": "Conception d’une architecture local-first avec stockage navigateur durable, saisie hors ligne, migration CSV, sauvegarde/restauration JSON validée et frontière de synchronisation pour Appwrite et Cloudflare D1, avec des opérations métier prêtes à être exposées par API REST."
+          }
+        },
+        {
+          "id": "b-owlcount-ux",
+          "text": {
+            "en": "Created the responsive UI/UX for phone and laptop, including accessible dashboards, budget planning, cash-flow views, quick transaction entry, PWA installation and clear states for empty, offline and sensitive financial data.",
+            "fr": "Conception de l’UI/UX responsive pour mobile et ordinateur : tableaux de bord accessibles, planification budgétaire, vues de trésorerie, saisie rapide des transactions, installation PWA et états clairs pour les données vides, hors ligne ou sensibles."
+          }
+        },
+        {
+          "id": "b-owlcount-roadmap-cloud",
+          "text": {
+            "en": "Artefact App Builder roadmap — extract Python/FastAPI services for forecasting and allocation logic, expose versioned REST APIs, move analytical datasets to BigQuery, transactional records to Cloud SQL and deploy stateless services on Cloud Run.",
+            "fr": "Roadmap App Builder alignée avec Artefact — extraire des services Python/FastAPI pour la prévision et l’allocation, exposer des API REST versionnées, déplacer les données analytiques vers BigQuery, les données transactionnelles vers Cloud SQL et déployer les services stateless sur Cloud Run."
+          }
+        },
+        {
+          "id": "b-owlcount-roadmap-lowcode",
+          "text": {
+            "en": "Planned extension — add a Retool or Appsmith administration workspace for business users, then adapt the planning engine to supply-chain use cases such as demand forecasts, stock allocation and scenario comparison with auditable decisions.",
+            "fr": "Extension prévue — ajouter un espace d’administration Retool ou Appsmith pour les utilisateurs métier, puis adapter le moteur de planification à des cas supply chain : prévision de la demande, allocation des stocks et comparaison de scénarios avec décisions auditables."
+          }
+        }
+      ]
+    },
     {
       "id": "custom-tealhi",
       "title": {
@@ -1681,7 +1773,46 @@
       "id": "sk-13-react",
       "name": "React",
       "icon": "react",
-      "family": "dev"
+      "family": "dev",
+      "projects": [
+        "custom-owlcount"
+      ]
+    },
+    {
+      "id": "sk-javascript",
+      "name": "JavaScript",
+      "icon": "javascript",
+      "family": "dev",
+      "projects": [
+        "custom-owlcount"
+      ]
+    },
+    {
+      "id": "sk-typescript",
+      "name": "TypeScript",
+      "icon": "typescript",
+      "family": "dev",
+      "projects": [
+        "custom-owlcount"
+      ]
+    },
+    {
+      "id": "sk-rest-api",
+      "name": "REST APIs",
+      "icon": "api",
+      "family": "dev",
+      "projects": [
+        "custom-owlcount"
+      ]
+    },
+    {
+      "id": "sk-sql",
+      "name": "SQL",
+      "icon": "database",
+      "family": "data",
+      "projects": [
+        "custom-owlcount"
+      ]
     },
     {
       "id": "sk-14-laravel",
