@@ -550,16 +550,26 @@
     },
     "custom-owlcount": {
       "featured": true,
-      "cover": "/covers/owlcount-budget-plan-desktop.jpg",
+      "cover": "/covers/owlcount-01-dashboard-wide.jpg",
       "coverCrop": {
         "x": 50,
-        "y": 42,
+        "y": 40,
         "zoom": 1
       },
       "gallery": [
-        "/covers/owlcount-budget-plan-desktop.jpg",
-        "/covers/owlcount-net-worth-desktop.jpg",
-        "/covers/owlcount-dashboard-mobile.jpg"
+        "/covers/owlcount-01-dashboard-wide.jpg",
+        "/covers/owlcount-02-budget-plan-wide.jpg",
+        "/covers/owlcount-03-transactions-wide.jpg",
+        "/covers/owlcount-04-cash-flow-wide.jpg",
+        "/covers/owlcount-05-goals-wide.jpg",
+        "/covers/owlcount-06-debts-wide.jpg",
+        "/covers/owlcount-07-accounts-wide.jpg",
+        "/covers/owlcount-08-net-worth-wide.jpg",
+        "/covers/owlcount-09-assets-wide.jpg",
+        "/covers/owlcount-10-recurring-wide.jpg",
+        "/covers/owlcount-11-habits-wide.jpg",
+        "/covers/owlcount-12-forecasts-wide.jpg",
+        "/covers/owlcount-13-settings-wide.jpg"
       ],
       "stack": [
         "Next.js / React",
