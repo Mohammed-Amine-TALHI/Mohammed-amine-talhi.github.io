@@ -574,15 +574,10 @@
       "stack": [
         "Next.js / React",
         "TypeScript / JavaScript",
-        "REST APIs",
         "SQL / Cloudflare D1",
-        "Appwrite",
         "PWA / IndexedDB",
-        "Responsive UI/UX",
-        "Python / FastAPI — roadmap",
-        "BigQuery · Cloud SQL · Cloud Run — roadmap",
-        "Retool / Appsmith — roadmap",
-        "Planning / Forecasting — roadmap"
+        "CSV / JSON",
+        "Responsive UI/UX"
       ],
       "assets": [
         {
@@ -605,8 +600,8 @@
         "fr": "OWLCount — Application de pilotage financier"
       },
       "tag": {
-        "en": "App Builder / Business Operations",
-        "fr": "App Builder / Opérations métier"
+        "en": "Business Applications / Finance",
+        "fr": "Applications métier / Finance"
       },
       "period": {
         "en": "2026 – Present",
@@ -616,36 +611,36 @@
         {
           "id": "b-owlcount-product",
           "text": {
-            "en": "Built a full-stack, installable finance PWA that replaces fragmented spreadsheets with one operational application for personal and business workspaces: transactions, accounts, envelope budgets, goals, debts, recurring payments, assets, net worth and forecasts.",
-            "fr": "Développement d’une PWA financière full-stack et installable qui remplace des fichiers Excel dispersés par une application métier unique pour les espaces personnels et professionnels : transactions, comptes, budgets par enveloppes, objectifs, dettes, paiements récurrents, actifs, patrimoine et prévisions."
+            "en": "I built OWLCount to bring everyday financial management into one application: record transactions, track accounts and organize personal and business budgets without maintaining separate spreadsheets.",
+            "fr": "J’ai conçu OWLCount pour réunir la gestion financière quotidienne dans une seule application : enregistrer les transactions, suivre les comptes et organiser les budgets personnels et professionnels sans multiplier les fichiers de suivi."
           }
         },
         {
-          "id": "b-owlcount-architecture",
+          "id": "b-owlcount-planning",
           "text": {
-            "en": "Designed the local-first data architecture around durable browser storage, offline capture, CSV migration, validated JSON backup/restore and a synchronization boundary for Appwrite and Cloudflare D1, with REST-ready domain operations.",
-            "fr": "Conception d’une architecture local-first avec stockage navigateur durable, saisie hors ligne, migration CSV, sauvegarde/restauration JSON validée et frontière de synchronisation pour Appwrite et Cloudflare D1, avec des opérations métier prêtes à être exposées par API REST."
+            "en": "Envelope budgets connect allocated amounts with actual spending and available balances. Cash-flow dashboards, savings goals and projections based on recurring payments help users anticipate expenses and make informed decisions.",
+            "fr": "Les budgets par enveloppes relient les montants alloués aux dépenses réelles et aux soldes disponibles. Les tableaux de bord de trésorerie, les objectifs d’épargne et les projections fondées sur les paiements récurrents aident à anticiper les dépenses et à prendre des décisions éclairées."
           }
         },
         {
           "id": "b-owlcount-ux",
           "text": {
-            "en": "Created the responsive UI/UX for phone and laptop, including accessible dashboards, budget planning, cash-flow views, quick transaction entry, PWA installation and clear states for empty, offline and sensitive financial data.",
-            "fr": "Conception de l’UI/UX responsive pour mobile et ordinateur : tableaux de bord accessibles, planification budgétaire, vues de trésorerie, saisie rapide des transactions, installation PWA et états clairs pour les données vides, hors ligne ou sensibles."
+            "en": "Designed for use on both phone and laptop, with guided setup, quick entry, searchable transactions and clear visual indicators. The interface turns financial rules into practical workflows that users can follow without technical knowledge.",
+            "fr": "Pensée pour le téléphone comme pour l’ordinateur, l’interface associe configuration guidée, saisie rapide, recherche de transactions et indicateurs visuels lisibles. Elle traduit les règles de gestion en parcours concrets, utilisables sans connaissances techniques."
           }
         },
         {
-          "id": "b-owlcount-roadmap-cloud",
+          "id": "b-owlcount-architecture",
           "text": {
-            "en": "Artefact App Builder roadmap — extract Python/FastAPI services for forecasting and allocation logic, expose versioned REST APIs, move analytical datasets to BigQuery, transactional records to Cloud SQL and deploy stateless services on Cloud Run.",
-            "fr": "Roadmap App Builder alignée avec Artefact — extraire des services Python/FastAPI pour la prévision et l’allocation, exposer des API REST versionnées, déplacer les données analytiques vers BigQuery, les données transactionnelles vers Cloud SQL et déployer les services stateless sur Cloud Run."
+            "en": "Built with Next.js and TypeScript, with local storage for offline use and a Cloudflare D1 synchronization layer. CSV import and export, validated JSON backups and restore workflows keep data portable and recoverable.",
+            "fr": "Développée avec Next.js et TypeScript, l’application s’appuie sur un stockage local pour fonctionner hors ligne et une couche de synchronisation Cloudflare D1. L’import/export CSV, les sauvegardes JSON validées et la restauration permettent de conserver des données portables et récupérables."
           }
         },
         {
-          "id": "b-owlcount-roadmap-lowcode",
+          "id": "b-owlcount-scope",
           "text": {
-            "en": "Planned extension — add a Retool or Appsmith administration workspace for business users, then adapt the planning engine to supply-chain use cases such as demand forecasts, stock allocation and scenario comparison with auditable decisions.",
-            "fr": "Extension prévue — ajouter un espace d’administration Retool ou Appsmith pour les utilisateurs métier, puis adapter le moteur de planification à des cas supply chain : prévision de la demande, allocation des stocks et comparaison de scénarios avec décisions auditables."
+            "en": "Separate workspaces bring together accounts, debts, assets, recurring payments and net worth. The screenshots below use demonstration data to illustrate these workflows.",
+            "fr": "Des espaces distincts regroupent les comptes, dettes, actifs, paiements récurrents et le patrimoine. Les captures ci-dessous illustrent ces parcours avec des données de démonstration."
           }
         }
       ]
